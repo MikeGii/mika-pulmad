@@ -4,12 +4,32 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import AdminLogin from './components/login/AdminLogin';
 import AdminDashboard from './components/admin/AdminDashboard';
+import AccountManagement from './components/admin/AccountManagement';
 import './App.css';
 
 // Protected Route Component
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { currentUser } = useAuth();
     return currentUser ? <>{children}</> : <Navigate to="/login" />;
+};
+
+// Permission-based Protected Route
+const PermissionRoute: React.FC<{
+    children: React.ReactNode;
+    requiredPermission: string;
+}> = ({ children, requiredPermission }) => {
+    const { currentUser } = useAuth();
+
+    // For now, only allow mike.gross@mika-pulm.ee to access account management
+    if (requiredPermission === 'accountManagement') {
+        if (currentUser?.email === 'mike.gross@mika-pulm.ee') {
+            return <>{children}</>;
+        } else {
+            return <Navigate to="/admin" />;
+        }
+    }
+
+    return <>{children}</>;
 };
 
 // Public Route Component (redirect if already logged in)
@@ -42,6 +62,18 @@ function AppContent() {
                         element={
                             <ProtectedRoute>
                                 <AdminDashboard />
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    {/* Account Management route - only for mike.gross@mika-pulm.ee */}
+                    <Route
+                        path="/admin/accounts"
+                        element={
+                            <ProtectedRoute>
+                                <PermissionRoute requiredPermission="accountManagement">
+                                    <AccountManagement />
+                                </PermissionRoute>
                             </ProtectedRoute>
                         }
                     />

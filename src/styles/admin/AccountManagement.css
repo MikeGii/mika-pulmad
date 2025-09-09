@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap');
+
+.account-management-content {
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: calc(100vh - 80px);
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.page-header h2 {
+    color: #7fa070;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+}
+
+.page-header p {
+    color: #666;
+    font-size: 16px;
+    margin: 0;
+}
+
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    color: #7fa070;
+    font-size: 18px;
+}
+
+.users-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.user-card {
+    background: linear-gradient(145deg, #ffffff, #f9f7f4);
+    border: 1px solid #e8e6e0;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow:
+            0 10px 30px rgba(0, 0, 0, 0.08),
+            0 0 0 1px rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.user-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(45deg, #d4af37, #ffd700, #b8860b);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.user-card:hover {
+    transform: translateY(-2px);
+    box-shadow:
+            0 15px 35px rgba(0, 0, 0, 0.12),
+            0 0 0 1px rgba(168, 192, 154, 0.2);
+}
+
+.user-card:hover::before {
+    opacity: 1;
+}
+
+.user-info {
+    margin-bottom: 25px;
+}
+
+.user-info h3 {
+    color: #7fa070;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+.permissions-section {
+    background: rgba(168, 192, 154, 0.05);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid rgba(168, 192, 154, 0.1);
+}
+
+.permission-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    font-weight: 500;
+    color: #666;
+    transition: color 0.3s ease;
+}
+
+.permission-item:hover {
+    color: #7fa070;
+}
+
+.permission-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #7fa070;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.permission-item span {
+    font-size: 16px;
+    user-select: none;
+}
+
+/* Custom checkbox styling */
+.permission-item input[type="checkbox"]:checked {
+    background: linear-gradient(45deg, #a8c09a, #7fa070);
+}
+
+.permission-item input[type="checkbox"]:focus {
+    outline: 2px solid rgba(168, 192, 154, 0.3);
+    outline-offset: 2px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .account-management-content {
+        padding: 20px;
+    }
+
+    .page-header h2 {
+        font-size: 1.6rem;
+    }
+
+    .user-card {
+        padding: 20px;
+    }
+
+    .user-info h3 {
+        font-size: 1.1rem;
+    }
+
+    .permissions-section {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-header h2 {
+        font-size: 1.4rem;
+    }
+
+    .permission-item {
+        font-size: 14px;
+    }
+
+    .permission-item input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+    }
+}

@@ -6,65 +6,31 @@
     font-family: 'Arial', sans-serif;
 }
 
-.dashboard-header {
-    background: linear-gradient(145deg, #ffffff, #f9f7f4);
-    border-bottom: 2px solid #e8e6e0;
-    padding: 20px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-}
-
-.dashboard-header h1 {
-    font-family: 'Dancing Script', cursive;
-    font-size: 2.5rem;
-    font-weight: 700;
-    background: linear-gradient(45deg, #d4af37, #ffd700, #b8860b);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 2px 4px rgba(212, 175, 55, 0.3);
-    margin: 0;
-    letter-spacing: 1px;
-}
-
-.user-info {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.user-info span {
-    color: #7fa070;
-    font-weight: 500;
-    font-size: 16px;
-}
-
-.logout-btn {
-    padding: 10px 20px;
-    background: linear-gradient(45deg, #a8c09a, #7fa070);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.logout-btn:hover {
-    background: linear-gradient(45deg, #95a889, #6d8b5e);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(168, 192, 154, 0.3);
-}
+/* Remove the old header styles since we're using Header component */
 
 .dashboard-content {
     padding: 40px;
     max-width: 1200px;
     margin: 0 auto;
+}
+
+.dashboard-welcome {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.dashboard-welcome h2 {
+    color: #7fa070;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+}
+
+.dashboard-welcome p {
+    color: #666;
+    font-size: 16px;
+    margin: 0;
 }
 
 .dashboard-grid {
@@ -123,24 +89,40 @@
     color: #666;
     font-size: 14px;
     line-height: 1.6;
-    margin: 0;
+    margin: 0 0 20px 0;
+}
+
+.card-stats {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 15px;
+    border-top: 1px solid #e8e6e0;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #d4af37;
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 5px;
 }
 
 /* Mobile responsiveness */
 @media (max-width: 768px) {
-    .dashboard-header {
-        padding: 15px 20px;
-        flex-direction: column;
-        gap: 15px;
-        text-align: center;
-    }
-
-    .dashboard-header h1 {
-        font-size: 2rem;
-    }
-
     .dashboard-content {
         padding: 20px;
+    }
+
+    .dashboard-welcome h2 {
+        font-size: 1.6rem;
     }
 
     .dashboard-grid {
@@ -154,13 +136,11 @@
 }
 
 @media (max-width: 480px) {
-    .user-info {
-        flex-direction: column;
-        gap: 10px;
+    .dashboard-welcome h2 {
+        font-size: 1.4rem;
     }
 
-    .logout-btn {
-        padding: 8px 16px;
-        font-size: 12px;
+    .stat-number {
+        font-size: 2rem;
     }
 }
