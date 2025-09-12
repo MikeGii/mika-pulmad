@@ -1,12 +1,15 @@
 // src/components/common/Header.tsx
 import React, { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
+import { useLanguage } from '../../contexts/LanguageContext';
 import { useNavigate } from 'react-router-dom';
+import LanguageSwitcher from './LanguageSwitcher';
 import '../../styles/common/Header.css';
 
 const Header: React.FC = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const { currentUser, logout } = useAuth();
+    const { t } = useLanguage();
     const navigate = useNavigate();
 
     const handleLogout = async () => {
@@ -27,17 +30,18 @@ const Header: React.FC = () => {
         setIsMenuOpen(false);
     };
 
-    // Check if user has account management access
     const hasAccountManagement = currentUser?.email === 'mike.gross@mika-pulm.ee';
 
     return (
         <>
             <header className="header-container">
                 <div className="header-content">
-                    <div className="header-left"></div>
+                    <div className="header-left">
+                        <LanguageSwitcher />
+                    </div>
 
                     <div className="header-center">
-                        <h1 className="header-title">Mike & Kateryna Pulmad</h1>
+                        <h1 className="header-title">{t('header.title')}</h1>
                     </div>
 
                     <div className="header-right">
@@ -50,12 +54,10 @@ const Header: React.FC = () => {
                 </div>
             </header>
 
-            {/* Dropdown Menu */}
             <div className={`dropdown-menu ${isMenuOpen ? 'open' : ''}`}>
                 <div className="menu-content">
                     <div className="user-info-menu">
                         <span className="user-email">{currentUser?.email}</span>
-                        <span className="user-role">Administrator</span>
                     </div>
 
                     <div className="menu-divider"></div>
@@ -63,13 +65,13 @@ const Header: React.FC = () => {
                     <nav className="menu-nav">
                         <button onClick={() => navigateTo('/admin')} className="menu-item">
                             <span className="menu-icon">📊</span>
-                            Dashboard
+                            {t('menu.dashboard')}
                         </button>
 
                         {hasAccountManagement && (
                             <button onClick={() => navigateTo('/admin/accounts')} className="menu-item">
                                 <span className="menu-icon">👤</span>
-                                Account Management
+                                {t('menu.userManagement')}
                             </button>
                         )}
                     </nav>
@@ -78,12 +80,11 @@ const Header: React.FC = () => {
 
                     <button onClick={handleLogout} className="logout-menu-btn">
                         <span className="menu-icon">🚪</span>
-                        Logout
+                        {t('menu.logout')}
                     </button>
                 </div>
             </div>
 
-            {/* Overlay */}
             {isMenuOpen && <div className="menu-overlay" onClick={() => setIsMenuOpen(false)}></div>}
         </>
     );

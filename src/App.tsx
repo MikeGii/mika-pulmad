@@ -2,6 +2,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { LanguageProvider } from './contexts/LanguageContext';
 import AdminLogin from './components/login/AdminLogin';
 import AdminDashboard from './components/admin/AdminDashboard';
 import AccountManagement from './components/admin/AccountManagement';
@@ -38,6 +39,7 @@ const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     return !currentUser ? <>{children}</> : <Navigate to="/admin" />;
 };
 
+// App Content Component (needs to be inside AuthProvider to use useAuth)
 function AppContent() {
     return (
         <Router>
@@ -86,11 +88,14 @@ function AppContent() {
     );
 }
 
+// Main App Component with proper provider nesting
 function App() {
     return (
-        <AuthProvider>
-            <AppContent />
-        </AuthProvider>
+        <LanguageProvider>
+            <AuthProvider>
+                <AppContent />
+            </AuthProvider>
+        </LanguageProvider>
     );
 }
 
