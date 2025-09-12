@@ -1,0 +1,211 @@
+/* src/styles/admin/ToDoDashboard.css */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap');
+
+.mika-todo-dashboard {
+    background: linear-gradient(135deg, #ffffff 0%, #f9f7f4 50%, #f5f3f0 100%);
+    padding: 60px 40px;
+    position: relative;
+}
+
+.mika-todo-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.mika-todo-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.mika-todo-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #7fa070;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 4px rgba(127, 160, 112, 0.2);
+}
+
+.mika-todo-subtitle {
+    color: #666;
+    font-size: 1.1rem;
+    font-weight: 400;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.mika-todo-container {
+    background: linear-gradient(145deg, #ffffff, #f9f7f4);
+    border: 1px solid #e8e6e0;
+    border-radius: 20px;
+    min-height: 300px;
+    box-shadow:
+            0 10px 30px rgba(0, 0, 0, 0.08),
+            0 0 0 1px rgba(255, 255, 255, 0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+.mika-todo-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(45deg, #d4af37, #ffd700, #b8860b);
+    opacity: 0.7;
+}
+
+/* Empty state styling */
+.mika-todo-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 40px;
+    text-align: center;
+    min-height: 250px;
+}
+
+.mika-todo-empty-icon {
+    font-size: 4rem;
+    margin-bottom: 25px;
+    opacity: 0.6;
+}
+
+.mika-todo-empty h3 {
+    color: #7fa070;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    letter-spacing: 0.5px;
+}
+
+.mika-todo-empty p {
+    color: #999;
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 400px;
+    margin: 0;
+}
+
+/* Future todo items container */
+.mika-todo-items {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Future todo item styling structure (ready for when you add items) */
+.mika-todo-item {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid #e8e6e0;
+    border-radius: 12px;
+    padding: 25px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.mika-todo-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border-color: #a8c09a;
+}
+
+.mika-todo-item-header {
+    display: flex;
+    justify-content: between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    gap: 20px;
+}
+
+.mika-todo-item-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #7fa070;
+    margin: 0;
+}
+
+.mika-todo-item-deadline {
+    background: linear-gradient(45deg, #d4af37, #ffd700);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.mika-todo-item-description {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.mika-todo-item-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: #999;
+}
+
+.mika-todo-organizator {
+    font-weight: 500;
+    color: #7fa070;
+}
+
+.mika-todo-company {
+    font-style: italic;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .mika-todo-dashboard {
+        padding: 40px 20px;
+    }
+
+    .mika-todo-title {
+        font-size: 2.5rem;
+    }
+
+    .mika-todo-subtitle {
+        font-size: 1rem;
+    }
+
+    .mika-todo-empty {
+        padding: 60px 20px;
+    }
+
+    .mika-todo-empty-icon {
+        font-size: 3rem;
+    }
+
+    .mika-todo-item-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .mika-todo-item-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .mika-todo-title {
+        font-size: 2rem;
+    }
+
+    .mika-todo-empty h3 {
+        font-size: 1.3rem;
+    }
+}

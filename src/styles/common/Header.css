@@ -218,3 +218,11 @@
         font-size: 1.5rem;
     }
 }
+
+/* Add this to your existing Header.css */
+.header-right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+}

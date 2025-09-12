@@ -5,7 +5,7 @@ export const translations: Translations = {
     // Header
     'header.title': {
         et: 'Mike & Kateryna Pulmad',
-        ua: 'Весілля Майка та Катерини'
+        ua: 'Mike & Kateryna Pulmad'
     },
     'menu.dashboard': {
         et: 'Töölaud',
@@ -34,5 +34,24 @@ export const translations: Translations = {
     'language.ukrainian': {
         et: 'Ukraina',
         ua: 'Українська'
+    },
+
+    // ToDo Dashboard
+    'todo.title': {
+        et: 'Pulmade Korraldamise Ülesanded',
+        ua: 'Завдання з Організації Весілля'
+    },
+    'todo.subtitle': {
+        et: 'Jälgi ja halda kõiki pulmadega seotud ülesandeid ja tähtaegu',
+        ua: 'Відстежуйте та керуйте всіма завданнями та термінами, пов\'язаними з весіллям'
+    },
+    'todo.empty.title': {
+        et: 'Ülesandeid pole veel lisatud',
+        ua: 'Завдання ще не додані'
+    },
+    'todo.empty.description': {
+        et: 'Kui ülesandeid lisatakse, kuvatakse need siin koos kõigi detailidega',
+        ua: 'Коли завдання будуть додані, вони відображатимуться тут з усіма деталями'
     }
 };
+

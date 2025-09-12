@@ -1,21 +1,33 @@
 // src/components/admin/AdminDashboard.tsx
 import React from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { useAuth } from '../../contexts/AuthContext';
 import Header from '../common/Header';
 import '../../styles/admin/AdminDashboard.css';
+import WeddingDetails from "./WeddingDetails";
+import ToDoDashboard from "./ToDoDashboard";
 
 const AdminDashboard: React.FC = () => {
     const { t } = useLanguage();
+    const { currentUser } = useAuth();
 
     return (
-        <div className="dashboard-container">
+        <div className="mika-dashboard-container">
             <Header />
 
-            <main className="dashboard-content">
-                <div className="dashboard-welcome">
-                    <h2>{t('dashboard.title')}</h2>
+            {/* Hero Section */}
+            <section className="mika-hero-section">
+                <div className="mika-hero-image">
+                    <img src="/images/index.jpg" alt="Mike & Kateryna" />
+                    <div className="mika-hero-overlay"></div>
                 </div>
-            </main>
+            </section>
+
+            {/* Wedding Details */}
+            <WeddingDetails />
+
+            {/* ToDo Dashboard */}
+            <ToDoDashboard />
         </div>
     );
 };

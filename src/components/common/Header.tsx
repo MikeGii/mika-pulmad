@@ -37,7 +37,7 @@ const Header: React.FC = () => {
             <header className="header-container">
                 <div className="header-content">
                     <div className="header-left">
-                        <LanguageSwitcher />
+                        {/* Empty space for balance */}
                     </div>
 
                     <div className="header-center">
@@ -45,6 +45,7 @@ const Header: React.FC = () => {
                     </div>
 
                     <div className="header-right">
+                        <LanguageSwitcher />
                         <button className="burger-menu" onClick={toggleMenu}>
                             <span className={`burger-line ${isMenuOpen ? 'open' : ''}`}></span>
                             <span className={`burger-line ${isMenuOpen ? 'open' : ''}`}></span>

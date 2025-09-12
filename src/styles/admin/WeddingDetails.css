@@ -1,0 +1,180 @@
+/* src/styles/admin/WeddingDetails.css */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Playfair+Display:wght@300;400;500;600&display=swap');
+
+.mika-wedding-details {
+    background: linear-gradient(135deg, #f9f7f4 0%, #ffffff 50%, #f5f3f0 100%);
+    padding: 60px 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.mika-wedding-details::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+            circle at center,
+            rgba(212, 175, 55, 0.05) 0%,
+            transparent 50%
+    );
+    animation: mika-subtle-glow 6s ease-in-out infinite alternate;
+    pointer-events: none;
+}
+
+@keyframes mika-subtle-glow {
+    0% { opacity: 0.3; transform: scale(1); }
+    100% { opacity: 0.1; transform: scale(1.1); }
+}
+
+.mika-details-content {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.mika-wedding-date {
+    font-family: 'Dancing Script', cursive;
+    font-size: 5rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+
+    /* Golden glowing effect */
+    background: linear-gradient(45deg, #d4af37, #ffd700, #b8860b, #daa520);
+    background-size: 400% 400%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    /* Glowing animation */
+    animation: mika-golden-glow 3s ease-in-out infinite alternate;
+
+    /* Text shadow for extra glow */
+    filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.4))
+    drop-shadow(0 0 20px rgba(212, 175, 55, 0.2))
+    drop-shadow(0 0 30px rgba(212, 175, 55, 0.1));
+
+    letter-spacing: 2px;
+    position: relative;
+}
+
+.mika-wedding-date::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(
+            ellipse at center,
+            rgba(212, 175, 55, 0.1) 0%,
+            rgba(255, 215, 0, 0.05) 50%,
+            transparent 70%
+    );
+    border-radius: 50%;
+    animation: mika-pulse-glow 4s ease-in-out infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes mika-golden-glow {
+    0% {
+        background-position: 0% 50%;
+        filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.4))
+        drop-shadow(0 0 20px rgba(212, 175, 55, 0.2));
+    }
+    100% {
+        background-position: 100% 50%;
+        filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.6))
+        drop-shadow(0 0 30px rgba(212, 175, 55, 0.3))
+        drop-shadow(0 0 45px rgba(212, 175, 55, 0.1));
+    }
+}
+
+@keyframes mika-pulse-glow {
+    0%, 100% {
+        opacity: 0.3;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        opacity: 0.1;
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+}
+
+.mika-wedding-venue {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: #8b9d7a;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    position: relative;
+
+    /* Beautiful greenish-beige styling */
+    background: linear-gradient(135deg, #8b9d7a, #a8c09a, #7fa070, #9bb88a);
+    background-size: 300% 300%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    animation: mika-venue-shimmer 4s ease-in-out infinite alternate;
+
+    /* Subtle text shadow */
+    filter: drop-shadow(0 2px 4px rgba(139, 157, 122, 0.2));
+}
+
+.mika-wedding-venue::before {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(45deg, transparent, #a8c09a, transparent);
+    border-radius: 2px;
+}
+
+@keyframes mika-venue-shimmer {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .mika-wedding-details {
+        padding: 40px 20px;
+    }
+
+    .mika-wedding-date {
+        font-size: 3.5rem;
+        margin-bottom: 25px;
+    }
+
+    .mika-wedding-venue {
+        font-size: 1.8rem;
+        letter-spacing: 2px;
+    }
+}
+
+@media (max-width: 480px) {
+    .mika-wedding-date {
+        font-size: 2.5rem;
+        letter-spacing: 1px;
+    }
+
+    .mika-wedding-venue {
+        font-size: 1.4rem;
+        letter-spacing: 1px;
+    }
+}
