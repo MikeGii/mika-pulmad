@@ -1,5 +1,5 @@
 // src/components/admin/guest-management/GuestForm.tsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useLanguage } from '../../../contexts/LanguageContext';
 import { Guest, GuestFormData } from '../../../types';
 import { GuestService } from '../../../services/guestService';
@@ -32,10 +32,20 @@ const GuestForm: React.FC<GuestFormProps> = ({ guest, onSave, onCancel }) => {
     const [invitationGetters, setInvitationGetters] = useState<Guest[]>([]);
     const [showGetterDropdown, setShowGetterDropdown] = useState(false);
 
-    // Load invitation getters when component mounts
+    const loadInvitationGetters = useCallback(async () => {
+        try {
+            const allGuests = await GuestService.getAllGuests();
+            const getters = allGuests.filter(g => g.isInvitationGetter);
+            setInvitationGetters(getters);
+        } catch (error) {
+            console.error('Error loading invitation getters:', error);
+        }
+    }, []);
+
+// Load invitation getters when component mounts
     useEffect(() => {
         loadInvitationGetters();
-    }, []);
+    }, [loadInvitationGetters]);
 
     // Load existing guest data when editing
     useEffect(() => {
@@ -63,17 +73,7 @@ const GuestForm: React.FC<GuestFormProps> = ({ guest, onSave, onCancel }) => {
                 });
             }
         }
-    }, [guest]);
-
-    const loadInvitationGetters = async () => {
-        try {
-            const allGuests = await GuestService.getAllGuests();
-            const getters = allGuests.filter(g => g.isInvitationGetter);
-            setInvitationGetters(getters);
-        } catch (error) {
-            console.error('Error loading invitation getters:', error);
-        }
-    };
+    }, [guest, loadInvitationGetters, invitationGetters]);
 
     const handleInputChange = (field: keyof GuestFormData, value: string | number | boolean) => {
         setFormData(prev => ({

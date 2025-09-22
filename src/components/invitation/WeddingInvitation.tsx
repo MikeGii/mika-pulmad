@@ -1,5 +1,5 @@
 // src/components/invitation/WeddingInvitation.tsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { InvitationService } from '../../services/invitationService';
 import { Guest } from '../../types';
@@ -17,13 +17,7 @@ const WeddingInvitationContent: React.FC = () => {
     const [hasResponded, setHasResponded] = useState(false);
     const { t, setLanguage } = useLanguage();
 
-    useEffect(() => {
-        if (guestName) {
-            loadInvitationData();
-        }
-    }, [guestName]);
-
-    const loadInvitationData = async () => {
+    const loadInvitationData = useCallback(async () => {
         try {
             if (!guestName) return;
 
@@ -63,7 +57,13 @@ const WeddingInvitationContent: React.FC = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [guestName, setLanguage]);
+
+    useEffect(() => {
+        if (guestName) {
+            loadInvitationData();
+        }
+    }, [guestName, loadInvitationData]);
 
     const handleRSVPSubmitted = () => {
         setHasResponded(true);
