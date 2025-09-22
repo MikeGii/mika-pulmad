@@ -538,6 +538,64 @@ export const translations: Translations = {
         ua: 'Фінансове відстеження'
     },
 
+    // Guest Status Dashboard
+    'guests.title': {
+        et: 'Külaliste Ülevaade',
+        ua: 'Огляд Гостей'
+    },
+    'guests.subtitle': {
+        et: 'Kutsutud külaliste arv ja jaotus',
+        ua: 'Кількість запрошених гостей та їх розподіл'
+    },
+    'guests.totalGuests': {
+        et: 'Kokku külalisi',
+        ua: 'Всього гостей'
+    },
+    'guests.totalAdults': {
+        et: 'Täiskasvanuid',
+        ua: 'Дорослих'
+    },
+    'guests.totalChildren': {
+        et: 'Lapsi',
+        ua: 'Дітей'
+    },
+    'guests.totalTables': {
+        et: 'Laudu',
+        ua: 'Столів'
+    },
+    'guests.invitedGuests': {
+        et: 'Kutsutud külalisi',
+        ua: 'Запрошено гостей'
+    },
+    'guests.adults': {
+        et: 'täiskasvanud',
+        ua: 'дорослі'
+    },
+    'guests.children': {
+        et: 'lapsed',
+        ua: 'діти'
+    },
+    'guests.distributedAcross': {
+        et: 'jaotatud',
+        ua: 'розподілено по'
+    },
+    'guests.table': {
+        et: 'laua vahel',
+        ua: 'столу'
+    },
+    'guests.tables': {
+        et: 'laua vahel',
+        ua: 'столах'
+    },
+    'guests.empty.title': {
+        et: 'Külalisi pole veel lisatud',
+        ua: 'Гостей ще не додано'
+    },
+    'guests.empty.description': {
+        et: 'Kui külalised lisatakse, kuvatakse nende statistika siin',
+        ua: 'Коли гості будуть додані, їх статистика відображатиметься тут'
+    },
+
     // Guest Management
     'guestManagement.title': {
         et: 'Külaliste Haldamine',
@@ -740,4 +798,3 @@ export const translations: Translations = {
         ua: 'Управління гостями'
     },
 };
-

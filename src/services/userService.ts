@@ -15,7 +15,7 @@ import {
     orderBy
 } from 'firebase/firestore';
 import { auth, db } from '../firebase';
-import { User, CreateUserData, UserPermissions } from '../types/User';
+import { User, CreateUserData, UserPermissions } from '../types';
 
 export class UserService {
     // Create a new user (Auth + Firestore)

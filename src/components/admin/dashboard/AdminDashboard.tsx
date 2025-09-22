@@ -7,6 +7,7 @@ import WeddingDetails from './WeddingDetails';
 import ToDoDashboard from './ToDoDashboard';
 import FinancialStatus from './FinancialStatus'; // Add this import
 import '../../../styles/admin/AdminDashboard.css';
+import GuestStatus from "./GuestStatus";
 
 const AdminDashboard: React.FC = () => {
     // eslint-disable-next-line
@@ -28,6 +29,9 @@ const AdminDashboard: React.FC = () => {
 
             {/* Wedding Details */}
             <WeddingDetails />
+
+            {/* Guest Status */}
+            <GuestStatus />
 
             {/* ToDo Dashboard */}
             <ToDoDashboard />

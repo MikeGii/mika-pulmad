@@ -11,7 +11,7 @@ import {
     where
 } from 'firebase/firestore';
 import { db } from '../firebase';
-import { Guest, CreateGuestData } from '../types/Guest';
+import { Guest, CreateGuestData } from '../types';
 
 export class GuestService {
     // Create a new guest
