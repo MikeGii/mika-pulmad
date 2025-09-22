@@ -1,7 +1,7 @@
 // src/components/admin/account-management/UserForm.tsx
 import React, { useState } from 'react';
 import { useLanguage } from '../../../contexts/LanguageContext';
-import { CreateUserData, UserPermissions } from '../../../types/User';
+import { CreateUserData } from '../../../types/User';
 import '../../../styles/admin/UserForm.css';
 
 interface UserFormProps {

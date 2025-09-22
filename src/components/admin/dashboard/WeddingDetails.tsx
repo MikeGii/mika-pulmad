@@ -1,10 +1,8 @@
 // src/components/admin/WeddingDetails.tsx
 import React from 'react';
-import { useLanguage } from '../../../contexts/LanguageContext';
 import '../../../styles/admin/WeddingDetails.css';
 
 const WeddingDetails: React.FC = () => {
-    const { t } = useLanguage();
 
     return (
         <section className="mika-wedding-details">

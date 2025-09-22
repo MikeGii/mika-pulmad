@@ -1,7 +1,7 @@
 // src/components/admin/financial-management/FinancialTaskCard.tsx
 import React, { useState } from 'react';
 import { useLanguage } from '../../../contexts/LanguageContext';
-import { Task, TaskContent, PriceOffer } from '../../../types';
+import { Task, TaskContent } from '../../../types';
 
 interface FinancialTaskCardProps {
     task: Task;

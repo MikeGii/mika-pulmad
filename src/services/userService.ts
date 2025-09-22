@@ -1,7 +1,6 @@
 // src/services/userService.ts
 import {
     createUserWithEmailAndPassword,
-    User as FirebaseUser,
     sendPasswordResetEmail
 } from 'firebase/auth';
 import {
@@ -11,7 +10,6 @@ import {
     getDocs,
     collection,
     updateDoc,
-    deleteDoc,
     query,
     where,
     orderBy
