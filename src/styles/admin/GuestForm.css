@@ -1,0 +1,162 @@
+/* src/styles/admin/GuestForm.css */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap');
+
+.mika-guest-form-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.mika-guest-form-container {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+    box-shadow:
+            0 25px 50px rgba(0, 0, 0, 0.15),
+            0 0 0 1px rgba(255, 255, 255, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    max-width: 600px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.mika-guest-form-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(249, 247, 244, 0.3) 50%,
+    rgba(245, 243, 240, 0.2) 100%);
+    border-radius: 24px;
+    z-index: -1;
+}
+
+.mika-guest-form {
+    padding: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.mika-guest-form-header {
+    padding: 30px 30px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+}
+
+.mika-guest-form-header h3 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #7fa070;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(127, 160, 112, 0.3);
+}
+
+.mika-guest-form-body {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.mika-guest-child-notice {
+    background: linear-gradient(145deg, rgba(255, 193, 7, 0.15), rgba(255, 193, 7, 0.1));
+    border: 2px solid rgba(255, 193, 7, 0.3);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.mika-guest-child-notice-icon {
+    font-size: 20px;
+    margin-top: 2px;
+}
+
+.mika-guest-child-notice-text {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #856404;
+    font-weight: 500;
+}
+
+.mika-child-checkbox-group {
+    background: rgba(168, 192, 154, 0.1);
+    border: 1px solid rgba(168, 192, 154, 0.2);
+    border-radius: 12px;
+    padding: 15px;
+    margin-top: 10px;
+}
+
+.mika-child-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+}
+
+.mika-child-checkbox input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #7fa070;
+    cursor: pointer;
+}
+
+.mika-guest-form-footer {
+    padding: 20px 30px 30px;
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .mika-guest-form-overlay {
+        padding: 10px;
+    }
+
+    .mika-guest-form-header {
+        padding: 20px 20px 15px;
+    }
+
+    .mika-guest-form-header h3 {
+        font-size: 2rem;
+    }
+
+    .mika-guest-form-body {
+        padding: 20px;
+        gap: 15px;
+    }
+
+    .mika-guest-form-footer {
+        padding: 15px 20px 20px;
+        flex-direction: column;
+    }
+
+    .mika-form-button {
+        width: 100%;
+    }
+}

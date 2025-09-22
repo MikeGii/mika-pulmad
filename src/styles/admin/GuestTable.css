@@ -1,0 +1,249 @@
+/* src/styles/admin/GuestTable.css */
+.mika-guest-table-container {
+    background: linear-gradient(145deg, #ffffff, #f9f7f4);
+    border: 1px solid #e8e6e0;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow:
+            0 10px 30px rgba(0, 0, 0, 0.08),
+            0 0 0 1px rgba(255, 255, 255, 0.5);
+    position: relative;
+}
+
+.mika-guest-table-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(45deg, #d4af37, #ffd700, #b8860b);
+    opacity: 0.7;
+}
+
+.mika-guest-table-wrapper {
+    overflow-x: auto;
+}
+
+.mika-guest-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 4px;
+}
+
+.mika-guest-table-head {
+    background: rgba(168, 192, 154, 0.1);
+}
+
+.mika-guest-table-head th {
+    padding: 20px 16px;
+    text-align: left;
+    color: #7fa070;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid rgba(168, 192, 154, 0.2);
+    white-space: nowrap;
+}
+
+.mika-guest-table-body tr {
+    transition: all 0.3s ease;
+}
+
+.mika-guest-table-body tr:hover {
+    background: rgba(168, 192, 154, 0.05);
+}
+
+.mika-guest-table-row td {
+    padding: 20px 16px;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: top;
+}
+
+.mika-guest-name-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.mika-guest-name {
+    font-weight: 600;
+    color: #333;
+    font-size: 16px;
+}
+
+.mika-guest-child-badge {
+    display: inline-block;
+    background: rgba(255, 193, 7, 0.2);
+    color: #856404;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.mika-guest-contact-info {
+    color: #666;
+    font-size: 14px;
+    max-width: 200px;
+}
+
+.mika-guest-contact-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: 4px;
+}
+
+.mika-guest-contact-label {
+    font-size: 11px;
+    color: #999;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.mika-guest-contact-value {
+    font-size: 13px;
+    color: #666;
+}
+
+.mika-guest-location {
+    color: #666;
+    font-size: 14px;
+    max-width: 180px;
+    font-style: italic;
+}
+
+.mika-guest-table-number {
+    display: inline-block;
+    background: linear-gradient(45deg, #a8c09a, #7fa070);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 14px;
+    min-width: 20px;
+    text-align: center;
+}
+
+.mika-guest-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.mika-guest-action-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-size: 16px;
+}
+
+.mika-guest-action-edit:hover {
+    background: rgba(168, 192, 154, 0.2);
+    transform: scale(1.1);
+}
+
+.mika-guest-action-delete:hover {
+    background: rgba(220, 53, 69, 0.2);
+    transform: scale(1.1);
+}
+
+/* Empty state */
+.mika-guest-table-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 40px;
+    text-align: center;
+    min-height: 200px;
+}
+
+.mika-guest-table-empty-icon {
+    font-size: 4rem;
+    margin-bottom: 25px;
+    opacity: 0.6;
+}
+
+.mika-guest-table-empty h3 {
+    color: #7fa070;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Table grouping by table numbers */
+.mika-guest-table-group {
+    margin-bottom: 30px;
+}
+
+.mika-guest-table-group-header {
+    background: rgba(168, 192, 154, 0.15);
+    padding: 15px 20px;
+    font-weight: 600;
+    color: #7fa070;
+    font-size: 16px;
+    border-bottom: 2px solid rgba(168, 192, 154, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mika-table-guest-count {
+    background: rgba(127, 160, 112, 0.2);
+    color: #7fa070;
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .mika-guest-table-head th {
+        padding: 15px 12px;
+        font-size: 12px;
+    }
+
+    .mika-guest-table-row td {
+        padding: 15px 12px;
+    }
+
+    .mika-guest-contact-info {
+        max-width: 150px;
+    }
+
+    .mika-guest-location {
+        max-width: 130px;
+    }
+
+    .mika-guest-actions {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .mika-guest-table-head th {
+        padding: 10px 8px;
+    }
+
+    .mika-guest-table-row td {
+        padding: 12px 8px;
+    }
+
+    .mika-guest-name {
+        font-size: 14px;
+    }
+
+    .mika-guest-contact-info {
+        max-width: 120px;
+    }
+}

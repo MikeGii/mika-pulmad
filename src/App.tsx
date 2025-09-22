@@ -9,6 +9,7 @@ import AccountManagement from './components/admin/account-management/AccountMana
 import TaskManagement from './components/admin/task-management/TaskManagement';
 import './App.css';
 import FinancialManagement from "./components/admin/financial-management/FinancialManagement";
+import GuestManagement from "./components/admin/guest-management/GuestManagement";
 
 // Protected Route Component
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -97,6 +98,15 @@ function AppContent() {
                                 <PermissionRoute requiredPermission="accountManagement">
                                     <AccountManagement />
                                 </PermissionRoute>
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    <Route
+                        path="/admin/guests"
+                        element={
+                            <ProtectedRoute>
+                                <GuestManagement />
                             </ProtectedRoute>
                         }
                     />

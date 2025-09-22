@@ -80,6 +80,11 @@ const Header: React.FC = () => {
                             {t('menu.financialManagement')}
                         </button>
 
+                        <button onClick={() => navigateTo('/admin/guests')} className="menu-item">
+                            <span className="menu-icon">👥</span>
+                            {t('menu.guestManagement')}
+                        </button>
+
                         {hasAccountManagement && (
                             <button onClick={() => navigateTo('/admin/accounts')} className="menu-item">
                                 <span className="menu-icon">👤</span>
