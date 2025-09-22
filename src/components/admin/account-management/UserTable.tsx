@@ -101,6 +101,24 @@ const UserTable: React.FC<UserTableProps> = ({
                                     <label className="mika-permission-checkbox">
                                         <input
                                             type="checkbox"
+                                            checked={user.permissions.financialManagement}
+                                            onChange={(e) => handlePermissionChange(user, 'financialManagement', e.target.checked)}
+                                            disabled={user.id === currentUserUid}
+                                        />
+                                        <span>{t('permission.financialManagement')}</span>
+                                    </label>
+                                    <label className="mika-permission-checkbox">
+                                        <input
+                                            type="checkbox"
+                                            checked={user.permissions.guestManagement}
+                                            onChange={(e) => handlePermissionChange(user, 'guestManagement', e.target.checked)}
+                                            disabled={user.id === currentUserUid}
+                                        />
+                                        <span>{t('permission.guestManagement')}</span>
+                                    </label>
+                                    <label className="mika-permission-checkbox">
+                                        <input
+                                            type="checkbox"
                                             checked={user.permissions.accountManagement}
                                             onChange={(e) => handlePermissionChange(user, 'accountManagement', e.target.checked)}
                                             disabled={user.id === currentUserUid}

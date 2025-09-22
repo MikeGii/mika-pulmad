@@ -64,23 +64,6 @@ const TaskManagement: React.FC = () => {
             setUsers(usersData);
         } catch (error) {
             console.error('Error fetching users:', error);
-            // Fallback to basic user structure if users collection doesn't exist
-            setUsers([{
-                id: 'fallback',
-                email: 'mike.gross@mika-pulm.ee',
-                profile: {
-                    firstName: 'Mike',
-                    lastName: 'Gross',
-                    displayName: 'Mike Gross',
-                    role: 'admin',
-                    phone: ''
-                },
-                permissions: { accountManagement: true, taskManagement: true },
-                dashboardAccess: { accountManagement: true, taskManagement: true },
-                isActive: true,
-                createdAt: new Date(),
-                updatedAt: new Date()
-            }]);
         }
     };
 

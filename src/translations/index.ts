@@ -311,6 +311,14 @@ export const translations: Translations = {
         et: 'Kontohaldus',
         ua: 'Управління обліковими записами'
     },
+    'permission.financialManagement': {
+        et: 'Finantsihaldus',
+        ua: 'Управління фінансами'
+    },
+    'permission.guestManagement': {
+        et: 'Külaliste haldamine',
+        ua: 'Управління гостями'
+    },
 
     // User Table
     'userTable.user': {

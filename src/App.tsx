@@ -7,9 +7,9 @@ import AdminLogin from './components/login/AdminLogin';
 import AdminDashboard from './components/admin/dashboard/AdminDashboard';
 import AccountManagement from './components/admin/account-management/AccountManagement';
 import TaskManagement from './components/admin/task-management/TaskManagement';
-import './App.css';
 import FinancialManagement from "./components/admin/financial-management/FinancialManagement";
 import GuestManagement from "./components/admin/guest-management/GuestManagement";
+import './App.css';
 
 // Protected Route Component
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -20,20 +20,15 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
 // Permission-based Protected Route
 const PermissionRoute: React.FC<{
     children: React.ReactNode;
-    requiredPermission: string;
+    requiredPermission: keyof import('./types/User').UserPermissions;
 }> = ({ children, requiredPermission }) => {
-    const { currentUser } = useAuth();
+    const { currentUserProfile } = useAuth();
 
-    // For now, only allow mike.gross@mika-pulm.ee to access account management
-    if (requiredPermission === 'accountManagement') {
-        if (currentUser?.email === 'mike.gross@mika-pulm.ee') {
-            return <>{children}</>;
-        } else {
-            return <Navigate to="/admin" />;
-        }
+    if (currentUserProfile?.permissions[requiredPermission]) {
+        return <>{children}</>;
+    } else {
+        return <Navigate to="/admin" />;
     }
-
-    return <>{children}</>;
 };
 
 // Public Route Component (redirect if already logged in)
@@ -71,26 +66,43 @@ function AppContent() {
                         }
                     />
 
-                    {/* Add this new Task Management route */}
+                    {/* Task Management route */}
                     <Route
                         path="/admin/tasks"
                         element={
                             <ProtectedRoute>
-                                <TaskManagement />
+                                <PermissionRoute requiredPermission="taskManagement">
+                                    <TaskManagement />
+                                </PermissionRoute>
                             </ProtectedRoute>
                         }
                     />
 
+                    {/* Financial Management route */}
                     <Route
                         path="/admin/financial"
                         element={
                             <ProtectedRoute>
-                                <FinancialManagement />
+                                <PermissionRoute requiredPermission="financialManagement">
+                                    <FinancialManagement />
+                                </PermissionRoute>
                             </ProtectedRoute>
                         }
                     />
 
-                    {/* Account Management route - only for mike.gross@mika-pulm.ee */}
+                    {/* Guest Management route */}
+                    <Route
+                        path="/admin/guests"
+                        element={
+                            <ProtectedRoute>
+                                <PermissionRoute requiredPermission="guestManagement">
+                                    <GuestManagement />
+                                </PermissionRoute>
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    {/* Account Management route */}
                     <Route
                         path="/admin/accounts"
                         element={
@@ -98,15 +110,6 @@ function AppContent() {
                                 <PermissionRoute requiredPermission="accountManagement">
                                     <AccountManagement />
                                 </PermissionRoute>
-                            </ProtectedRoute>
-                        }
-                    />
-
-                    <Route
-                        path="/admin/guests"
-                        element={
-                            <ProtectedRoute>
-                                <GuestManagement />
                             </ProtectedRoute>
                         }
                     />

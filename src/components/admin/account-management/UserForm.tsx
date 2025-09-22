@@ -5,7 +5,7 @@ import { CreateUserData } from '../../../types/User';
 import '../../../styles/admin/UserForm.css';
 
 interface UserFormProps {
-    user?: any; // For future editing functionality
+    user?: any;
     onSave: (userData: CreateUserData) => void;
     onCancel: () => void;
 }
@@ -14,7 +14,7 @@ const UserForm: React.FC<UserFormProps> = ({ user, onSave, onCancel }) => {
     const { t } = useLanguage();
     const [formData, setFormData] = useState<CreateUserData>({
         email: '',
-        password: 'TempPassword123!', // Temporary - user will reset via email
+        password: 'TempPassword123!',
         profile: {
             firstName: '',
             lastName: '',
@@ -25,6 +25,8 @@ const UserForm: React.FC<UserFormProps> = ({ user, onSave, onCancel }) => {
         permissions: {
             accountManagement: false,
             taskManagement: true,
+            financialManagement: false,
+            guestManagement: false,
         }
     });
 
@@ -158,6 +160,22 @@ const UserForm: React.FC<UserFormProps> = ({ user, onSave, onCancel }) => {
                                         onChange={(e) => handleInputChange('permissions.taskManagement', e.target.checked)}
                                     />
                                     <span>{t('permission.taskManagement')}</span>
+                                </label>
+                                <label className="mika-permission-item">
+                                    <input
+                                        type="checkbox"
+                                        checked={formData.permissions.financialManagement}
+                                        onChange={(e) => handleInputChange('permissions.financialManagement', e.target.checked)}
+                                    />
+                                    <span>{t('permission.financialManagement')}</span>
+                                </label>
+                                <label className="mika-permission-item">
+                                    <input
+                                        type="checkbox"
+                                        checked={formData.permissions.guestManagement}
+                                        onChange={(e) => handleInputChange('permissions.guestManagement', e.target.checked)}
+                                    />
+                                    <span>{t('permission.guestManagement')}</span>
                                 </label>
                                 <label className="mika-permission-item">
                                     <input

@@ -2,13 +2,15 @@
 export interface UserPermissions {
     accountManagement: boolean;
     taskManagement: boolean;
-    guestManagement?: boolean; // for future features
+    financialManagement: boolean;
+    guestManagement: boolean;
 }
 
 export interface UserDashboardAccess {
     accountManagement: boolean;
     taskManagement: boolean;
-    guestManagement?: boolean;
+    financialManagement: boolean;
+    guestManagement: boolean;
 }
 
 export interface UserProfile {

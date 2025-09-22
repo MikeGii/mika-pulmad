@@ -154,7 +154,7 @@ const FinancialManagement: React.FC = () => {
     };
 
     // Check permissions
-    if (!currentUserProfile?.permissions.taskManagement) {
+    if (!currentUserProfile?.permissions.financialManagement) {
         return (
             <div className="mika-financial-management-container">
                 <Header />

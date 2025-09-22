@@ -126,7 +126,7 @@ const GuestManagement: React.FC = () => {
     };
 
     // Check permissions - for now, allow task management users to manage guests
-    if (!currentUserProfile?.permissions.taskManagement) {
+    if (!currentUserProfile?.permissions.guestManagement) {
         return (
             <div className="mika-guest-management-container">
                 <Header />

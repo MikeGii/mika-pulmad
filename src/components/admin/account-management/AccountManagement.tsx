@@ -38,11 +38,15 @@ const AccountManagement: React.FC = () => {
                     permissions: {
                         accountManagement: data.permissions?.accountManagement || false,
                         taskManagement: data.permissions?.taskManagement || true,
+                        financialManagement: data.permissions?.financialManagement || false,
+                        guestManagement: data.permissions?.guestManagement || false,
                         ...data.permissions
                     },
                     dashboardAccess: {
                         accountManagement: data.dashboardAccess?.accountManagement || false,
                         taskManagement: data.dashboardAccess?.taskManagement || true,
+                        financialManagement: data.dashboardAccess?.financialManagement || false,
+                        guestManagement: data.dashboardAccess?.guestManagement || false,
                         ...data.dashboardAccess
                     },
                     isActive: data.isActive ?? true,
@@ -89,19 +93,16 @@ const AccountManagement: React.FC = () => {
         }
     };
 
-    // Add new user creation handler
     const handleCreateUser = async (userData: CreateUserData) => {
         try {
             await UserService.createUser(userData);
             setShowForm(false);
-            fetchUsers(); // Refresh the user list
+            fetchUsers();
         } catch (error) {
             console.error('Error creating user:', error);
-            // You might want to add error handling/notification here
         }
     };
 
-    // Check permissions
     if (!currentUserProfile?.permissions.accountManagement) {
         return (
             <div className="dashboard-container">
@@ -132,7 +133,6 @@ const AccountManagement: React.FC = () => {
                 <div className="page-header">
                     <h2>{t('userManagement.title')}</h2>
                     <p>{t('userManagement.subtitle')}</p>
-                    {/* Add the create user button */}
                     <button
                         className="mika-account-add-button"
                         onClick={() => setShowForm(true)}
@@ -182,6 +182,26 @@ const AccountManagement: React.FC = () => {
                                 <label className="permission-item">
                                     <input
                                         type="checkbox"
+                                        checked={user.permissions?.financialManagement || false}
+                                        onChange={(e) => updateUserPermission(user.id, 'financialManagement', e.target.checked)}
+                                        disabled={user.id === currentUserProfile?.id}
+                                    />
+                                    <span>{t('permission.financialManagement')}</span>
+                                </label>
+
+                                <label className="permission-item">
+                                    <input
+                                        type="checkbox"
+                                        checked={user.permissions?.guestManagement || false}
+                                        onChange={(e) => updateUserPermission(user.id, 'guestManagement', e.target.checked)}
+                                        disabled={user.id === currentUserProfile?.id}
+                                    />
+                                    <span>{t('permission.guestManagement')}</span>
+                                </label>
+
+                                <label className="permission-item">
+                                    <input
+                                        type="checkbox"
                                         checked={user.permissions?.accountManagement || false}
                                         onChange={(e) => updateUserPermission(user.id, 'accountManagement', e.target.checked)}
                                         disabled={user.id === currentUserProfile?.id}
@@ -199,7 +219,6 @@ const AccountManagement: React.FC = () => {
                     )}
                 </div>
 
-                {/* Add the UserForm modal */}
                 {showForm && (
                     <UserForm
                         onSave={handleCreateUser}

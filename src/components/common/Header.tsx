@@ -8,7 +8,7 @@ import '../../styles/common/Header.css';
 
 const Header: React.FC = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const { currentUser, logout } = useAuth();
+    const { currentUser, currentUserProfile, logout } = useAuth();
     const { t } = useLanguage();
     const navigate = useNavigate();
 
@@ -29,8 +29,6 @@ const Header: React.FC = () => {
         navigate(path);
         setIsMenuOpen(false);
     };
-
-    const hasAccountManagement = currentUser?.email === 'mike.gross@mika-pulm.ee';
 
     return (
         <>
@@ -69,23 +67,28 @@ const Header: React.FC = () => {
                             {t('menu.dashboard')}
                         </button>
 
-                        {/* Add this new menu item */}
-                        <button onClick={() => navigateTo('/admin/tasks')} className="menu-item">
-                            <span className="menu-icon">📋</span>
-                            {t('menu.taskManagement')}
-                        </button>
+                        {currentUserProfile?.permissions.taskManagement && (
+                            <button onClick={() => navigateTo('/admin/tasks')} className="menu-item">
+                                <span className="menu-icon">📋</span>
+                                {t('menu.taskManagement')}
+                            </button>
+                        )}
 
-                        <button onClick={() => navigateTo('/admin/financial')} className="menu-item">
-                            <span className="menu-icon">💰</span>
-                            {t('menu.financialManagement')}
-                        </button>
+                        {currentUserProfile?.permissions.financialManagement && (
+                            <button onClick={() => navigateTo('/admin/financial')} className="menu-item">
+                                <span className="menu-icon">💰</span>
+                                {t('menu.financialManagement')}
+                            </button>
+                        )}
 
-                        <button onClick={() => navigateTo('/admin/guests')} className="menu-item">
-                            <span className="menu-icon">👥</span>
-                            {t('menu.guestManagement')}
-                        </button>
+                        {currentUserProfile?.permissions.guestManagement && (
+                            <button onClick={() => navigateTo('/admin/guests')} className="menu-item">
+                                <span className="menu-icon">👥</span>
+                                {t('menu.guestManagement')}
+                            </button>
+                        )}
 
-                        {hasAccountManagement && (
+                        {currentUserProfile?.permissions.accountManagement && (
                             <button onClick={() => navigateTo('/admin/accounts')} className="menu-item">
                                 <span className="menu-icon">👤</span>
                                 {t('menu.userManagement')}
