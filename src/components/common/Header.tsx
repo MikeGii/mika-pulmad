@@ -75,6 +75,11 @@ const Header: React.FC = () => {
                             {t('menu.taskManagement')}
                         </button>
 
+                        <button onClick={() => navigateTo('/admin/financial')} className="menu-item">
+                            <span className="menu-icon">💰</span>
+                            {t('menu.financialManagement')}
+                        </button>
+
                         {hasAccountManagement && (
                             <button onClick={() => navigateTo('/admin/accounts')} className="menu-item">
                                 <span className="menu-icon">👤</span>

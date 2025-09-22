@@ -8,6 +8,7 @@ import AdminDashboard from './components/admin/dashboard/AdminDashboard';
 import AccountManagement from './components/admin/account-management/AccountManagement';
 import TaskManagement from './components/admin/task-management/TaskManagement';
 import './App.css';
+import FinancialManagement from "./components/admin/financial-management/FinancialManagement";
 
 // Protected Route Component
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -75,6 +76,15 @@ function AppContent() {
                         element={
                             <ProtectedRoute>
                                 <TaskManagement />
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    <Route
+                        path="/admin/financial"
+                        element={
+                            <ProtectedRoute>
+                                <FinancialManagement />
                             </ProtectedRoute>
                         }
                     />

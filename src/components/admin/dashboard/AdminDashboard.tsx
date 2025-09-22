@@ -1,14 +1,17 @@
-// src/components/admin/dashboard/AdminDashboard.tsx
+// Update src/components/admin/dashboard/AdminDashboard.tsx
 import React from 'react';
 import { useLanguage } from '../../../contexts/LanguageContext';
 import { useAuth } from '../../../contexts/AuthContext';
 import Header from '../../common/Header';
 import WeddingDetails from './WeddingDetails';
 import ToDoDashboard from './ToDoDashboard';
+import FinancialStatus from './FinancialStatus'; // Add this import
 import '../../../styles/admin/AdminDashboard.css';
 
 const AdminDashboard: React.FC = () => {
+    // eslint-disable-next-line
     const { t } = useLanguage();
+    // eslint-disable-next-line
     const { currentUser } = useAuth();
 
     return (
@@ -28,6 +31,9 @@ const AdminDashboard: React.FC = () => {
 
             {/* ToDo Dashboard */}
             <ToDoDashboard />
+
+            {/* Financial Status */}
+            <FinancialStatus />
         </div>
     );
 };

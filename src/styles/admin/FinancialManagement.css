@@ -1,0 +1,881 @@
+/* src/styles/admin/FinancialManagement.css */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap');
+
+.mika-financial-management-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f9f7f4 0%, #ffffff 50%, #f5f3f0 100%);
+    font-family: 'Arial', sans-serif;
+}
+
+.mika-financial-management-content {
+    padding: 40px;
+    max-width: 1600px;
+    margin: 0 auto;
+    min-height: calc(100vh - 80px);
+}
+
+.mika-financial-page-header {
+    text-align: center;
+    margin-bottom: 40px;
+    background: linear-gradient(145deg, #ffffff, #f9f7f4);
+    border: 1px solid #e8e6e0;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow:
+            0 10px 30px rgba(0, 0, 0, 0.08),
+            0 0 0 1px rgba(255, 255, 255, 0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+.mika-financial-page-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(45deg, #d4af37, #ffd700, #b8860b);
+    opacity: 0.7;
+}
+
+.mika-financial-page-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #d4af37;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 4px rgba(212, 175, 55, 0.2);
+}
+
+.mika-financial-page-subtitle {
+    color: #666;
+    font-size: 1.1rem;
+    font-weight: 400;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto 30px;
+}
+
+.mika-financial-stats {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 25px;
+    padding: 20px;
+    background: linear-gradient(145deg, rgba(212, 175, 55, 0.1), rgba(255, 215, 0, 0.05));
+    border-radius: 15px;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.mika-financial-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.mika-financial-stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #d4af37;
+}
+
+.mika-financial-stat-number.mika-financial-remaining {
+    color: #dc3545;
+}
+
+.mika-financial-stat-number.mika-financial-complete {
+    color: #28a745;
+}
+
+.mika-financial-stat-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: center;
+}
+
+.mika-financial-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+    color: #d4af37;
+    font-size: 18px;
+}
+
+.mika-financial-access-denied {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    text-align: center;
+    padding: 40px;
+}
+
+.mika-financial-access-denied h2 {
+    color: #dc3545;
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+.mika-financial-access-denied p {
+    color: #666;
+    font-size: 16px;
+}
+
+.mika-financial-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    text-align: center;
+    padding: 40px;
+    background: linear-gradient(145deg, #ffffff, #f9f7f4);
+    border: 1px solid #e8e6e0;
+    border-radius: 20px;
+    box-shadow:
+            0 10px 30px rgba(0, 0, 0, 0.08),
+            0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+.mika-financial-empty-icon {
+    font-size: 4rem;
+    margin-bottom: 25px;
+    opacity: 0.6;
+}
+
+.mika-financial-empty h3 {
+    color: #d4af37;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    letter-spacing: 0.5px;
+}
+
+.mika-financial-empty p {
+    color: #999;
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 500px;
+    margin: 0;
+}
+
+.mika-financial-tasks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+    gap: 25px;
+}
+
+/* Financial Task Card Styles */
+.mika-financial-task-card {
+    background: linear-gradient(145deg, #ffffff, #f9f7f4);
+    border: 2px solid #e8e6e0;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow:
+            0 10px 30px rgba(0, 0, 0, 0.08),
+            0 0 0 1px rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.mika-financial-task-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.mika-financial-task-card.mika-financial-active {
+    border-color: #d4af37;
+    box-shadow:
+            0 15px 35px rgba(0, 0, 0, 0.12),
+            0 0 0 1px rgba(212, 175, 55, 0.3);
+}
+
+.mika-financial-task-card.mika-financial-active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(45deg, #d4af37, #ffd700, #b8860b);
+}
+
+.mika-financial-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    gap: 15px;
+}
+
+.mika-financial-card-title {
+    flex: 1;
+}
+
+.mika-financial-card-title h3 {
+    color: #333;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    line-height: 1.3;
+}
+
+.mika-financial-card-title p {
+    color: #666;
+    font-size: 14px;
+    margin: 0;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.mika-financial-card-toggle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.mika-financial-toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.mika-financial-toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.mika-financial-toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.3s;
+    border-radius: 24px;
+}
+
+.mika-financial-toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.3s;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+input:checked + .mika-financial-toggle-slider {
+    background-color: #d4af37;
+}
+
+input:checked + .mika-financial-toggle-slider:before {
+    transform: translateX(26px);
+}
+
+.mika-financial-toggle-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #666;
+    text-align: center;
+}
+
+.mika-financial-card-details {
+    margin-bottom: 25px;
+}
+
+.mika-financial-amounts {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.mika-financial-amount {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+}
+
+.mika-financial-amount-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+}
+
+.mika-financial-amount-value {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.mika-financial-amount-value.mika-financial-required {
+    color: #d4af37;
+    font-size: 18px;
+}
+
+.mika-financial-amount-value.mika-financial-remaining {
+    color: #dc3545;
+}
+
+.mika-financial-amount-value.mika-financial-complete {
+    color: #28a745;
+}
+
+.mika-financial-amount-edit {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.mika-financial-amount-input {
+    width: 100px;
+    padding: 4px 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.mika-financial-edit-buttons {
+    display: flex;
+    gap: 4px;
+}
+
+.mika-financial-save-btn, .mika-financial-cancel-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.mika-financial-save-btn {
+    color: #28a745;
+}
+
+.mika-financial-save-btn:hover {
+    background: rgba(40, 167, 69, 0.1);
+    transform: scale(1.1);
+}
+
+.mika-financial-cancel-btn {
+    color: #dc3545;
+}
+
+.mika-financial-cancel-btn:hover {
+    background: rgba(220, 53, 69, 0.1);
+    transform: scale(1.1);
+}
+
+.mika-financial-amount-display {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.mika-financial-edit-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    opacity: 0.7;
+    transition: all 0.2s ease;
+}
+
+.mika-financial-edit-btn:hover {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.05);
+    transform: scale(1.1);
+}
+
+.mika-financial-progress {
+    margin-bottom: 15px;
+}
+
+.mika-financial-progress-bar {
+    width: 100%;
+    height: 10px;
+    background: #e9ecef;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 8px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.mika-financial-progress-fill {
+    height: 100%;
+    background: linear-gradient(45deg, #28a745, #20c997);
+    border-radius: 5px;
+    transition: width 0.6s ease;
+    position: relative;
+}
+
+.mika-financial-progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent);
+    animation: mika-financial-shimmer 2s infinite;
+}
+
+@keyframes mika-financial-shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.mika-financial-progress-text {
+    font-size: 12px;
+    color: #666;
+    text-align: center;
+    font-weight: 600;
+}
+
+.mika-financial-best-offer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: linear-gradient(145deg, rgba(40, 167, 69, 0.1), rgba(40, 167, 69, 0.05));
+    border-radius: 10px;
+    border: 1px solid rgba(40, 167, 69, 0.2);
+    margin-bottom: 15px;
+}
+
+.mika-financial-best-offer-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #28a745;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.mika-financial-best-offer-value {
+    font-size: 16px;
+    font-weight: 700;
+    color: #28a745;
+}
+
+.mika-financial-potential-saving {
+    font-size: 11px;
+    color: #28a745;
+    font-style: italic;
+    font-weight: 600;
+}
+
+.mika-financial-price-offers-section {
+    border-top: 1px solid #e8e6e0;
+    padding-top: 20px;
+}
+
+.mika-financial-price-offers-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.mika-financial-price-offers-header h4 {
+    color: #333;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.mika-financial-add-offer-btn {
+    background: linear-gradient(45deg, #d4af37, #ffd700);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.mika-financial-add-offer-btn:hover {
+    background: linear-gradient(45deg, #b8860b, #daa520);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+}
+
+.mika-financial-price-offers-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.mika-financial-price-offer-item {
+    background: linear-gradient(145deg, rgba(212, 175, 55, 0.05), rgba(255, 215, 0, 0.02));
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    border-radius: 10px;
+    padding: 15px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.mika-financial-price-offer-item:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.1);
+    border-color: rgba(212, 175, 55, 0.3);
+}
+
+.mika-financial-offer-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.mika-financial-offer-company {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+
+.mika-financial-offer-amount {
+    font-size: 16px;
+    font-weight: 700;
+    color: #d4af37;
+}
+
+.mika-financial-offer-notes {
+    font-size: 12px;
+    color: #666;
+    margin: 0;
+    font-style: italic;
+    line-height: 1.4;
+}
+
+.mika-financial-remove-offer-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    opacity: 0.5;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.mika-financial-remove-offer-btn:hover {
+    opacity: 1;
+    background: rgba(220, 53, 69, 0.1);
+    transform: scale(1.1);
+}
+
+.mika-financial-no-offers {
+    color: #999;
+    font-size: 13px;
+    font-style: italic;
+    margin: 0;
+    text-align: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.02);
+    border-radius: 8px;
+    border: 1px dashed #ddd;
+}
+
+/* Price Offer Modal */
+.mika-price-offer-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.mika-price-offer-modal-container {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+    box-shadow:
+            0 25px 50px rgba(0, 0, 0, 0.15),
+            0 0 0 1px rgba(255, 255, 255, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    max-width: 500px;
+    width: 100%;
+    position: relative;
+}
+
+.mika-price-offer-modal-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(249, 247, 244, 0.3) 50%,
+    rgba(245, 243, 240, 0.2) 100%);
+    border-radius: 24px;
+    z-index: -1;
+}
+
+.mika-price-offer-modal {
+    padding: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.mika-price-offer-header {
+    padding: 30px 30px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+}
+
+.mika-price-offer-header h3 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #d4af37;
+    margin: 0 0 10px 0;
+    text-shadow: 0 2px 4px rgba(212, 175, 55, 0.3);
+}
+
+.mika-financial-task-name {
+    color: #666;
+    font-size: 14px;
+    font-style: italic;
+    margin: 0;
+    font-weight: 500;
+}
+
+.mika-price-offer-body {
+    padding: 20px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.mika-financial-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mika-financial-form-label {
+    color: #333;
+    font-weight: 600;
+    font-size: 14px;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.mika-financial-form-input,
+.mika-financial-form-textarea {
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 16px;
+    color: #333;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.mika-financial-form-input:focus,
+.mika-financial-form-textarea:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(212, 175, 55, 0.5);
+    box-shadow:
+            inset 0 2px 4px rgba(0, 0, 0, 0.05),
+            0 0 0 3px rgba(212, 175, 55, 0.1);
+}
+
+.mika-financial-form-input::placeholder,
+.mika-financial-form-textarea::placeholder {
+    color: rgba(0, 0, 0, 0.4);
+    font-style: italic;
+}
+
+.mika-financial-form-textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.mika-price-offer-footer {
+    padding: 15px 30px 30px;
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mika-financial-form-button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(10px);
+}
+
+.mika-financial-form-button-cancel {
+    background: rgba(220, 53, 69, 0.8);
+    color: white;
+    border: 1px solid rgba(220, 53, 69, 0.3);
+}
+
+.mika-financial-form-button-cancel:hover {
+    background: rgba(220, 53, 69, 0.9);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+
+.mika-financial-form-button-save {
+    background: rgba(212, 175, 55, 0.8);
+    color: white;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.mika-financial-form-button-save:hover {
+    background: rgba(212, 175, 55, 0.9);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .mika-financial-management-content {
+        padding: 20px;
+    }
+
+    .mika-financial-page-header {
+        padding: 25px;
+    }
+
+    .mika-financial-page-title {
+        font-size: 2.5rem;
+    }
+
+    .mika-financial-stats {
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 15px;
+    }
+
+    .mika-financial-stat {
+        flex: 1;
+        min-width: 120px;
+    }
+
+    .mika-financial-tasks-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .mika-financial-card-header {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .mika-financial-card-toggle {
+        align-self: flex-end;
+        flex-direction: row;
+        gap: 10px;
+    }
+
+    .mika-financial-price-offers-header {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+
+    .mika-financial-add-offer-btn {
+        align-self: flex-start;
+    }
+}
+
+@media (max-width: 480px) {
+    .mika-financial-page-title {
+        font-size: 2rem;
+    }
+
+    .mika-financial-stats {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .mika-financial-stat {
+        min-width: auto;
+    }
+
+    .mika-financial-task-card {
+        padding: 20px;
+    }
+
+    .mika-price-offer-modal-overlay {
+        padding: 10px;
+    }
+
+    .mika-price-offer-body {
+        padding: 15px 20px;
+    }
+
+    .mika-price-offer-footer {
+        padding: 10px 20px 20px;
+        flex-direction: column;
+    }
+
+    .mika-financial-form-button {
+        width: 100%;
+    }
+}
