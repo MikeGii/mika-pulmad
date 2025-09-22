@@ -24,6 +24,15 @@ export class GuestService {
 
             const newGuest = {
                 ...cleanGuestData,
+                // Set default invitation tracking fields
+                invitationStatus: 'not_sent' as const,
+                invitationOpenCount: 0,
+                rsvpStatus: 'pending' as const,
+                rsvpResponses: {
+                    requiresAccommodation: false,
+                    needsTransport: false,
+                    hasDietaryRestrictions: false,
+                },
                 createdAt: new Date(),
                 updatedAt: new Date(),
             };
@@ -32,7 +41,16 @@ export class GuestService {
 
             return {
                 id: docRef.id,
-                ...guestData, // Return the original data structure
+                ...guestData,
+                // Include default values in return
+                invitationStatus: 'not_sent',
+                invitationOpenCount: 0,
+                rsvpStatus: 'pending',
+                rsvpResponses: {
+                    requiresAccommodation: false,
+                    needsTransport: false,
+                    hasDietaryRestrictions: false,
+                },
                 createdAt: newGuest.createdAt,
                 updatedAt: newGuest.updatedAt,
             } as Guest;
@@ -54,8 +72,24 @@ export class GuestService {
                 return {
                     id: doc.id,
                     ...data,
+                    // Ensure default values for invitation fields if missing
+                    isInvitationGetter: data.isInvitationGetter ?? false,
+                    invitationLanguage: data.invitationLanguage ?? 'et',
+                    invitationStatus: data.invitationStatus ?? 'not_sent',
+                    invitationOpenCount: data.invitationOpenCount ?? 0,
+                    rsvpStatus: data.rsvpStatus ?? 'pending',
+                    rsvpResponses: {
+                        requiresAccommodation: false,
+                        needsTransport: false,
+                        hasDietaryRestrictions: false,
+                        ...data.rsvpResponses
+                    },
                     createdAt: data.createdAt?.toDate() || new Date(),
                     updatedAt: data.updatedAt?.toDate() || new Date(),
+                    invitationSentAt: data.invitationSentAt?.toDate() || undefined,
+                    invitationOpenedAt: data.invitationOpenedAt?.toDate() || undefined,
+                    lastOpenedAt: data.lastOpenedAt?.toDate() || undefined,
+                    rsvpSubmittedAt: data.rsvpSubmittedAt?.toDate() || undefined,
                 } as Guest;
             });
         } catch (error) {
@@ -80,13 +114,67 @@ export class GuestService {
                 return {
                     id: doc.id,
                     ...data,
+                    // Ensure default values for invitation fields if missing
+                    isInvitationGetter: data.isInvitationGetter ?? false,
+                    invitationLanguage: data.invitationLanguage ?? 'et',
+                    invitationStatus: data.invitationStatus ?? 'not_sent',
+                    invitationOpenCount: data.invitationOpenCount ?? 0,
+                    rsvpStatus: data.rsvpStatus ?? 'pending',
+                    rsvpResponses: {
+                        requiresAccommodation: false,
+                        needsTransport: false,
+                        hasDietaryRestrictions: false,
+                        ...data.rsvpResponses
+                    },
                     createdAt: data.createdAt?.toDate() || new Date(),
                     updatedAt: data.updatedAt?.toDate() || new Date(),
+                    invitationSentAt: data.invitationSentAt?.toDate() || undefined,
+                    invitationOpenedAt: data.invitationOpenedAt?.toDate() || undefined,
+                    lastOpenedAt: data.lastOpenedAt?.toDate() || undefined,
+                    rsvpSubmittedAt: data.rsvpSubmittedAt?.toDate() || undefined,
                 } as Guest;
             });
         } catch (error) {
             console.error('Error fetching guests by table:', error);
             return [];
+        }
+    }
+
+    // Get single guest by ID
+    static async getGuest(guestId: string): Promise<Guest | null> {
+        try {
+            const guestDoc = await getDocs(
+                query(collection(db, 'guests'), where('__name__', '==', guestId))
+            );
+
+            if (guestDoc.empty) return null;
+
+            const data = guestDoc.docs[0].data();
+            return {
+                id: guestDoc.docs[0].id,
+                ...data,
+                // Ensure default values for invitation fields if missing
+                isInvitationGetter: data.isInvitationGetter ?? false,
+                invitationLanguage: data.invitationLanguage ?? 'et',
+                invitationStatus: data.invitationStatus ?? 'not_sent',
+                invitationOpenCount: data.invitationOpenCount ?? 0,
+                rsvpStatus: data.rsvpStatus ?? 'pending',
+                rsvpResponses: {
+                    requiresAccommodation: false,
+                    needsTransport: false,
+                    hasDietaryRestrictions: false,
+                    ...data.rsvpResponses
+                },
+                createdAt: data.createdAt?.toDate() || new Date(),
+                updatedAt: data.updatedAt?.toDate() || new Date(),
+                invitationSentAt: data.invitationSentAt?.toDate() || undefined,
+                invitationOpenedAt: data.invitationOpenedAt?.toDate() || undefined,
+                lastOpenedAt: data.lastOpenedAt?.toDate() || undefined,
+                rsvpSubmittedAt: data.rsvpSubmittedAt?.toDate() || undefined,
+            } as Guest;
+        } catch (error) {
+            console.error('Error fetching guest:', error);
+            return null;
         }
     }
 
@@ -115,6 +203,62 @@ export class GuestService {
         } catch (error) {
             console.error('Error deleting guest:', error);
             throw error;
+        }
+    }
+
+    // Get invitation getters only
+    static async getInvitationGetters(): Promise<Guest[]> {
+        try {
+            const guestsSnapshot = await getDocs(
+                query(
+                    collection(db, 'guests'),
+                    where('isInvitationGetter', '==', true),
+                    orderBy('firstName', 'asc')
+                )
+            );
+
+            return guestsSnapshot.docs.map(doc => {
+                const data = doc.data();
+                return {
+                    id: doc.id,
+                    ...data,
+                    createdAt: data.createdAt?.toDate() || new Date(),
+                    updatedAt: data.updatedAt?.toDate() || new Date(),
+                    invitationSentAt: data.invitationSentAt?.toDate() || undefined,
+                    invitationOpenedAt: data.invitationOpenedAt?.toDate() || undefined,
+                    lastOpenedAt: data.lastOpenedAt?.toDate() || undefined,
+                    rsvpSubmittedAt: data.rsvpSubmittedAt?.toDate() || undefined,
+                } as Guest;
+            });
+        } catch (error) {
+            console.error('Error fetching invitation getters:', error);
+            return [];
+        }
+    }
+
+    // Get linked guests for a specific invitation getter
+    static async getLinkedGuests(invitationGetterId: string): Promise<Guest[]> {
+        try {
+            const guestsSnapshot = await getDocs(
+                query(
+                    collection(db, 'guests'),
+                    where('linkedInvitationGetterId', '==', invitationGetterId),
+                    orderBy('firstName', 'asc')
+                )
+            );
+
+            return guestsSnapshot.docs.map(doc => {
+                const data = doc.data();
+                return {
+                    id: doc.id,
+                    ...data,
+                    createdAt: data.createdAt?.toDate() || new Date(),
+                    updatedAt: data.updatedAt?.toDate() || new Date(),
+                } as Guest;
+            });
+        } catch (error) {
+            console.error('Error fetching linked guests:', error);
+            return [];
         }
     }
 

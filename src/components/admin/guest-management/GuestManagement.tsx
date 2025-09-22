@@ -60,6 +60,10 @@ const GuestManagement: React.FC = () => {
                 location: formData.location || undefined,
                 tableNumber: Number(formData.tableNumber),
                 isChild: formData.isChild,
+                // Add new invitation fields
+                isInvitationGetter: formData.isInvitationGetter,
+                invitationLanguage: formData.invitationLanguage,
+                linkedInvitationGetterId: formData.linkedInvitationGetterId || undefined,
             };
 
             await GuestService.createGuest(guestData);
@@ -84,6 +88,10 @@ const GuestManagement: React.FC = () => {
                 location: formData.location || undefined,
                 tableNumber: Number(formData.tableNumber),
                 isChild: formData.isChild,
+                // Add new invitation fields
+                isInvitationGetter: formData.isInvitationGetter,
+                invitationLanguage: formData.invitationLanguage,
+                linkedInvitationGetterId: formData.linkedInvitationGetterId || undefined,
             };
 
             await GuestService.updateGuest(editingGuest.id, guestData);
@@ -125,7 +133,7 @@ const GuestManagement: React.FC = () => {
         setEditingGuest(null);
     };
 
-    // Check permissions - for now, allow task management users to manage guests
+    // Check permissions
     if (!currentUserProfile?.permissions.guestManagement) {
         return (
             <div className="mika-guest-management-container">

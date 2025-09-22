@@ -13,6 +13,56 @@ interface GuestTableProps {
 const GuestTable: React.FC<GuestTableProps> = ({ guests, onEdit, onDelete }) => {
     const { t } = useLanguage();
 
+    // Helper function to generate invitation URL
+    const generateInvitationUrl = (guest: Guest): string => {
+        const encodedName = `${guest.firstName}&${guest.lastName}`;
+        return `${window.location.origin}/invitation/${encodedName}`;
+    };
+
+    // Helper function to copy URL to clipboard
+    const handleCopyInvitationUrl = async (guest: Guest) => {
+        const url = generateInvitationUrl(guest);
+        try {
+            await navigator.clipboard.writeText(url);
+            alert(t('guestTable.invitationUrlCopied'));
+        } catch (error) {
+            console.error('Failed to copy URL:', error);
+            alert(t('guestTable.invitationUrlCopyFailed'));
+        }
+    };
+
+    // Helper function to get invitation status badge
+    const getInvitationStatusBadge = (status: string) => {
+        const statusClasses = {
+            'not_sent': 'mika-invitation-status-not-sent',
+            'sent': 'mika-invitation-status-sent',
+            'opened': 'mika-invitation-status-opened',
+            'responded': 'mika-invitation-status-responded',
+            'declined': 'mika-invitation-status-declined'
+        };
+
+        return (
+            <span className={`mika-invitation-status ${statusClasses[status as keyof typeof statusClasses]}`}>
+                {t(`invitationStatus.${status}`)}
+            </span>
+        );
+    };
+
+    // Helper function to get RSVP status badge
+    const getRsvpStatusBadge = (status: string) => {
+        const statusClasses = {
+            'pending': 'mika-rsvp-status-pending',
+            'attending': 'mika-rsvp-status-attending',
+            'not_attending': 'mika-rsvp-status-not-attending'
+        };
+
+        return (
+            <span className={`mika-rsvp-status ${statusClasses[status as keyof typeof statusClasses]}`}>
+                {t(`rsvpStatus.${status}`)}
+            </span>
+        );
+    };
+
     // Group guests by table number
     const guestsByTable = useMemo(() => {
         const grouped: { [tableNumber: number]: Guest[] } = {};
@@ -24,11 +74,15 @@ const GuestTable: React.FC<GuestTableProps> = ({ guests, onEdit, onDelete }) => 
             grouped[guest.tableNumber].push(guest);
         });
 
-        // Sort guests within each table by name
+        // Sort guests within each table: invitation getters first, then by name
         Object.keys(grouped).forEach(tableNumber => {
-            grouped[Number(tableNumber)].sort((a, b) =>
-                `${a.firstName} ${a.lastName}`.localeCompare(`${b.firstName} ${b.lastName}`)
-            );
+            grouped[Number(tableNumber)].sort((a, b) => {
+                // Invitation getters first
+                if (a.isInvitationGetter && !b.isInvitationGetter) return -1;
+                if (!a.isInvitationGetter && b.isInvitationGetter) return 1;
+                // Then by name
+                return `${a.firstName} ${a.lastName}`.localeCompare(`${b.firstName} ${b.lastName}`);
+            });
         });
 
         return grouped;
@@ -70,6 +124,7 @@ const GuestTable: React.FC<GuestTableProps> = ({ guests, onEdit, onDelete }) => 
                                     <th>{t('guestTable.name')}</th>
                                     <th>{t('guestTable.contact')}</th>
                                     <th>{t('guestTable.location')}</th>
+                                    <th>{t('guestTable.invitationInfo')}</th>
                                     <th>{t('guestTable.actions')}</th>
                                 </tr>
                                 </thead>
@@ -84,6 +139,16 @@ const GuestTable: React.FC<GuestTableProps> = ({ guests, onEdit, onDelete }) => 
                                                 {guest.isChild && (
                                                     <span className="mika-guest-child-badge">
                                                         {t('guestTable.child')}
+                                                    </span>
+                                                )}
+                                                {guest.isInvitationGetter && (
+                                                    <span className="mika-guest-invitation-getter-badge">
+                                                        {t('guestTable.invitationGetter')}
+                                                    </span>
+                                                )}
+                                                {guest.linkedInvitationGetterId && (
+                                                    <span className="mika-guest-linked-badge">
+                                                        {t('guestTable.linkedGuest')}
                                                     </span>
                                                 )}
                                             </div>
@@ -108,8 +173,56 @@ const GuestTable: React.FC<GuestTableProps> = ({ guests, onEdit, onDelete }) => 
                                         <td className="mika-guest-location">
                                             {guest.location || '-'}
                                         </td>
+                                        <td className="mika-guest-invitation-info">
+                                            {guest.isInvitationGetter ? (
+                                                <div className="mika-invitation-getter-info">
+                                                    <div className="mika-invitation-language">
+                                                        {guest.invitationLanguage === 'et' ? '🇪🇪 Eesti' : '🇺🇦 Українська'}
+                                                    </div>
+                                                    <div className="mika-invitation-status-info">
+                                                        {getInvitationStatusBadge(guest.invitationStatus)}
+                                                    </div>
+                                                    {guest.invitationOpenCount > 0 && (
+                                                        <div className="mika-invitation-opens">
+                                                            {guest.invitationOpenCount} {guest.invitationOpenCount === 1 ? t('guestTable.openedTime') : t('guestTable.openedTimes')}
+                                                        </div>
+                                                    )}
+                                                    <div className="mika-rsvp-status-info">
+                                                        {getRsvpStatusBadge(guest.rsvpStatus)}
+                                                    </div>
+                                                    {guest.rsvpStatus === 'attending' && (
+                                                        <div className="mika-rsvp-details">
+                                                            {guest.rsvpResponses.requiresAccommodation && (
+                                                                <span className="mika-rsvp-need">🏨 {t('guestTable.needsAccommodation')}</span>
+                                                            )}
+                                                            {guest.rsvpResponses.needsTransport && (
+                                                                <span className="mika-rsvp-need">🚗 {t('guestTable.needsTransport')}</span>
+                                                            )}
+                                                            {guest.rsvpResponses.hasDietaryRestrictions && (
+                                                                <span className="mika-rsvp-need">🍽️ {t('guestTable.hasDietaryRestrictions')}</span>
+                                                            )}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            ) : (
+                                                <div className="mika-linked-guest-info">
+                                                    <span className="mika-linked-to-text">
+                                                        {t('guestTable.linkedTo')}
+                                                    </span>
+                                                </div>
+                                            )}
+                                        </td>
                                         <td>
                                             <div className="mika-guest-actions">
+                                                {guest.isInvitationGetter && (
+                                                    <button
+                                                        className="mika-guest-action-button mika-guest-action-invitation"
+                                                        onClick={() => handleCopyInvitationUrl(guest)}
+                                                        title={t('guestTable.generateInvitation')}
+                                                    >
+                                                        🔗
+                                                    </button>
+                                                )}
                                                 <button
                                                     className="mika-guest-action-button mika-guest-action-edit"
                                                     onClick={() => onEdit(guest)}

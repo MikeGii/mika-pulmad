@@ -9,6 +9,7 @@ import AccountManagement from './components/admin/account-management/AccountMana
 import TaskManagement from './components/admin/task-management/TaskManagement';
 import FinancialManagement from "./components/admin/financial-management/FinancialManagement";
 import GuestManagement from "./components/admin/guest-management/GuestManagement";
+import WeddingInvitation from './components/invitation/WeddingInvitation';
 import './App.css';
 
 // Protected Route Component
@@ -54,6 +55,12 @@ function AppContent() {
                                 <AdminLogin />
                             </PublicRoute>
                         }
+                    />
+
+                    {/* Wedding Invitation route - specific route should come before catch-all */}
+                    <Route
+                        path="/invitation/:guestName"
+                        element={<WeddingInvitation />}
                     />
 
                     {/* Admin dashboard route */}
@@ -114,8 +121,8 @@ function AppContent() {
                         }
                     />
 
-                    {/* Guest invitation routes (we'll add these later) */}
-                    <Route path="/:guestName" element={<div>Guest invitation page</div>} />
+                    {/* Catch-all route for future guest invitation features */}
+                    <Route path="/:guestName" element={<div>Future guest invitation features</div>} />
                 </Routes>
             </div>
         </Router>
