@@ -226,3 +226,27 @@
         font-size: 12px;
     }
 }
+
+.mika-manager-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.mika-manager-name {
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+}
+
+.mika-manager-email {
+    color: #999;
+    font-size: 12px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .mika-manager-email {
+        display: none;
+    }
+}

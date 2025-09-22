@@ -1,0 +1,238 @@
+/* src/styles/admin/UserTable.css */
+.mika-user-table-container {
+    background: linear-gradient(145deg, #ffffff, #f9f7f4);
+    border: 1px solid #e8e6e0;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow:
+            0 10px 30px rgba(0, 0, 0, 0.08),
+            0 0 0 1px rgba(255, 255, 255, 0.5);
+    position: relative;
+}
+
+.mika-user-table-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(45deg, #d4af37, #ffd700, #b8860b);
+    opacity: 0.7;
+}
+
+.mika-user-table-wrapper {
+    overflow-x: auto;
+}
+
+.mika-user-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 4px;
+}
+
+.mika-user-table-head {
+    background: rgba(168, 192, 154, 0.1);
+}
+
+.mika-user-table-head th {
+    padding: 20px 16px;
+    text-align: left;
+    color: #7fa070;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid rgba(168, 192, 154, 0.2);
+    white-space: nowrap;
+}
+
+.mika-user-table-body tr {
+    transition: all 0.3s ease;
+}
+
+.mika-user-table-body tr:hover {
+    background: rgba(168, 192, 154, 0.05);
+}
+
+.mika-user-table-row td {
+    padding: 20px 16px;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: top;
+}
+
+.mika-user-info-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.mika-user-name {
+    font-weight: 600;
+    color: #333;
+    font-size: 16px;
+}
+
+.mika-user-email {
+    color: #666;
+    font-size: 13px;
+}
+
+.mika-role-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.role-admin {
+    background: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+    border: 1px solid rgba(220, 53, 69, 0.2);
+}
+
+.role-planner {
+    background: rgba(0, 123, 255, 0.1);
+    color: #007bff;
+    border: 1px solid rgba(0, 123, 255, 0.2);
+}
+
+.role-coordinator {
+    background: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+    border: 1px solid rgba(40, 167, 69, 0.2);
+}
+
+.mika-user-status {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.mika-user-status.active {
+    background: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+    border: 1px solid rgba(40, 167, 69, 0.2);
+}
+
+.mika-user-status.inactive {
+    background: rgba(108, 117, 125, 0.1);
+    color: #6c757d;
+    border: 1px solid rgba(108, 117, 125, 0.2);
+}
+
+.mika-permissions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mika-permission-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #666;
+    cursor: pointer;
+}
+
+.mika-permission-checkbox input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
+    accent-color: #7fa070;
+    cursor: pointer;
+}
+
+.mika-permission-checkbox input[type="checkbox"]:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.mika-user-last-login {
+    color: #666;
+    font-size: 13px;
+}
+
+.mika-user-actions {
+    text-align: center;
+}
+
+.mika-action-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.mika-action-deactivate:hover {
+    background: rgba(220, 53, 69, 0.1);
+    transform: scale(1.1);
+}
+
+.mika-current-user-badge {
+    font-size: 10px;
+    color: #7fa070;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Empty state */
+.mika-user-table-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 40px;
+    text-align: center;
+    min-height: 200px;
+}
+
+.mika-user-table-empty-icon {
+    font-size: 4rem;
+    margin-bottom: 25px;
+    opacity: 0.6;
+}
+
+.mika-user-table-empty h3 {
+    color: #7fa070;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 10px;
+}
+
+.mika-user-table-empty p {
+    color: #999;
+    font-size: 14px;
+    margin: 0;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .mika-user-table-head th {
+        padding: 15px 12px;
+        font-size: 12px;
+    }
+
+    .mika-user-table-row td {
+        padding: 15px 12px;
+    }
+
+    .mika-permissions-list {
+        gap: 4px;
+    }
+
+    .mika-permission-checkbox {
+        font-size: 11px;
+    }
+}

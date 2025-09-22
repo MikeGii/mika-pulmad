@@ -1,16 +1,18 @@
-// src/components/admin/TaskTable.tsx
+// src/components/admin/task-management/TaskTable.tsx
 import React from 'react';
 import { useLanguage } from '../../../contexts/LanguageContext';
 import { Task } from '../../../types';
+import { User } from '../../../types';
 import '../../../styles/admin/TaskTable.css';
 
 interface TaskTableProps {
     tasks: Task[];
+    users: User[];
     onEdit: (task: Task) => void;
     onDelete: (task: Task) => void;
 }
 
-const TaskTable: React.FC<TaskTableProps> = ({ tasks, onEdit, onDelete }) => {
+const TaskTable: React.FC<TaskTableProps> = ({ tasks, users, onEdit, onDelete }) => {
     const { t } = useLanguage();
 
     const getStatusClass = (status: string) => {
@@ -25,6 +27,15 @@ const TaskTable: React.FC<TaskTableProps> = ({ tasks, onEdit, onDelete }) => {
     const formatCurrency = (amount?: number) => {
         if (amount === undefined || amount === 0) return '-';
         return `€${amount.toFixed(2)}`;
+    };
+
+    // Helper function to get display name from email
+    const getManagerDisplayName = (email: string): string => {
+        const user = users.find(u => u.email === email);
+        if (user) {
+            return user.profile.displayName || `${user.profile.firstName} ${user.profile.lastName}`;
+        }
+        return email; // Fallback to email if user not found
     };
 
     if (tasks.length === 0) {
@@ -75,7 +86,14 @@ const TaskTable: React.FC<TaskTableProps> = ({ tasks, onEdit, onDelete }) => {
                                     </span>
                             </td>
                             <td className="mika-task-manager">
-                                {task.taskManager}
+                                <div className="mika-manager-info">
+                                    <span className="mika-manager-name">
+                                        {getManagerDisplayName(task.taskManager)}
+                                    </span>
+                                    <span className="mika-manager-email">
+                                        {task.taskManager}
+                                    </span>
+                                </div>
                             </td>
                             <td className="mika-task-monetary">
                                 {formatCurrency(task.monetaryRequirement)}

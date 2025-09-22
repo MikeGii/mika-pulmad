@@ -1,12 +1,13 @@
-// src/components/admin/TaskForm.tsx
+// src/components/admin/task-management/TaskForm.tsx
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../../../contexts/LanguageContext';
 import { Task, TaskFormData, TaskStatus } from '../../../types';
+import { User } from '../../../types';
 import '../../../styles/admin/TaskForm.css';
 
 interface TaskFormProps {
     task?: Task | null;
-    users: string[];
+    users: User[];
     onSave: (formData: TaskFormData) => void;
     onCancel: () => void;
 }
@@ -45,6 +46,14 @@ const TaskForm: React.FC<TaskFormProps> = ({ task, users, onSave, onCancel }) =>
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         onSave(formData);
+    };
+
+    // Helper function to get display name
+    const getUserDisplayName = (user: User): string => {
+        if (user.profile.displayName) {
+            return user.profile.displayName;
+        }
+        return `${user.profile.firstName} ${user.profile.lastName}`;
     };
 
     return (
@@ -124,7 +133,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ task, users, onSave, onCancel }) =>
                                 />
                             </div>
 
-                            {/* Task Manager */}
+                            {/* Task Manager - Updated to show display names */}
                             <div className="mika-form-group mika-form-group-half">
                                 <label className="mika-form-label">
                                     {t('taskForm.taskManager')} *
@@ -136,8 +145,10 @@ const TaskForm: React.FC<TaskFormProps> = ({ task, users, onSave, onCancel }) =>
                                     required
                                 >
                                     <option value="">{t('taskForm.taskManagerPlaceholder')}</option>
-                                    {users.map(email => (
-                                        <option key={email} value={email}>{email}</option>
+                                    {users.map(user => (
+                                        <option key={user.email}>
+                                            {getUserDisplayName(user)}
+                                        </option>
                                     ))}
                                 </select>
                             </div>

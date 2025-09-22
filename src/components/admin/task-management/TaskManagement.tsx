@@ -1,10 +1,11 @@
-// src/components/admin/TaskManagement.tsx
+// src/components/admin/task-management/TaskManagement.tsx
 import React, { useState, useEffect } from 'react';
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../../../firebase';
 import Header from '../../common/Header';
 import { useLanguage } from '../../../contexts/LanguageContext';
 import { Task, TaskFormData } from '../../../types';
+import { User } from '../../../types/User'; // Add this import
 import TaskForm from './TaskForm';
 import TaskTable from './TaskTable';
 import DeleteConfirmationModal from './DeleteConfirmationModal';
@@ -13,7 +14,7 @@ import '../../../styles/admin/TaskManagement.css';
 const TaskManagement: React.FC = () => {
     const { t } = useLanguage();
     const [tasks, setTasks] = useState<Task[]>([]);
-    const [users, setUsers] = useState<string[]>([]);
+    const [users, setUsers] = useState<User[]>([]); // Change from string[] to User[]
     const [loading, setLoading] = useState(true);
     const [showForm, setShowForm] = useState(false);
     const [editingTask, setEditingTask] = useState<Task | null>(null);
@@ -41,17 +42,45 @@ const TaskManagement: React.FC = () => {
         }
     };
 
+    // Update this function to fetch full user objects
     const fetchUsers = async () => {
         try {
-            // For now, we'll use a basic approach since Firebase Admin SDK isn't available on client
-            // In a real application, you'd fetch this from your backend API
             const usersSnapshot = await getDocs(collection(db, 'users'));
-            const usersData = usersSnapshot.docs.map(doc => doc.data().email);
+            const usersData = usersSnapshot.docs.map(doc => {
+                const data = doc.data();
+                return {
+                    id: doc.id,
+                    email: data.email,
+                    profile: data.profile,
+                    permissions: data.permissions,
+                    dashboardAccess: data.dashboardAccess,
+                    isActive: data.isActive ?? true,
+                    createdAt: data.createdAt?.toDate() || new Date(),
+                    updatedAt: data.updatedAt?.toDate() || new Date(),
+                    lastLoginAt: data.lastLoginAt?.toDate()
+                } as User;
+            }).filter(user => user.isActive); // Only get active users
+
             setUsers(usersData);
         } catch (error) {
             console.error('Error fetching users:', error);
-            // Fallback to current user if users collection doesn't exist yet
-            setUsers(['mike.gross@mika-pulm.ee']);
+            // Fallback to basic user structure if users collection doesn't exist
+            setUsers([{
+                id: 'fallback',
+                email: 'mike.gross@mika-pulm.ee',
+                profile: {
+                    firstName: 'Mike',
+                    lastName: 'Gross',
+                    displayName: 'Mike Gross',
+                    role: 'admin',
+                    phone: ''
+                },
+                permissions: { accountManagement: true, taskManagement: true },
+                dashboardAccess: { accountManagement: true, taskManagement: true },
+                isActive: true,
+                createdAt: new Date(),
+                updatedAt: new Date()
+            }]);
         }
     };
 
@@ -146,6 +175,7 @@ const TaskManagement: React.FC = () => {
 
                 <TaskTable
                     tasks={tasks}
+                    users={users} // Pass full users array to TaskTable too
                     onEdit={handleEditClick}
                     onDelete={handleDeleteClick}
                 />
@@ -153,7 +183,7 @@ const TaskManagement: React.FC = () => {
                 {showForm && (
                     <TaskForm
                         task={editingTask}
-                        users={users}
+                        users={users} // Pass full User objects instead of just emails
                         onSave={editingTask ? handleUpdateTask : handleCreateTask}
                         onCancel={handleFormCancel}
                     />

@@ -1,11 +1,11 @@
-// src/components/admin/AdminDashboard.tsx
+// src/components/admin/dashboard/AdminDashboard.tsx
 import React from 'react';
 import { useLanguage } from '../../../contexts/LanguageContext';
 import { useAuth } from '../../../contexts/AuthContext';
 import Header from '../../common/Header';
+import WeddingDetails from './WeddingDetails';
+import ToDoDashboard from './ToDoDashboard';
 import '../../../styles/admin/AdminDashboard.css';
-import WeddingDetails from "./WeddingDetails";
-import ToDoDashboard from "./ToDoDashboard";
 
 const AdminDashboard: React.FC = () => {
     const { t } = useLanguage();
