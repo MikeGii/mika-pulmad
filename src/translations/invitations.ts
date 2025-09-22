@@ -52,8 +52,8 @@ export const invitationTranslations: Translations = {
         ua: 'Місце'
     },
     'invitation.address': {
-        et: 'Kõrtsi tee 1, Jõelähtme vald, Harjumaa',
-        ua: 'Kõrtsi tee 1, Jõelähtme vald, Harjumaa'
+        et: 'Kata küla, Kose vald, Harjumaa, 75103',
+        ua: 'Kata küla, Kose vald, Harjumaa, 75103'
     },
     'invitation.time': {
         et: 'Aeg',
@@ -98,5 +98,103 @@ export const invitationTranslations: Translations = {
     'invitation.footer': {
         et: 'Ootame teid suure rõõmuga!',
         ua: 'Чекаємо на вас з великою радістю!'
+    },
+
+// RSVP Form translations
+    'rsvp.title': {
+        et: 'Palume kinnitada osalemist',
+        ua: 'Будь ласка, підтвердіть участь'
+    },
+    'rsvp.forYou': {
+        et: 'Teie jaoks',
+        ua: 'Для вас'
+    },
+    'rsvp.forYourGroup': {
+        et: 'Teie grupi jaoks',
+        ua: 'Для вашої групи'
+    },
+    'rsvp.questions.attending': {
+        et: 'Kas tulete pulmadele?',
+        ua: 'Чи прийдете ви на весілля?'
+    },
+    'rsvp.questions.accommodation': {
+        et: 'Kas vajate majutust?',
+        ua: 'Чи потрібне вам розміщення?'
+    },
+    'rsvp.questions.transport': {
+        et: 'Kas vajate transporti?',
+        ua: 'Чи потрібен вам транспорт?'
+    },
+    'rsvp.questions.dietary': {
+        et: 'Kas teil on toidupiirangud?',
+        ua: 'Чи є у вас дієтичні обмеження?'
+    },
+    'rsvp.questions.dietaryNote': {
+        et: 'Palun täpsustage oma toidupiiranguid...',
+        ua: 'Будь ласка, уточніть свої дієтичні обмеження...'
+    },
+    'rsvp.answers.yes': {
+        et: 'Jah, tulen!',
+        ua: 'Так, прийду!'
+    },
+    'rsvp.answers.no': {
+        et: 'Ei, ei saa tulla',
+        ua: 'Ні, не можу прийти'
+    },
+    'rsvp.answers.needAccommodation': {
+        et: 'Jah, vajan majutust',
+        ua: 'Так, потрібне розміщення'
+    },
+    'rsvp.answers.needTransport': {
+        et: 'Jah, vajan transporti',
+        ua: 'Так, потрібен транспорт'
+    },
+    'rsvp.answers.hasDietary': {
+        et: 'Jah, mul on toidupiirangud',
+        ua: 'Так, у мене є дієтичні обмеження'
+    },
+    'rsvp.submit': {
+        et: 'Saada vastus',
+        ua: 'Надіслати відповідь'
+    },
+    'rsvp.submitting': {
+        et: 'Saadan...',
+        ua: 'Надсилаю...'
+    },
+    'rsvp.pleaseSelectAttending': {
+        et: 'Palun valige, kas tulete või mitte',
+        ua: 'Будь ласка, виберіть, чи прийдете ви чи ні'
+    },
+    'rsvp.submissionError': {
+        et: 'Viga vastuse saatmisel. Palun proovige uuesti.',
+        ua: 'Помилка надсилання відповіді. Спробуйте ще раз.'
+    },
+    'rsvp.decliningMessage': {
+        et: 'Kahju, et ei saa tulla! Loodame teid näha järgmisel korral.',
+        ua: 'Шкода, що не можете прийти! Сподіваємось побачити вас наступного разу.'
+    },
+    'rsvp.thankYou.title': {
+        et: 'Aitäh!',
+        ua: 'Дякую!'
+    },
+    'rsvp.thankYou.message': {
+        et: 'Teie vastus on vastu võetud. Ootame teid suure rõõmuga!',
+        ua: 'Вашу відповідь отримано. Чекаємо на вас з великою радістю!'
+    },
+    'rsvp.respondNow': {
+        et: 'Vasta kohe',
+        ua: 'Відповісти зараз'
+    },
+    'rsvp.responseReceived': {
+        et: 'Teie vastus on saadud',
+        ua: 'Вашу відповідь отримано'
+    },
+    'rsvp.seeYouThere': {
+        et: 'Näeme pulmas!',
+        ua: 'Побачимося на весіллі!'
+    },
+    'rsvp.sorryToMissYou': {
+        et: 'Kahju, et ei saa osaleda.',
+        ua: 'Шкода, що не зможете взяти участь.'
     },
 };

@@ -247,3 +247,236 @@
         max-width: 120px;
     }
 }
+
+/* Invitation Info Column */
+.mika-guest-invitation-info {
+    min-width: 200px;
+    padding: 8px;
+}
+
+.mika-invitation-getter-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.mika-invitation-language {
+    font-size: 12px;
+    font-weight: 500;
+    color: #666;
+    padding: 2px 6px;
+    background: rgba(168, 192, 154, 0.1);
+    border-radius: 4px;
+    width: fit-content;
+}
+
+/* Invitation Status Badges */
+.mika-invitation-status {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: fit-content;
+}
+
+.mika-invitation-status-not-sent {
+    background: #f3f4f6;
+    color: #6b7280;
+}
+
+.mika-invitation-status-sent {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.mika-invitation-status-opened {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.mika-invitation-status-responded {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.mika-invitation-status-declined {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+/* RSVP Status Badges */
+.mika-rsvp-status {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: fit-content;
+}
+
+.mika-rsvp-status-pending {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.mika-rsvp-status-attending {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.mika-rsvp-status-not-attending {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+/* Invitation Opens Counter */
+.mika-invitation-opens {
+    font-size: 10px;
+    color: #6b7280;
+    font-style: italic;
+}
+
+/* RSVP Details */
+.mika-rsvp-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 4px;
+}
+
+.mika-rsvp-need {
+    font-size: 10px;
+    background: rgba(168, 192, 154, 0.15);
+    color: #5a6c50;
+    padding: 2px 6px;
+    border-radius: 8px;
+    white-space: nowrap;
+}
+
+/* Linked Guest Info */
+.mika-linked-guest-info {
+    font-size: 12px;
+    color: #6b7280;
+    font-style: italic;
+}
+
+/* Guest Name Cell Badges */
+.mika-guest-name-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.mika-guest-invitation-getter-badge {
+    font-size: 10px;
+    font-weight: 600;
+    background: #7fa070;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 8px;
+    width: fit-content;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.mika-guest-linked-badge {
+    font-size: 10px;
+    font-weight: 500;
+    background: rgba(168, 192, 154, 0.2);
+    color: #5a6c50;
+    padding: 2px 6px;
+    border-radius: 8px;
+    width: fit-content;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Action Buttons */
+.mika-guest-actions {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.mika-guest-action-button {
+    padding: 6px 8px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    background: transparent;
+    min-width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mika-guest-action-invitation {
+    background: #7fa070;
+    color: white;
+}
+
+.mika-guest-action-invitation:hover {
+    background: #6a8a5f;
+    transform: translateY(-1px);
+}
+
+.mika-guest-action-edit {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.mika-guest-action-edit:hover {
+    background: #e5e7eb;
+    transform: translateY(-1px);
+}
+
+.mika-guest-action-delete {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.mika-guest-action-delete:hover {
+    background: #fecaca;
+    transform: translateY(-1px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .mika-guest-invitation-info {
+        min-width: 160px;
+    }
+
+    .mika-rsvp-details {
+        flex-direction: column;
+    }
+
+    .mika-guest-actions {
+        flex-direction: column;
+        gap: 4px;
+    }
+}
+
+@media (max-width: 768px) {
+    .mika-invitation-getter-info {
+        gap: 4px;
+    }
+
+    .mika-invitation-status,
+    .mika-rsvp-status {
+        font-size: 10px;
+        padding: 2px 6px;
+    }
+
+    .mika-guest-action-button {
+        padding: 4px 6px;
+        min-width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+}

@@ -179,7 +179,7 @@ export class GuestService {
     }
 
     // Update guest
-    static async updateGuest(guestId: string, guestData: Partial<CreateGuestData>): Promise<void> {
+    static async updateGuest(guestId: string, guestData: Partial<CreateGuestData> | Partial<Guest>): Promise<void> {
         try {
             // Filter out undefined values for Firestore
             const cleanGuestData = Object.fromEntries(

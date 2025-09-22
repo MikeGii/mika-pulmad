@@ -160,3 +160,122 @@
         width: 100%;
     }
 }
+
+/* Invitation Settings Group */
+.mika-invitation-settings-group {
+    background: rgba(168, 192, 154, 0.1);
+    border: 1px solid rgba(168, 192, 154, 0.2);
+    border-radius: 12px;
+    padding: 15px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.mika-invitation-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+}
+
+.mika-invitation-checkbox input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #7fa070;
+    cursor: pointer;
+}
+
+.mika-invitation-checkbox span {
+    user-select: none;
+}
+
+/* Invitation Language Selection */
+.mika-invitation-language-group {
+    padding-left: 20px;
+    border-left: 3px solid #7fa070;
+    background: rgba(127, 160, 112, 0.05);
+    padding: 10px 15px;
+    border-radius: 8px;
+}
+
+.mika-invitation-language-group .mika-form-label {
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #5a6c50;
+}
+
+.mika-invitation-language-group .mika-form-select {
+    font-size: 14px;
+    padding: 8px 12px;
+    border: 1px solid #d0d7ca;
+    border-radius: 6px;
+    background: white;
+    color: #333;
+}
+
+/* Linked Getter Search */
+.mika-linked-getter-group {
+    padding-left: 20px;
+}
+
+.mika-linked-getter-group .mika-form-label {
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #5a6c50;
+}
+
+.mika-getter-search-container {
+    position: relative;
+}
+
+.mika-getter-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    margin-top: 2px;
+}
+
+.mika-getter-dropdown-item {
+    padding: 10px 15px;
+    cursor: pointer;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s ease;
+    font-size: 14px;
+    color: #333;
+}
+
+.mika-getter-dropdown-item:hover {
+    background-color: rgba(127, 160, 112, 0.1);
+}
+
+.mika-getter-dropdown-item:last-child {
+    border-bottom: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .mika-invitation-settings-group {
+        padding: 12px;
+        gap: 12px;
+    }
+
+    .mika-invitation-language-group,
+    .mika-linked-getter-group {
+        padding-left: 15px;
+    }
+}

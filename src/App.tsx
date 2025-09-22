@@ -1,4 +1,4 @@
-// src/App.tsx
+// src/App.tsx - Fixed routing order
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
@@ -57,7 +57,7 @@ function AppContent() {
                         }
                     />
 
-                    {/* Wedding Invitation route - specific route should come before catch-all */}
+                    {/* Wedding Invitation route - MUST come before /admin routes */}
                     <Route
                         path="/invitation/:guestName"
                         element={<WeddingInvitation />}
@@ -121,8 +121,8 @@ function AppContent() {
                         }
                     />
 
-                    {/* Catch-all route for future guest invitation features */}
-                    <Route path="/:guestName" element={<div>Future guest invitation features</div>} />
+                    {/* 404 fallback - remove the catch-all route that was causing conflicts */}
+                    <Route path="*" element={<div>Page not found</div>} />
                 </Routes>
             </div>
         </Router>

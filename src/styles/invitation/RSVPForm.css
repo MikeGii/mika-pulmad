@@ -1,0 +1,335 @@
+/* src/styles/invitation/RSVPForm.css */
+
+.mika-rsvp-form-container {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    margin: 30px 0;
+    border: 2px solid rgba(168, 192, 154, 0.2);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.mika-rsvp-form-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(168, 192, 154, 0.2);
+}
+
+.mika-rsvp-form-header h3 {
+    font-size: 28px;
+    color: #5a6c50;
+    margin: 0 0 10px 0;
+    font-weight: 600;
+}
+
+.mika-rsvp-form-subtitle {
+    font-size: 16px;
+    color: #6b7280;
+    margin: 0 0 15px 0;
+}
+
+.mika-rsvp-guest-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.mika-rsvp-guest-name {
+    font-size: 18px;
+    color: #374151;
+    font-weight: 500;
+}
+
+.mika-rsvp-child-indicator {
+    font-size: 14px;
+    color: #7fa070;
+    font-style: italic;
+    margin-left: 5px;
+}
+
+/* Form Sections */
+.mika-rsvp-section {
+    margin-bottom: 25px;
+}
+
+.mika-rsvp-question {
+    font-size: 20px;
+    color: #5a6c50;
+    margin: 0 0 15px 0;
+    font-weight: 600;
+}
+
+/* Radio Button Options */
+.mika-rsvp-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.mika-rsvp-option {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #f9fafb;
+}
+
+.mika-rsvp-option:hover {
+    border-color: rgba(168, 192, 154, 0.5);
+    background: rgba(168, 192, 154, 0.05);
+}
+
+.mika-rsvp-option.selected {
+    border-color: #7fa070;
+    background: rgba(168, 192, 154, 0.1);
+}
+
+.mika-rsvp-option input[type="radio"] {
+    display: none;
+}
+
+.mika-rsvp-option-text {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #374151;
+}
+
+.mika-rsvp-option-icon {
+    font-size: 20px;
+}
+
+/* Checkbox Options */
+.mika-rsvp-checkbox {
+    display: flex;
+    align-items: flex-start;
+    padding: 15px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #f9fafb;
+}
+
+.mika-rsvp-checkbox:hover {
+    border-color: rgba(168, 192, 154, 0.5);
+    background: rgba(168, 192, 154, 0.05);
+}
+
+.mika-rsvp-checkbox input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #7fa070;
+    margin-right: 12px;
+    margin-top: 2px;
+}
+
+.mika-rsvp-checkbox-text {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    color: #374151;
+}
+
+.mika-rsvp-checkbox-icon {
+    font-size: 18px;
+}
+
+/* Dietary Note */
+.mika-rsvp-dietary-note {
+    margin-top: 15px;
+    padding-left: 30px;
+}
+
+.mika-rsvp-textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    resize: vertical;
+    min-height: 80px;
+}
+
+.mika-rsvp-textarea:focus {
+    outline: none;
+    border-color: #7fa070;
+    box-shadow: 0 0 0 3px rgba(127, 160, 112, 0.1);
+}
+
+.mika-rsvp-char-count {
+    text-align: right;
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 5px;
+}
+
+/* Additional Questions Container */
+.mika-rsvp-additional-questions {
+    background: rgba(168, 192, 154, 0.05);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+/* Declining Message */
+.mika-rsvp-declining-message {
+    background: rgba(239, 68, 68, 0.05);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.mika-rsvp-declining-message p {
+    color: #7f1d1d;
+    font-size: 16px;
+    font-style: italic;
+    margin: 0;
+}
+
+/* Submit Section */
+.mika-rsvp-submit-section {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(168, 192, 154, 0.2);
+}
+
+.mika-rsvp-submit-button {
+    background: #7fa070;
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 auto;
+}
+
+.mika-rsvp-submit-button:hover:not(:disabled) {
+    background: #6a8a5f;
+    transform: translateY(-2px);
+}
+
+.mika-rsvp-submit-button:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.mika-rsvp-spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-left: 2px solid white;
+    border-radius: 50%;
+    animation: mika-rsvp-spin 1s linear infinite;
+}
+
+@keyframes mika-rsvp-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Thank You Message */
+.mika-rsvp-thank-you {
+    background: rgba(34, 197, 94, 0.1);
+    border: 2px solid rgba(34, 197, 94, 0.3);
+    border-radius: 15px;
+    padding: 40px;
+    text-align: center;
+    margin: 30px 0;
+}
+
+.mika-rsvp-thank-you-content {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.mika-rsvp-thank-you-icon {
+    width: 80px;
+    height: 80px;
+    background: #22c55e;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    font-weight: bold;
+    margin: 0 auto 20px auto;
+}
+
+.mika-rsvp-thank-you h3 {
+    font-size: 24px;
+    color: #16a34a;
+    margin: 0 0 15px 0;
+    font-weight: 600;
+}
+
+.mika-rsvp-thank-you p {
+    font-size: 16px;
+    color: #166534;
+    margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .mika-rsvp-form-container {
+        padding: 20px;
+        margin: 20px 0;
+    }
+
+    .mika-rsvp-options {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .mika-rsvp-option {
+        padding: 15px;
+    }
+
+    .mika-rsvp-question {
+        font-size: 18px;
+    }
+
+    .mika-rsvp-submit-button {
+        width: 100%;
+        padding: 12px 20px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .mika-rsvp-form-header h3 {
+        font-size: 24px;
+    }
+
+    .mika-rsvp-guest-name {
+        font-size: 16px;
+    }
+
+    .mika-rsvp-option-text,
+    .mika-rsvp-checkbox-text {
+        font-size: 14px;
+    }
+
+    .mika-rsvp-additional-questions {
+        padding: 15px;
+    }
+}

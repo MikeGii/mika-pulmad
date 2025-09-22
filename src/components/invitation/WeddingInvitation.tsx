@@ -1,9 +1,10 @@
 // src/components/invitation/WeddingInvitation.tsx
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { GuestService } from '../../services/guestService';
-import { Guest } from '../../types/Guest';
+import { InvitationService } from '../../services/invitationService';
+import { Guest } from '../../types';
 import { LanguageProvider, useLanguage } from '../../contexts/LanguageContext';
+import RSVPForm from './RSVPForm';
 import '../../styles/invitation/WeddingInvitation.css';
 
 const WeddingInvitationContent: React.FC = () => {
@@ -12,6 +13,8 @@ const WeddingInvitationContent: React.FC = () => {
     const [linkedGuests, setLinkedGuests] = useState<Guest[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [showRSVP, setShowRSVP] = useState(false);
+    const [hasResponded, setHasResponded] = useState(false);
     const { t, setLanguage } = useLanguage();
 
     useEffect(() => {
@@ -32,12 +35,7 @@ const WeddingInvitationContent: React.FC = () => {
             }
 
             // Find the invitation getter by name
-            const allGuests = await GuestService.getAllGuests();
-            const getter = allGuests.find(guest =>
-                guest.firstName.toLowerCase() === firstName.toLowerCase() &&
-                guest.lastName.toLowerCase() === lastName.toLowerCase() &&
-                guest.isInvitationGetter
-            );
+            const getter = await InvitationService.findInvitationGetterByName(firstName, lastName);
 
             if (!getter) {
                 setError('Invitation not found');
@@ -49,17 +47,30 @@ const WeddingInvitationContent: React.FC = () => {
             // Set the language based on the invitation getter's preference
             setLanguage(getter.invitationLanguage);
 
+            // Check if already responded
+            setHasResponded(getter.rsvpStatus !== 'pending');
+
             // Find all linked guests
-            const linked = allGuests.filter(guest =>
-                guest.linkedInvitationGetterId === getter.id
-            );
+            const linked = await InvitationService.getLinkedGuestsForInvitation(getter.id);
             setLinkedGuests(linked);
+
+            // Track invitation open
+            await InvitationService.trackInvitationOpen(guestName);
 
         } catch (error) {
             console.error('Error loading invitation:', error);
             setError('Failed to load invitation');
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleRSVPSubmitted = () => {
+        setHasResponded(true);
+        setShowRSVP(false);
+        // Reload data to show updated status
+        if (invitationGetter) {
+            loadInvitationData();
         }
     };
 
@@ -158,6 +169,51 @@ const WeddingInvitationContent: React.FC = () => {
                 <section className="mika-invitation-rsvp">
                     <h3>{t('invitation.rsvp.title')}</h3>
                     <p>{t('invitation.rsvp.deadline')}</p>
+
+                    {hasResponded ? (
+                        <div className="mika-invitation-response-status">
+                            <div className="mika-response-confirmed">
+                                <h4>✓ {t('rsvp.responseReceived')}</h4>
+                                <p>
+                                    {invitationGetter.rsvpStatus === 'attending'
+                                        ? t('rsvp.seeYouThere')
+                                        : t('rsvp.sorryToMissYou')
+                                    }
+                                </p>
+                                {invitationGetter.rsvpStatus === 'attending' && (
+                                    <div className="mika-response-details">
+                                        {invitationGetter.rsvpResponses.requiresAccommodation && (
+                                            <p>• {t('guestTable.needsAccommodation')}</p>
+                                        )}
+                                        {invitationGetter.rsvpResponses.needsTransport && (
+                                            <p>• {t('guestTable.needsTransport')}</p>
+                                        )}
+                                        {invitationGetter.rsvpResponses.hasDietaryRestrictions && (
+                                            <p>• {t('guestTable.hasDietaryRestrictions')}</p>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    ) : (
+                        <>
+                            {!showRSVP ? (
+                                <button
+                                    className="mika-rsvp-button"
+                                    onClick={() => setShowRSVP(true)}
+                                >
+                                    {t('rsvp.respondNow')}
+                                </button>
+                            ) : (
+                                <RSVPForm
+                                    invitationGetter={invitationGetter}
+                                    linkedGuests={linkedGuests}
+                                    onSubmitted={handleRSVPSubmitted}
+                                />
+                            )}
+                        </>
+                    )}
+
                     {invitationGetter.phoneNumber && (
                         <div className="mika-invitation-contact">
                             <p>{t('invitation.contact')}: {invitationGetter.phoneNumber}</p>
