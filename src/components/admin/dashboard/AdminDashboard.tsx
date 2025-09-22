@@ -1,9 +1,9 @@
 // src/components/admin/AdminDashboard.tsx
 import React from 'react';
-import { useLanguage } from '../../contexts/LanguageContext';
-import { useAuth } from '../../contexts/AuthContext';
-import Header from '../common/Header';
-import '../../styles/admin/AdminDashboard.css';
+import { useLanguage } from '../../../contexts/LanguageContext';
+import { useAuth } from '../../../contexts/AuthContext';
+import Header from '../../common/Header';
+import '../../../styles/admin/AdminDashboard.css';
 import WeddingDetails from "./WeddingDetails";
 import ToDoDashboard from "./ToDoDashboard";
 

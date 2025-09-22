@@ -4,8 +4,9 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { LanguageProvider } from './contexts/LanguageContext';
 import AdminLogin from './components/login/AdminLogin';
-import AdminDashboard from './components/admin/AdminDashboard';
-import AccountManagement from './components/admin/AccountManagement';
+import AdminDashboard from './components/admin/dashboard/AdminDashboard';
+import AccountManagement from './components/admin/account-management/AccountManagement';
+import TaskManagement from './components/admin/task-management/TaskManagement';
 import './App.css';
 
 // Protected Route Component
@@ -64,6 +65,16 @@ function AppContent() {
                         element={
                             <ProtectedRoute>
                                 <AdminDashboard />
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    {/* Add this new Task Management route */}
+                    <Route
+                        path="/admin/tasks"
+                        element={
+                            <ProtectedRoute>
+                                <TaskManagement />
                             </ProtectedRoute>
                         }
                     />

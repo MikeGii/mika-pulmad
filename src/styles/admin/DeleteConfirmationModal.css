@@ -1,0 +1,172 @@
+/* src/styles/admin/DeleteConfirmationModal.css */
+.mika-delete-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1100;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.mika-delete-modal-container {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+    box-shadow:
+            0 25px 50px rgba(0, 0, 0, 0.2),
+            0 0 0 1px rgba(255, 255, 255, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    max-width: 450px;
+    width: 100%;
+    position: relative;
+}
+
+.mika-delete-modal-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(249, 247, 244, 0.3) 50%,
+    rgba(245, 243, 240, 0.2) 100%);
+    border-radius: 24px;
+    z-index: -1;
+}
+
+.mika-delete-modal {
+    padding: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.mika-delete-modal-header {
+    padding: 25px 25px 0;
+    text-align: center;
+}
+
+.mika-delete-modal-header h3 {
+    color: #dc3545;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.mika-delete-modal-body {
+    padding: 20px 25px;
+    text-align: center;
+}
+
+.mika-delete-modal-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.mika-delete-modal-body p {
+    color: #333;
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0 0 15px;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.mika-delete-task-info {
+    background: rgba(220, 53, 69, 0.1);
+    border: 1px solid rgba(220, 53, 69, 0.2);
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 15px;
+}
+
+.mika-delete-task-info strong {
+    color: #dc3545;
+    font-weight: 600;
+}
+
+.mika-delete-modal-footer {
+    padding: 0 25px 25px;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.mika-delete-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(10px);
+    min-width: 100px;
+}
+
+.mika-delete-button-cancel {
+    background: rgba(108, 117, 125, 0.8);
+    color: white;
+    border: 1px solid rgba(108, 117, 125, 0.3);
+}
+
+.mika-delete-button-cancel:hover {
+    background: rgba(108, 117, 125, 0.9);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+}
+
+.mika-delete-button-confirm {
+    background: rgba(220, 53, 69, 0.8);
+    color: white;
+    border: 1px solid rgba(220, 53, 69, 0.3);
+}
+
+.mika-delete-button-confirm:hover {
+    background: rgba(220, 53, 69, 0.9);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .mika-delete-modal-overlay {
+        padding: 10px;
+    }
+
+    .mika-delete-modal-header {
+        padding: 20px 20px 0;
+    }
+
+    .mika-delete-modal-header h3 {
+        font-size: 1.3rem;
+    }
+
+    .mika-delete-modal-body {
+        padding: 15px 20px;
+    }
+
+    .mika-delete-modal-body p {
+        font-size: 14px;
+    }
+
+    .mika-delete-modal-footer {
+        padding: 0 20px 20px;
+        flex-direction: column;
+    }
+
+    .mika-delete-button {
+        width: 100%;
+    }
+}

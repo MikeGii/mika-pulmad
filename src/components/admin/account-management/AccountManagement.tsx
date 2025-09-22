@@ -1,10 +1,10 @@
 // src/components/admin/AccountManagement.tsx
 import React, { useState, useEffect } from 'react';
 import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
-import { db } from '../../firebase';
-import Header from '../common/Header';
-import { User } from '../../types';
-import '../../styles/admin/AccountManagement.css';
+import { db } from '../../../firebase';
+import Header from '../../common/Header';
+import { User } from '../../../types';
+import '../../../styles/admin/AccountManagement.css';
 
 const AccountManagement: React.FC = () => {
     const [users, setUsers] = useState<User[]>([]);

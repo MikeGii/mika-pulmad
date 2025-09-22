@@ -1,7 +1,7 @@
 // src/components/admin/ToDoDashboard.tsx
 import React from 'react';
-import { useLanguage } from '../../contexts/LanguageContext';
-import '../../styles/admin/ToDoDashboard.css';
+import { useLanguage } from '../../../contexts/LanguageContext';
+import '../../../styles/admin/ToDoDashboard.css';
 
 const ToDoDashboard: React.FC = () => {
     const { t } = useLanguage();
