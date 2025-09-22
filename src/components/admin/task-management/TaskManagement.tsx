@@ -5,7 +5,7 @@ import { db } from '../../../firebase';
 import Header from '../../common/Header';
 import { useLanguage } from '../../../contexts/LanguageContext';
 import { Task, TaskFormData } from '../../../types';
-import { User } from '../../../types/User'; // Add this import
+import { User } from '../../../types';
 import TaskForm from './TaskForm';
 import TaskTable from './TaskTable';
 import DeleteConfirmationModal from './DeleteConfirmationModal';

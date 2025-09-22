@@ -41,10 +41,6 @@ export const translations: Translations = {
         et: 'Pulmade Korraldamise Ülesanded',
         ua: 'Завдання з Організації Весілля'
     },
-    'todo.subtitle': {
-        et: 'Jälgi ja halda kõiki pulmadega seotud ülesandeid ja tähtaegu',
-        ua: 'Відстежуйте та керуйте всіма завданнями та термінами, пов\'язаними з весіллям'
-    },
     'todo.empty.title': {
         et: 'Ülesandeid pole veel lisatud',
         ua: 'Завдання ще не додані'
@@ -52,6 +48,30 @@ export const translations: Translations = {
     'todo.empty.description': {
         et: 'Kui ülesandeid lisatakse, kuvatakse need siin koos kõigi detailidega',
         ua: 'Коли завдання будуть додані, вони відображатимуться тут з усіма деталями'
+    },
+    'todo.stats.total': {
+        et: 'Kokku',
+        ua: 'Всього'
+    },
+    'todo.stats.completed': {
+        et: 'Tehtud',
+        ua: 'Виконано'
+    },
+    'todo.stats.inProgress': {
+        et: 'Töös',
+        ua: 'В роботі'
+    },
+    'todo.stats.pending': {
+        et: 'Ootel',
+        ua: 'Очікує'
+    },
+    'todo.manager': {
+        et: 'Vastutaja',
+        ua: 'Відповідальний'
+    },
+    'todo.created': {
+        et: 'Loodud',
+        ua: 'Створено'
     },
 
     // Task Management

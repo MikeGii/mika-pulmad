@@ -1,7 +1,7 @@
-// src/components/admin/DeleteConfirmationModal.tsx
+// src/components/admin/task-management/DeleteConfirmationModal.tsx
 import React from 'react';
 import { useLanguage } from '../../../contexts/LanguageContext';
-import { Task } from '../../../types';
+import { Task, TaskContent } from '../../../types';
 import '../../../styles/admin/DeleteConfirmationModal.css';
 
 interface DeleteConfirmationModalProps {
@@ -15,7 +15,15 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = ({
                                                                              onConfirm,
                                                                              onCancel
                                                                          }) => {
-    const { t } = useLanguage();
+    const { t, language } = useLanguage();
+
+    // Helper function to get content in current language
+    const getLocalizedContent = (content: TaskContent | string): string => {
+        if (typeof content === 'string') {
+            return content; // Fallback for old tasks
+        }
+        return content[language] || content.et || content.ua || '';
+    };
 
     return (
         <div className="mika-delete-modal-overlay">
@@ -29,7 +37,7 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = ({
                         <div className="mika-delete-modal-icon">⚠️</div>
                         <p>{t('taskDelete.message')}</p>
                         <div className="mika-delete-task-info">
-                            <strong>{task.name}</strong>
+                            <strong>{getLocalizedContent(task.name)}</strong>
                         </div>
                     </div>
 

@@ -1,7 +1,7 @@
 // src/components/admin/task-management/TaskTable.tsx
 import React from 'react';
 import { useLanguage } from '../../../contexts/LanguageContext';
-import { Task } from '../../../types';
+import { Task, TaskContent } from '../../../types';
 import { User } from '../../../types';
 import '../../../styles/admin/TaskTable.css';
 
@@ -13,7 +13,15 @@ interface TaskTableProps {
 }
 
 const TaskTable: React.FC<TaskTableProps> = ({ tasks, users, onEdit, onDelete }) => {
-    const { t } = useLanguage();
+    const { t, language } = useLanguage();
+
+    // Helper function to get content in current language
+    const getLocalizedContent = (content: TaskContent | string): string => {
+        if (typeof content === 'string') {
+            return content; // Fallback for old tasks
+        }
+        return content[language] || content.et || content.ua || '';
+    };
 
     const getStatusClass = (status: string) => {
         switch (status) {
@@ -29,13 +37,12 @@ const TaskTable: React.FC<TaskTableProps> = ({ tasks, users, onEdit, onDelete })
         return `€${amount.toFixed(2)}`;
     };
 
-    // Helper function to get display name from email
     const getManagerDisplayName = (email: string): string => {
         const user = users.find(u => u.email === email);
         if (user) {
             return user.profile.displayName || `${user.profile.firstName} ${user.profile.lastName}`;
         }
-        return email; // Fallback to email if user not found
+        return email;
     };
 
     if (tasks.length === 0) {
@@ -67,23 +74,25 @@ const TaskTable: React.FC<TaskTableProps> = ({ tasks, users, onEdit, onDelete })
                         <tr key={task.id} className="mika-task-table-row">
                             <td className="mika-task-name">
                                 <div className="mika-task-name-content">
-                                    <span className="mika-task-title">{task.name}</span>
+                                    <span className="mika-task-title">
+                                        {getLocalizedContent(task.name)}
+                                    </span>
                                     {task.description && (
                                         <span className="mika-task-description">
-                                                {task.description}
-                                            </span>
+                                            {getLocalizedContent(task.description)}
+                                        </span>
                                     )}
                                     {task.extraInformation && (
                                         <span className="mika-task-extra">
-                                                {task.extraInformation}
-                                            </span>
+                                            {getLocalizedContent(task.extraInformation)}
+                                        </span>
                                     )}
                                 </div>
                             </td>
                             <td>
-                                    <span className={`mika-task-status ${getStatusClass(task.status)}`}>
-                                        {t(`taskStatus.${task.status}`)}
-                                    </span>
+                                <span className={`mika-task-status ${getStatusClass(task.status)}`}>
+                                    {t(`taskStatus.${task.status}`)}
+                                </span>
                             </td>
                             <td className="mika-task-manager">
                                 <div className="mika-manager-info">

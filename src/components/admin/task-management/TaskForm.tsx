@@ -1,7 +1,7 @@
 // src/components/admin/task-management/TaskForm.tsx
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../../../contexts/LanguageContext';
-import { Task, TaskFormData, TaskStatus } from '../../../types';
+import { Task, TaskFormData, TaskStatus, TaskContent } from '../../../types';
 import { User } from '../../../types';
 import '../../../styles/admin/TaskForm.css';
 
@@ -15,12 +15,12 @@ interface TaskFormProps {
 const TaskForm: React.FC<TaskFormProps> = ({ task, users, onSave, onCancel }) => {
     const { t } = useLanguage();
     const [formData, setFormData] = useState<TaskFormData>({
-        name: '',
+        name: { et: '', ua: '' },
         status: 'tegemata',
-        description: '',
+        description: { et: '', ua: '' },
         monetaryRequirement: '',
         taskManager: '',
-        extraInformation: '',
+        extraInformation: { et: '', ua: '' },
     });
 
     useEffect(() => {
@@ -31,15 +31,25 @@ const TaskForm: React.FC<TaskFormProps> = ({ task, users, onSave, onCancel }) =>
                 description: task.description,
                 monetaryRequirement: task.monetaryRequirement || '',
                 taskManager: task.taskManager,
-                extraInformation: task.extraInformation || '',
+                extraInformation: task.extraInformation || { et: '', ua: '' },
             });
         }
     }, [task]);
 
-    const handleInputChange = (field: keyof TaskFormData, value: string | number) => {
+    const handleInputChange = (field: keyof TaskFormData, value: string | number | TaskContent) => {
         setFormData(prev => ({
             ...prev,
             [field]: value
+        }));
+    };
+
+    const handleMultilingualChange = (field: 'name' | 'description' | 'extraInformation', language: 'et' | 'ua', value: string) => {
+        setFormData(prev => ({
+            ...prev,
+            [field]: {
+                ...prev[field],
+                [language]: value
+            }
         }));
     };
 
@@ -48,7 +58,6 @@ const TaskForm: React.FC<TaskFormProps> = ({ task, users, onSave, onCancel }) =>
         onSave(formData);
     };
 
-    // Helper function to get display name
     const getUserDisplayName = (user: User): string => {
         if (user.profile.displayName) {
             return user.profile.displayName;
@@ -65,19 +74,35 @@ const TaskForm: React.FC<TaskFormProps> = ({ task, users, onSave, onCancel }) =>
                     </div>
 
                     <div className="mika-task-form-body">
-                        {/* Task Name */}
+                        {/* Task Name - Multilingual */}
                         <div className="mika-form-group">
                             <label className="mika-form-label">
                                 {t('taskForm.name')} *
                             </label>
-                            <input
-                                type="text"
-                                className="mika-form-input"
-                                placeholder={t('taskForm.namePlaceholder')}
-                                value={formData.name}
-                                onChange={(e) => handleInputChange('name', e.target.value)}
-                                required
-                            />
+                            <div className="mika-multilingual-group">
+                                <div className="mika-language-input">
+                                    <label className="mika-language-label">🇪🇪 Eesti</label>
+                                    <input
+                                        type="text"
+                                        className="mika-form-input"
+                                        placeholder={t('taskForm.namePlaceholder')}
+                                        value={formData.name.et}
+                                        onChange={(e) => handleMultilingualChange('name', 'et', e.target.value)}
+                                        required
+                                    />
+                                </div>
+                                <div className="mika-language-input">
+                                    <label className="mika-language-label">🇺🇦 Українська</label>
+                                    <input
+                                        type="text"
+                                        className="mika-form-input"
+                                        placeholder="Введіть назву завдання..."
+                                        value={formData.name.ua}
+                                        onChange={(e) => handleMultilingualChange('name', 'ua', e.target.value)}
+                                        required
+                                    />
+                                </div>
+                            </div>
                         </div>
 
                         {/* Status */}
@@ -97,22 +122,42 @@ const TaskForm: React.FC<TaskFormProps> = ({ task, users, onSave, onCancel }) =>
                             </select>
                         </div>
 
-                        {/* Description */}
+                        {/* Description - Multilingual */}
                         <div className="mika-form-group">
                             <label className="mika-form-label">
                                 {t('taskForm.description')} *
                             </label>
-                            <textarea
-                                className="mika-form-textarea"
-                                placeholder={t('taskForm.descriptionPlaceholder')}
-                                value={formData.description}
-                                onChange={(e) => handleInputChange('description', e.target.value)}
-                                maxLength={300}
-                                rows={4}
-                                required
-                            />
-                            <div className="mika-char-counter">
-                                {formData.description.length}/300
+                            <div className="mika-multilingual-group">
+                                <div className="mika-language-input">
+                                    <label className="mika-language-label">🇪🇪 Eesti</label>
+                                    <textarea
+                                        className="mika-form-textarea"
+                                        placeholder={t('taskForm.descriptionPlaceholder')}
+                                        value={formData.description.et}
+                                        onChange={(e) => handleMultilingualChange('description', 'et', e.target.value)}
+                                        maxLength={300}
+                                        rows={4}
+                                        required
+                                    />
+                                    <div className="mika-char-counter">
+                                        {formData.description.et.length}/300
+                                    </div>
+                                </div>
+                                <div className="mika-language-input">
+                                    <label className="mika-language-label">🇺🇦 Українська</label>
+                                    <textarea
+                                        className="mika-form-textarea"
+                                        placeholder="Введіть опис завдання (до 300 символів)..."
+                                        value={formData.description.ua}
+                                        onChange={(e) => handleMultilingualChange('description', 'ua', e.target.value)}
+                                        maxLength={300}
+                                        rows={4}
+                                        required
+                                    />
+                                    <div className="mika-char-counter">
+                                        {formData.description.ua.length}/300
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -133,7 +178,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ task, users, onSave, onCancel }) =>
                                 />
                             </div>
 
-                            {/* Task Manager - Updated to show display names */}
+                            {/* Task Manager */}
                             <div className="mika-form-group mika-form-group-half">
                                 <label className="mika-form-label">
                                     {t('taskForm.taskManager')} *
@@ -146,7 +191,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ task, users, onSave, onCancel }) =>
                                 >
                                     <option value="">{t('taskForm.taskManagerPlaceholder')}</option>
                                     {users.map(user => (
-                                        <option key={user.email}>
+                                        <option key={user.email} value={user.email}>
                                             {getUserDisplayName(user)}
                                         </option>
                                     ))}
@@ -154,18 +199,33 @@ const TaskForm: React.FC<TaskFormProps> = ({ task, users, onSave, onCancel }) =>
                             </div>
                         </div>
 
-                        {/* Extra Information */}
+                        {/* Extra Information - Multilingual */}
                         <div className="mika-form-group">
                             <label className="mika-form-label">
                                 {t('taskForm.extraInformation')}
                             </label>
-                            <input
-                                type="text"
-                                className="mika-form-input"
-                                placeholder={t('taskForm.extraPlaceholder')}
-                                value={formData.extraInformation}
-                                onChange={(e) => handleInputChange('extraInformation', e.target.value)}
-                            />
+                            <div className="mika-multilingual-group">
+                                <div className="mika-language-input">
+                                    <label className="mika-language-label">🇪🇪 Eesti</label>
+                                    <input
+                                        type="text"
+                                        className="mika-form-input"
+                                        placeholder={t('taskForm.extraPlaceholder')}
+                                        value={formData.extraInformation.et}
+                                        onChange={(e) => handleMultilingualChange('extraInformation', 'et', e.target.value)}
+                                    />
+                                </div>
+                                <div className="mika-language-input">
+                                    <label className="mika-language-label">🇺🇦 Українська</label>
+                                    <input
+                                        type="text"
+                                        className="mika-form-input"
+                                        placeholder="Назва компанії або інша інформація..."
+                                        value={formData.extraInformation.ua}
+                                        onChange={(e) => handleMultilingualChange('extraInformation', 'ua', e.target.value)}
+                                    />
+                                </div>
+                            </div>
                         </div>
                     </div>
 

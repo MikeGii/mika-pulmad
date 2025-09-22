@@ -118,7 +118,6 @@
 
 .mika-todo-item-header {
     display: flex;
-    justify-content: between;
     align-items: flex-start;
     margin-bottom: 15px;
     gap: 20px;
@@ -207,5 +206,214 @@
 
     .mika-todo-empty h3 {
         font-size: 1.3rem;
+    }
+}
+
+/* Task Statistics */
+.mika-todo-stats {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 25px;
+    padding: 20px;
+    background: rgba(168, 192, 154, 0.1);
+    border-radius: 15px;
+    border: 1px solid rgba(168, 192, 154, 0.2);
+}
+
+.mika-todo-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.mika-todo-stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #7fa070;
+}
+
+.mika-todo-stat-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Updated todo items styling */
+.mika-todo-items {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.mika-todo-item {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid #e8e6e0;
+    border-radius: 12px;
+    padding: 25px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.mika-todo-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border-color: #a8c09a;
+}
+
+.mika-todo-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    gap: 20px;
+}
+
+.mika-todo-item-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #7fa070;
+    margin: 0;
+    flex: 1;
+}
+
+.mika-todo-item-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.mika-todo-item-status {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.mika-todo-item-cost {
+    background: linear-gradient(45deg, #d4af37, #ffd700);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.mika-todo-item-description {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.mika-todo-item-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-size: 12px;
+    color: #999;
+    gap: 15px;
+}
+
+.mika-todo-organizator {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.mika-todo-organizator-label {
+    font-weight: 500;
+    color: #7fa070;
+}
+
+.mika-todo-organizator-name {
+    font-weight: 600;
+    color: #333;
+}
+
+.mika-todo-item-dates {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    text-align: right;
+}
+
+.mika-todo-created {
+    font-size: 11px;
+    color: #999;
+}
+
+.mika-todo-company {
+    font-style: italic;
+    font-size: 11px;
+    color: #7fa070;
+}
+
+.mika-todo-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px;
+    color: #7fa070;
+    font-size: 16px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .mika-todo-stats {
+        gap: 20px;
+        padding: 15px;
+    }
+
+    .mika-todo-stat-number {
+        font-size: 1.5rem;
+    }
+
+    .mika-todo-item-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .mika-todo-item-meta {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .mika-todo-item-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .mika-todo-item-dates {
+        text-align: left;
+    }
+}
+
+@media (max-width: 480px) {
+    .mika-todo-stats {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .mika-todo-stat {
+        flex: 1;
+        min-width: 80px;
     }
 }

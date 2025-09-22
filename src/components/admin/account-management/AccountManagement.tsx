@@ -3,12 +3,19 @@ import React, { useState, useEffect } from 'react';
 import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../firebase';
 import Header from '../../common/Header';
-import { User, UserPermissions } from '../../../types';
+import { User, UserPermissions, CreateUserData } from '../../../types';
+import { UserService } from '../../../services/userService';
+import { useLanguage } from '../../../contexts/LanguageContext';
+import { useAuth } from '../../../contexts/AuthContext';
+import UserForm from './UserForm';
 import '../../../styles/admin/AccountManagement.css';
 
 const AccountManagement: React.FC = () => {
+    const { t } = useLanguage();
+    const { currentUserProfile } = useAuth();
     const [users, setUsers] = useState<User[]>([]);
     const [loading, setLoading] = useState(true);
+    const [showForm, setShowForm] = useState(false);
 
     useEffect(() => {
         fetchUsers();
@@ -82,6 +89,30 @@ const AccountManagement: React.FC = () => {
         }
     };
 
+    // Add new user creation handler
+    const handleCreateUser = async (userData: CreateUserData) => {
+        try {
+            await UserService.createUser(userData);
+            setShowForm(false);
+            fetchUsers(); // Refresh the user list
+        } catch (error) {
+            console.error('Error creating user:', error);
+            // You might want to add error handling/notification here
+        }
+    };
+
+    // Check permissions
+    if (!currentUserProfile?.permissions.accountManagement) {
+        return (
+            <div className="dashboard-container">
+                <Header />
+                <div className="loading-container">
+                    <p>Access denied. You don't have permission to manage accounts.</p>
+                </div>
+            </div>
+        );
+    }
+
     if (loading) {
         return (
             <div className="dashboard-container">
@@ -99,8 +130,29 @@ const AccountManagement: React.FC = () => {
 
             <main className="account-management-content">
                 <div className="page-header">
-                    <h2>Account Management</h2>
-                    <p>Manage user account access and permissions</p>
+                    <h2>{t('userManagement.title')}</h2>
+                    <p>{t('userManagement.subtitle')}</p>
+                    {/* Add the create user button */}
+                    <button
+                        className="mika-account-add-button"
+                        onClick={() => setShowForm(true)}
+                        style={{
+                            background: 'linear-gradient(45deg, #a8c09a, #7fa070)',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '12px',
+                            padding: '15px 30px',
+                            fontSize: '16px',
+                            fontWeight: '600',
+                            cursor: 'pointer',
+                            transition: 'all 0.3s ease',
+                            textTransform: 'uppercase',
+                            letterSpacing: '1px',
+                            marginTop: '20px'
+                        }}
+                    >
+                        {t('userManagement.addUser')}
+                    </button>
                 </div>
 
                 <div className="users-container">
@@ -122,8 +174,9 @@ const AccountManagement: React.FC = () => {
                                         type="checkbox"
                                         checked={user.permissions?.taskManagement || false}
                                         onChange={(e) => updateUserPermission(user.id, 'taskManagement', e.target.checked)}
+                                        disabled={user.id === currentUserProfile?.id}
                                     />
-                                    <span>Task Management Access</span>
+                                    <span>{t('permission.taskManagement')}</span>
                                 </label>
 
                                 <label className="permission-item">
@@ -131,8 +184,9 @@ const AccountManagement: React.FC = () => {
                                         type="checkbox"
                                         checked={user.permissions?.accountManagement || false}
                                         onChange={(e) => updateUserPermission(user.id, 'accountManagement', e.target.checked)}
+                                        disabled={user.id === currentUserProfile?.id}
                                     />
-                                    <span>Account Management Access</span>
+                                    <span>{t('permission.accountManagement')}</span>
                                 </label>
                             </div>
                         </div>
@@ -140,10 +194,18 @@ const AccountManagement: React.FC = () => {
 
                     {users.length === 0 && (
                         <div className="no-users">
-                            <p>No users found. Create users through the User Management system.</p>
+                            <p>{t('userTable.noUsers')}</p>
                         </div>
                     )}
                 </div>
+
+                {/* Add the UserForm modal */}
+                {showForm && (
+                    <UserForm
+                        onSave={handleCreateUser}
+                        onCancel={() => setShowForm(false)}
+                    />
+                )}
             </main>
         </div>
     );
