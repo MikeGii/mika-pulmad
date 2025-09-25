@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../../firebase';
 import { useLanguage } from '../../../contexts/LanguageContext';
+import { doc, getDoc } from 'firebase/firestore';
 import { Task, TaskContent } from '../../../types';
 import '../../../styles/admin/FinancialStatus.css';
 
@@ -10,10 +11,24 @@ const FinancialStatus: React.FC = () => {
     const { t, language } = useLanguage();
     const [financialTasks, setFinancialTasks] = useState<Task[]>([]);
     const [loading, setLoading] = useState(true);
+    const [reservedMoney, setReservedMoney] = useState(0);
 
     useEffect(() => {
         fetchFinancialTasks();
+        fetchReservedMoney();
     }, []);
+
+    const fetchReservedMoney = async () => {
+        try {
+            const settingsDoc = await getDoc(doc(db, 'settings', 'financial'));
+            if (settingsDoc.exists()) {
+                const data = settingsDoc.data();
+                setReservedMoney(data.reservedMoney || 0);
+            }
+        } catch (error) {
+            console.error('Error fetching reserved money:', error);
+        }
+    };
 
     const fetchFinancialTasks = async () => {
         try {
@@ -56,7 +71,7 @@ const FinancialStatus: React.FC = () => {
     // Calculate financial totals
     const totalRequired = financialTasks.reduce((sum, task) => sum + (task.monetaryRequirement || 0), 0);
     const totalAllocated = financialTasks.reduce((sum, task) => sum + (task.allocatedAmount || 0), 0);
-    const totalRemaining = totalRequired - totalAllocated;
+    const effectiveRemaining = Math.max(totalRequired - totalAllocated - reservedMoney, 0);
 
     // Get the best price offers
     const totalBestOffers = financialTasks.reduce((sum, task) => {
@@ -103,8 +118,14 @@ const FinancialStatus: React.FC = () => {
                             <span className="mika-financial-stat-number">€{totalAllocated.toFixed(2)}</span>
                             <span className="mika-financial-stat-label">{t('financial.totalAllocated')}</span>
                         </div>
+                        {reservedMoney > 0 && (
+                            <div className="mika-financial-stat">
+                                <span className="mika-financial-stat-number">€{reservedMoney.toFixed(2)}</span>
+                                <span className="mika-financial-stat-label">{t('financial.reservedMoney')}</span>
+                            </div>
+                        )}
                         <div className="mika-financial-stat">
-                            <span className="mika-financial-stat-number mika-remaining">€{totalRemaining.toFixed(2)}</span>
+                            <span className="mika-financial-stat-number mika-remaining">€{effectiveRemaining.toFixed(2)}</span>
                             <span className="mika-financial-stat-label">{t('financial.remaining')}</span>
                         </div>
                         {potentialSavings > 0 && (

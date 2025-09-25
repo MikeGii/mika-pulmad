@@ -327,3 +327,14 @@
         font-size: 1.8rem;
     }
 }
+
+.mika-financial-stat-editable {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border-radius: 8px;
+    padding: 8px;
+}
+
+.mika-financial-stat-editable:hover {
+    background-color: rgba(212, 175, 55, 0.1);
+}

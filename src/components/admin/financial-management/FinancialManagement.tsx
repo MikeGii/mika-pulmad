@@ -1,14 +1,14 @@
 // src/components/admin/financial-management/FinancialManagement.tsx
 import React, { useState, useEffect } from 'react';
-import { collection, getDocs, updateDoc, doc } from 'firebase/firestore';
+import {collection, getDocs, updateDoc, doc, setDoc, getDoc} from 'firebase/firestore';
 import { db } from '../../../firebase';
 import Header from '../../common/Header';
 import { useLanguage } from '../../../contexts/LanguageContext';
 import { useAuth } from '../../../contexts/AuthContext';
 import { Task, TaskContent, PriceOffer } from '../../../types';
-import FinancialTaskCard from './FinancialTaskCard';
 import PriceOfferModal from './PriceOfferModal';
 import '../../../styles/admin/FinancialManagement.css';
+import FinancialTable from "./FinancialTable";
 
 const FinancialManagement: React.FC = () => {
     const { t, language } = useLanguage();
@@ -17,9 +17,11 @@ const FinancialManagement: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [showPriceOfferModal, setShowPriceOfferModal] = useState(false);
     const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+    const [reservedMoney, setReservedMoney] = useState(0);
 
     useEffect(() => {
         fetchTasks();
+        fetchReservedMoney();
     }, []);
 
     const fetchTasks = async () => {
@@ -153,6 +155,32 @@ const FinancialManagement: React.FC = () => {
         setSelectedTask(null);
     };
 
+    // Fetch reserved money from Firestore
+    const fetchReservedMoney = async () => {
+        try {
+            const settingsDoc = await getDoc(doc(db, 'settings', 'financial'));
+            if (settingsDoc.exists()) {
+                const data = settingsDoc.data();
+                setReservedMoney(data.reservedMoney || 0);
+            }
+        } catch (error) {
+            console.error('Error fetching reserved money:', error);
+        }
+    };
+
+    // Update reserved money in Firestore
+    const updateReservedMoney = async (amount: number) => {
+        try {
+            await setDoc(doc(db, 'settings', 'financial'), {
+                reservedMoney: amount,
+                updatedAt: new Date(),
+            });
+            setReservedMoney(amount);
+        } catch (error) {
+            console.error('Error updating reserved money:', error);
+        }
+    };
+
     // Check permissions
     if (!currentUserProfile?.permissions.financialManagement) {
         return (
@@ -166,11 +194,11 @@ const FinancialManagement: React.FC = () => {
         );
     }
 
-    // Calculate statistics
+// Calculate statistics
     const activeTasks = tasks.filter(task => task.isFinanciallyActive);
     const totalRequired = tasks.reduce((sum, task) => sum + (task.monetaryRequirement || 0), 0);
     const totalAllocated = tasks.reduce((sum, task) => sum + (task.allocatedAmount || 0), 0);
-    const totalRemaining = totalRequired - totalAllocated;
+    const effectiveRemaining = Math.max(totalRequired - totalAllocated - reservedMoney, 0);
 
     if (loading) {
         return (
@@ -210,9 +238,19 @@ const FinancialManagement: React.FC = () => {
                             <span className="mika-financial-stat-number">€{totalAllocated.toFixed(2)}</span>
                             <span className="mika-financial-stat-label">{t('financialManagement.totalAllocated')}</span>
                         </div>
+                        <div className="mika-financial-stat mika-financial-stat-editable" onClick={() => {
+                            const newAmount = prompt('Enter reserved money amount:', reservedMoney.toString());
+                            if (newAmount !== null) {
+                                const amount = parseFloat(newAmount) || 0;
+                                updateReservedMoney(amount);
+                            }
+                        }}>
+                            <span className="mika-financial-stat-number">€{reservedMoney.toFixed(2)}</span>
+                            <span className="mika-financial-stat-label">{t('financialManagement.reservedMoney')} ✏️</span>
+                        </div>
                         <div className="mika-financial-stat">
-                        <span className={`mika-financial-stat-number ${totalRemaining > 0 ? 'mika-financial-remaining' : 'mika-financial-complete'}`}>
-                            €{totalRemaining.toFixed(2)}
+                        <span className={`mika-financial-stat-number ${effectiveRemaining > 0 ? 'mika-financial-remaining' : 'mika-financial-complete'}`}>
+                            €{effectiveRemaining.toFixed(2)}
                         </span>
                             <span className="mika-financial-stat-label">{t('financialManagement.remaining')}</span>
                         </div>
@@ -226,19 +264,14 @@ const FinancialManagement: React.FC = () => {
                         <p>{t('financialManagement.empty.description')}</p>
                     </div>
                 ) : (
-                    <div className="mika-financial-tasks-grid">
-                        {tasks.map(task => (
-                            <FinancialTaskCard
-                                key={task.id}
-                                task={task}
-                                onToggleActive={updateTaskFinancialStatus}
-                                onUpdateAllocated={updateAllocatedAmount}
-                                onAddPriceOffer={handleAddPriceOffer}
-                                onRemovePriceOffer={removePriceOffer}
-                                getLocalizedContent={getLocalizedContent}
-                            />
-                        ))}
-                    </div>
+                    <FinancialTable
+                        tasks={tasks}
+                        onToggleActive={updateTaskFinancialStatus}
+                        onUpdateAllocated={updateAllocatedAmount}
+                        onAddPriceOffer={handleAddPriceOffer}
+                        onRemovePriceOffer={removePriceOffer}
+                        getLocalizedContent={getLocalizedContent}
+                    />
                 )}
 
                 {showPriceOfferModal && selectedTask && (

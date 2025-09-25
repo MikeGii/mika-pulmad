@@ -173,4 +173,33 @@ export const financialTranslations: Translations = {
         et: 'Loo ülesandeid rahaliste vajadustega ülesannete halduslehel',
         ua: 'Створіть завдання з грошовими потребами на сторінці управління завданнями'
     },
+
+
+    'financialManagement.taskName': {
+        et: 'Ülesande nimi',
+        ua: 'Назва завдання'
+    },
+    'financialManagement.status': {
+        et: 'Staatus',
+        ua: 'Статус'
+    },
+    'financialManagement.actions': {
+        et: 'Tegevused',
+        ua: 'Дії'
+    },
+    'financialManagement.clickToEdit': {
+        et: 'Kliki muutmiseks',
+        ua: 'Натисніть для редагування'
+    },
+
+
+
+    'financialManagement.reservedMoney': {
+        et: 'Reserveeritud raha',
+        ua: 'Зарезервовані кошти'
+    },
+    'financial.reservedMoney': {
+        et: 'Reserveeritud raha',
+        ua: 'Зарезервовані кошти'
+    },
 };
