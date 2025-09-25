@@ -95,6 +95,11 @@ const GuestForm: React.FC<GuestFormProps> = ({ guest, onSave, onCancel }) => {
     const selectInvitationGetter = (getter: Guest) => {
         setLinkedGetterSearchTerm(`${getter.firstName} ${getter.lastName}`);
         handleInputChange('linkedInvitationGetterId', getter.id);
+
+        if (formData.tableNumber === '' || formData.tableNumber === 0) {
+            handleInputChange('tableNumber', getter.tableNumber);
+        }
+
         setShowGetterDropdown(false);
     };
 
@@ -232,7 +237,18 @@ const GuestForm: React.FC<GuestFormProps> = ({ guest, onSave, onCancel }) => {
                                 className="mika-form-input"
                                 placeholder={t('guestForm.tableNumberPlaceholder')}
                                 value={formData.tableNumber}
-                                onChange={(e) => handleInputChange('tableNumber', Number(e.target.value))}
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    // Контролюємо, щоб значення не було порожнім або некоректним
+                                    if (value === '') {
+                                        handleInputChange('tableNumber', '');
+                                    } else {
+                                        const numValue = parseInt(value, 10);
+                                        if (!isNaN(numValue) && numValue > 0) {
+                                            handleInputChange('tableNumber', numValue);
+                                        }
+                                    }
+                                }}
                                 required
                             />
                         </div>
