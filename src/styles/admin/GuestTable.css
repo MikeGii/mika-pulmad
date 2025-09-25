@@ -601,3 +601,135 @@
         padding-right: 36px;
     }
 }
+
+/* Collapsible Table Header Styles */
+.mika-guest-table-group-header {
+    background: rgba(168, 192, 154, 0.15);
+    padding: 15px 20px;
+    font-weight: 600;
+    color: #7fa070;
+    font-size: 16px;
+    border-bottom: 2px solid rgba(168, 192, 154, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+.mika-guest-table-group-header:hover {
+    background: rgba(168, 192, 154, 0.25);
+    transform: translateY(-1px);
+}
+
+.mika-guest-table-group-header.mika-expanded {
+    background: rgba(168, 192, 154, 0.2);
+}
+
+.mika-guest-table-group-header.mika-collapsed {
+    border-bottom: 1px solid rgba(168, 192, 154, 0.15);
+    margin-bottom: 2px;
+}
+
+.mika-table-header-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mika-table-expand-icon {
+    font-size: 12px;
+    color: #7fa070;
+    transition: transform 0.3s ease;
+    font-weight: bold;
+}
+
+.mika-guest-table-group-header.mika-expanded .mika-table-expand-icon {
+    transform: rotate(0deg);
+}
+
+.mika-guest-table-group-header.mika-collapsed .mika-table-expand-icon {
+    transform: rotate(-90deg);
+}
+
+.mika-table-title {
+    font-weight: 600;
+    color: #7fa070;
+}
+
+.mika-table-guest-count {
+    background: rgba(127, 160, 112, 0.2);
+    color: #7fa070;
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.mika-guest-table-group-header:hover .mika-table-guest-count {
+    background: rgba(127, 160, 112, 0.3);
+}
+
+/* Table Content Animation */
+.mika-guest-table-content {
+    animation: mika-expand-table 0.3s ease-out;
+    overflow: hidden;
+}
+
+@keyframes mika-expand-table {
+    from {
+        opacity: 0;
+        max-height: 0;
+    }
+    to {
+        opacity: 1;
+        max-height: 1000px;
+    }
+}
+
+/* Update existing table group styles */
+.mika-guest-table-group {
+    margin-bottom: 15px; /* Reduced from 30px for collapsed state */
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.mika-guest-table-group:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Mobile responsiveness for collapsible headers */
+@media (max-width: 768px) {
+    .mika-guest-table-group-header {
+        padding: 12px 15px;
+        font-size: 14px;
+    }
+
+    .mika-table-header-content {
+        gap: 8px;
+    }
+
+    .mika-table-expand-icon {
+        font-size: 10px;
+    }
+
+    .mika-table-guest-count {
+        padding: 3px 8px;
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 480px) {
+    .mika-guest-table-group-header {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+
+    .mika-table-title {
+        font-size: 13px;
+    }
+}

@@ -307,4 +307,22 @@ export const guestTranslations: Translations = {
         et: 'otsingu tulemust',
         ua: 'результатів пошуку'
     },
+
+    // Add these to the guestTranslations object in guests.ts
+    'guestTable.expandTable': {
+        et: 'Laienda laud',
+        ua: 'Розгорнути стіл'
+    },
+    'guestTable.collapseTable': {
+        et: 'Ahenda laud',
+        ua: 'Згорнути стіл'
+    },
+    'guestTable.clickToExpand': {
+        et: 'Klõpsa laienamiseks',
+        ua: 'Клікніть для розгортання'
+    },
+    'guestTable.clickToCollapse': {
+        et: 'Klõpsa ahendamiseks',
+        ua: 'Клікніть для згортання'
+    },
 };

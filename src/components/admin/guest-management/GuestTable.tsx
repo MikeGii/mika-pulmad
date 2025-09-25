@@ -13,6 +13,7 @@ interface GuestTableProps {
 const GuestTable: React.FC<GuestTableProps> = ({ guests, onEdit, onDelete }) => {
     const { t } = useLanguage();
     const [searchTerm, setSearchTerm] = useState('');
+    const [expandedTables, setExpandedTables] = useState<Set<number>>(new Set());
 
     // Helper function to generate invitation URL
     const generateInvitationUrl = (guest: Guest): string => {
@@ -62,6 +63,30 @@ const GuestTable: React.FC<GuestTableProps> = ({ guests, onEdit, onDelete }) => 
                 {t(`rsvpStatus.${status}`)}
             </span>
         );
+    };
+
+    // Toggle table expansion
+    const toggleTable = (tableNumber: number) => {
+        setExpandedTables(prev => {
+            const newSet = new Set(prev);
+            if (newSet.has(tableNumber)) {
+                newSet.delete(tableNumber);
+            } else {
+                newSet.add(tableNumber);
+            }
+            return newSet;
+        });
+    };
+
+    // Expand all tables when searching
+    const handleSearchChange = (value: string) => {
+        setSearchTerm(value);
+        // If searching, expand all tables to show results
+        if (value.trim()) {
+            // Expand all tables when searching
+            const allTableNumbers = new Set(guests.map(guest => guest.tableNumber));
+            setExpandedTables(allTableNumbers);
+        }
     };
 
     // Filter guests based on search term
@@ -148,6 +173,8 @@ const GuestTable: React.FC<GuestTableProps> = ({ guests, onEdit, onDelete }) => 
     // Clear search
     const handleClearSearch = () => {
         setSearchTerm('');
+        // When clearing search, collapse all tables
+        setExpandedTables(new Set());
     };
 
     if (guests.length === 0) {
@@ -172,7 +199,7 @@ const GuestTable: React.FC<GuestTableProps> = ({ guests, onEdit, onDelete }) => 
                             className="mika-guest-search-input"
                             placeholder={t('guestTable.searchPlaceholder')}
                             value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
+                            onChange={(e) => handleSearchChange(e.target.value)}
                         />
                         {searchTerm && (
                             <button
@@ -213,156 +240,173 @@ const GuestTable: React.FC<GuestTableProps> = ({ guests, onEdit, onDelete }) => 
                 ) : (
                     sortedTableNumbers.map(tableNumber => {
                         const tableGuests = guestsByTable[tableNumber];
+                        const isExpanded = expandedTables.has(tableNumber);
+
                         return (
                             <div key={tableNumber} className="mika-guest-table-group">
-                                <div className="mika-guest-table-group-header">
-                                    <span>{t('guestTable.table')} {tableNumber}</span>
+                                <div
+                                    className={`mika-guest-table-group-header ${isExpanded ? 'mika-expanded' : 'mika-collapsed'}`}
+                                    onClick={() => toggleTable(tableNumber)}
+                                    title={isExpanded ? t('guestTable.clickToCollapse') : t('guestTable.clickToExpand')}
+                                >
+                                    <div className="mika-table-header-content">
+                                        <span className="mika-table-expand-icon">
+                                            {isExpanded ? '▼' : '▶'}
+                                        </span>
+                                        <span className="mika-table-title">
+                                            {t('guestTable.table')} {tableNumber}
+                                        </span>
+                                    </div>
                                     <span className="mika-table-guest-count">
                                         {tableGuests.length} {tableGuests.length === 1 ? t('guestTable.guest') : t('guestTable.guests')}
                                     </span>
                                 </div>
 
-                                <table className="mika-guest-table">
-                                    <thead className="mika-guest-table-head">
-                                    <tr>
-                                        <th>{t('guestTable.name')}</th>
-                                        <th>{t('guestTable.contact')}</th>
-                                        <th>{t('guestTable.location')}</th>
-                                        <th>{t('guestTable.invitationInfo')}</th>
-                                        <th>{t('guestTable.actions')}</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody className="mika-guest-table-body">
-                                    {tableGuests.map((guest) => (
-                                        <tr key={guest.id} className="mika-guest-table-row">
-                                            <td className="mika-guest-name-cell">
-                                                <div className="mika-guest-name-content">
-                                                    <span className="mika-guest-name">
-                                                        {guest.firstName} {guest.lastName}
-                                                    </span>
-                                                    {guest.isChild && (
-                                                        <span className="mika-guest-child-badge">
-                                                            {t('guestTable.child')}
-                                                        </span>
-                                                    )}
-                                                    {guest.isInvitationGetter && (
-                                                        <span className="mika-guest-invitation-getter-badge">
-                                                            {t('guestTable.invitationGetter')}
-                                                        </span>
-                                                    )}
-                                                    {!guest.isInvitationGetter && guest.linkedInvitationGetterId && (
-                                                        <span className="mika-guest-linked-badge">
-                                                            {t('guestTable.linkedGuest')}
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-
-                                            <td className="mika-guest-contact-cell">
-                                                <div className="mika-guest-contact-info">
-                                                    {guest.phoneNumber && (
-                                                        <div className="mika-guest-contact-item">
-                                                            <span className="mika-guest-contact-label">{t('guestTable.phone')}</span>
-                                                            <span className="mika-guest-contact-value">{guest.phoneNumber}</span>
-                                                        </div>
-                                                    )}
-                                                    {guest.email && (
-                                                        <div className="mika-guest-contact-item">
-                                                            <span className="mika-guest-contact-label">{t('guestTable.email')}</span>
-                                                            <span className="mika-guest-contact-value">{guest.email}</span>
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            </td>
-
-                                            <td className="mika-guest-location-cell">
-                                                <div className="mika-guest-location">
-                                                    {guest.location || '-'}
-                                                </div>
-                                            </td>
-
-                                            <td className="mika-guest-invitation-cell">
-                                                <div className="mika-guest-invitation-info">
-                                                    {guest.isInvitationGetter ? (
-                                                        <div className="mika-invitation-getter-info">
-                                                            <div className="mika-invitation-language">
-                                                                {guest.invitationLanguage.toUpperCase()}
-                                                            </div>
-                                                            <div className="mika-invitation-status-info">
-                                                                {getInvitationStatusBadge(guest.invitationStatus)}
-                                                            </div>
-                                                            {guest.invitationOpenCount > 0 && (
-                                                                <div className="mika-invitation-opens">
-                                                                    {guest.invitationOpenCount} {guest.invitationOpenCount === 1
-                                                                    ? t('guestTable.openedTime') : t('guestTable.openedTimes')}
-                                                                </div>
-                                                            )}
-                                                            <div className="mika-rsvp-status-info">
-                                                                {getRsvpStatusBadge(guest.rsvpStatus)}
-                                                            </div>
-                                                            {guest.rsvpStatus === 'attending' && (
-                                                                <div className="mika-rsvp-details">
-                                                                    {guest.rsvpResponses.requiresAccommodation && (
-                                                                        <span className="mika-rsvp-need">🏨 {t('guestTable.needsAccommodation')}</span>
-                                                                    )}
-                                                                    {guest.rsvpResponses.needsTransport && (
-                                                                        <span className="mika-rsvp-need">🚗 {t('guestTable.needsTransport')}</span>
-                                                                    )}
-                                                                    {guest.rsvpResponses.hasDietaryRestrictions && (
-                                                                        <span className="mika-rsvp-need">🍽️ {t('guestTable.hasDietaryRestrictions')}</span>
-                                                                    )}
-                                                                </div>
-                                                            )}
-                                                        </div>
-                                                    ) : (
-                                                        <div className="mika-linked-guest-info">
-                                                            <span className="mika-linked-to-text">
-                                                                {t('guestTable.linkedTo')}
-                                                                <span className="mika-linked-getter-name">
-                                                                    {(() => {
-                                                                        const linkedGetter = guests.find(g => g.id === guest.linkedInvitationGetterId);
-                                                                        return linkedGetter ?
-                                                                            ` ${linkedGetter.firstName} ${linkedGetter.lastName}` :
-                                                                            t('guestTable.unknownGetter');
-                                                                    })()}
-                                                                </span>
+                                {isExpanded && (
+                                    <div className="mika-guest-table-content">
+                                        <table className="mika-guest-table">
+                                            <thead className="mika-guest-table-head">
+                                            <tr>
+                                                <th>{t('guestTable.name')}</th>
+                                                <th>{t('guestTable.contact')}</th>
+                                                <th>{t('guestTable.location')}</th>
+                                                <th>{t('guestTable.invitationInfo')}</th>
+                                                <th>{t('guestTable.actions')}</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody className="mika-guest-table-body">
+                                            {tableGuests.map((guest) => (
+                                                <tr key={guest.id} className="mika-guest-table-row">
+                                                    <td className="mika-guest-name-cell">
+                                                        <div className="mika-guest-name-content">
+                                                            <span className="mika-guest-name">
+                                                                {guest.firstName} {guest.lastName}
                                                             </span>
+                                                            {guest.isChild && (
+                                                                <span className="mika-guest-child-badge">
+                                                                    {t('guestTable.child')}
+                                                                </span>
+                                                            )}
+                                                            {guest.isInvitationGetter && (
+                                                                <span className="mika-guest-invitation-getter-badge">
+                                                                    {t('guestTable.invitationGetter')}
+                                                                </span>
+                                                            )}
+                                                            {!guest.isInvitationGetter && guest.linkedInvitationGetterId && (
+                                                                <span className="mika-guest-linked-badge">
+                                                                    {t('guestTable.linkedGuest')}
+                                                                </span>
+                                                            )}
                                                         </div>
-                                                    )}
-                                                </div>
-                                            </td>
+                                                    </td>
 
-                                            <td className="mika-guest-actions-cell">
-                                                <div className="mika-guest-actions">
-                                                    {guest.isInvitationGetter && (
-                                                        <button
-                                                            className="mika-guest-action-button mika-guest-action-invitation"
-                                                            onClick={() => handleCopyInvitationUrl(guest)}
-                                                            title={t('guestTable.generateInvitation')}
-                                                        >
-                                                            📧
-                                                        </button>
-                                                    )}
-                                                    <button
-                                                        className="mika-guest-action-button mika-guest-action-edit"
-                                                        onClick={() => onEdit(guest)}
-                                                        title={t('guestTable.edit')}
-                                                    >
-                                                        ✏️
-                                                    </button>
-                                                    <button
-                                                        className="mika-guest-action-button mika-guest-action-delete"
-                                                        onClick={() => onDelete(guest)}
-                                                        title={t('guestTable.delete')}
-                                                    >
-                                                        🗑️
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                    </tbody>
-                                </table>
+                                                    <td className="mika-guest-contact-cell">
+                                                        <div className="mika-guest-contact-info">
+                                                            {guest.phoneNumber && (
+                                                                <div className="mika-guest-contact-item">
+                                                                    <span className="mika-guest-contact-label">{t('guestTable.phone')}</span>
+                                                                    <span className="mika-guest-contact-value">{guest.phoneNumber}</span>
+                                                                </div>
+                                                            )}
+                                                            {guest.email && (
+                                                                <div className="mika-guest-contact-item">
+                                                                    <span className="mika-guest-contact-label">{t('guestTable.email')}</span>
+                                                                    <span className="mika-guest-contact-value">{guest.email}</span>
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    </td>
+
+                                                    <td className="mika-guest-location-cell">
+                                                        <div className="mika-guest-location">
+                                                            {guest.location || '-'}
+                                                        </div>
+                                                    </td>
+
+                                                    <td className="mika-guest-invitation-cell">
+                                                        <div className="mika-guest-invitation-info">
+                                                            {guest.isInvitationGetter ? (
+                                                                <div className="mika-invitation-getter-info">
+                                                                    <div className="mika-invitation-language">
+                                                                        {guest.invitationLanguage.toUpperCase()}
+                                                                    </div>
+                                                                    <div className="mika-invitation-status-info">
+                                                                        {getInvitationStatusBadge(guest.invitationStatus)}
+                                                                    </div>
+                                                                    {guest.invitationOpenCount > 0 && (
+                                                                        <div className="mika-invitation-opens">
+                                                                            {guest.invitationOpenCount} {guest.invitationOpenCount === 1
+                                                                            ? t('guestTable.openedTime') : t('guestTable.openedTimes')}
+                                                                        </div>
+                                                                    )}
+                                                                    <div className="mika-rsvp-status-info">
+                                                                        {getRsvpStatusBadge(guest.rsvpStatus)}
+                                                                    </div>
+                                                                    {guest.rsvpStatus === 'attending' && (
+                                                                        <div className="mika-rsvp-details">
+                                                                            {guest.rsvpResponses.requiresAccommodation && (
+                                                                                <span className="mika-rsvp-need">🏨 {t('guestTable.needsAccommodation')}</span>
+                                                                            )}
+                                                                            {guest.rsvpResponses.needsTransport && (
+                                                                                <span className="mika-rsvp-need">🚗 {t('guestTable.needsTransport')}</span>
+                                                                            )}
+                                                                            {guest.rsvpResponses.hasDietaryRestrictions && (
+                                                                                <span className="mika-rsvp-need">🍽️ {t('guestTable.hasDietaryRestrictions')}</span>
+                                                                            )}
+                                                                        </div>
+                                                                    )}
+                                                                </div>
+                                                            ) : (
+                                                                <div className="mika-linked-guest-info">
+                                                                    <span className="mika-linked-to-text">
+                                                                        {t('guestTable.linkedTo')}
+                                                                        <span className="mika-linked-getter-name">
+                                                                            {(() => {
+                                                                                const linkedGetter = guests.find(g => g.id === guest.linkedInvitationGetterId);
+                                                                                return linkedGetter ?
+                                                                                    ` ${linkedGetter.firstName} ${linkedGetter.lastName}` :
+                                                                                    t('guestTable.unknownGetter');
+                                                                            })()}
+                                                                        </span>
+                                                                    </span>
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    </td>
+
+                                                    <td className="mika-guest-actions-cell">
+                                                        <div className="mika-guest-actions">
+                                                            {guest.isInvitationGetter && (
+                                                                <button
+                                                                    className="mika-guest-action-button mika-guest-action-invitation"
+                                                                    onClick={() => handleCopyInvitationUrl(guest)}
+                                                                    title={t('guestTable.generateInvitation')}
+                                                                >
+                                                                    📧
+                                                                </button>
+                                                            )}
+                                                            <button
+                                                                className="mika-guest-action-button mika-guest-action-edit"
+                                                                onClick={() => onEdit(guest)}
+                                                                title={t('guestTable.edit')}
+                                                            >
+                                                                ✏️
+                                                            </button>
+                                                            <button
+                                                                className="mika-guest-action-button mika-guest-action-delete"
+                                                                onClick={() => onDelete(guest)}
+                                                                title={t('guestTable.delete')}
+                                                            >
+                                                                🗑️
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                )}
                             </div>
                         );
                     })
