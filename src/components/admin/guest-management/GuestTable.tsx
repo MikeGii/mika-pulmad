@@ -82,7 +82,7 @@ const GuestTable: React.FC<GuestTableProps> = ({ guests, onEdit, onDelete }) => 
         });
     }, [guests, searchTerm]);
 
-    // Group filtered guests by table number
+    // Group filtered guests by table number with new sorting logic
     const guestsByTable = useMemo(() => {
         const grouped: { [tableNumber: number]: Guest[] } = {};
 
@@ -93,15 +93,48 @@ const GuestTable: React.FC<GuestTableProps> = ({ guests, onEdit, onDelete }) => 
             grouped[guest.tableNumber].push(guest);
         });
 
-        // Sort guests within each table: invitation getters first, then by name
+        // NEW SORTING LOGIC: Sort guests within each table
         Object.keys(grouped).forEach(tableNumber => {
-            grouped[Number(tableNumber)].sort((a, b) => {
-                // Invitation getters first
-                if (a.isInvitationGetter && !b.isInvitationGetter) return -1;
-                if (!a.isInvitationGetter && b.isInvitationGetter) return 1;
-                // Then by name
+            const tableGuests = grouped[Number(tableNumber)];
+
+            // Separate invitation getters and linked guests
+            const invitationGetters = tableGuests.filter(guest => guest.isInvitationGetter);
+            const linkedGuests = tableGuests.filter(guest => !guest.isInvitationGetter);
+
+            // Sort invitation getters alphabetically by name
+            invitationGetters.sort((a, b) => {
                 return `${a.firstName} ${a.lastName}`.localeCompare(`${b.firstName} ${b.lastName}`);
             });
+
+            // Create the final sorted array
+            const sortedGuests: Guest[] = [];
+
+            // For each invitation getter, add them and their linked guests
+            invitationGetters.forEach(getter => {
+                // Add the invitation getter
+                sortedGuests.push(getter);
+
+                // Find and add all linked guests for this getter, sorted by name
+                const getterLinkedGuests = linkedGuests
+                    .filter(guest => guest.linkedInvitationGetterId === getter.id)
+                    .sort((a, b) => `${a.firstName} ${a.lastName}`.localeCompare(`${b.firstName} ${b.lastName}`));
+
+                sortedGuests.push(...getterLinkedGuests);
+            });
+
+            // Add any remaining linked guests (those without a valid invitation getter)
+            const orphanedLinkedGuests = linkedGuests
+                .filter(guest => {
+                    // Check if their linked invitation getter exists in this table
+                    const linkedGetter = invitationGetters.find(getter => getter.id === guest.linkedInvitationGetterId);
+                    return !linkedGetter;
+                })
+                .sort((a, b) => `${a.firstName} ${a.lastName}`.localeCompare(`${b.firstName} ${b.lastName}`));
+
+            sortedGuests.push(...orphanedLinkedGuests);
+
+            // Update the grouped array with the sorted guests
+            grouped[Number(tableNumber)] = sortedGuests;
         });
 
         return grouped;
@@ -289,7 +322,7 @@ const GuestTable: React.FC<GuestTableProps> = ({ guests, onEdit, onDelete }) => 
                                                                     {(() => {
                                                                         const linkedGetter = guests.find(g => g.id === guest.linkedInvitationGetterId);
                                                                         return linkedGetter ?
-                                                                            `${linkedGetter.firstName} ${linkedGetter.lastName}` :
+                                                                            ` ${linkedGetter.firstName} ${linkedGetter.lastName}` :
                                                                             t('guestTable.unknownGetter');
                                                                     })()}
                                                                 </span>
