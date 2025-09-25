@@ -733,3 +733,168 @@
         font-size: 13px;
     }
 }
+
+/* RSVP Details Toggle Button */
+.mika-rsvp-details-toggle {
+    background: rgba(168, 192, 154, 0.1);
+    border: 1px solid rgba(168, 192, 154, 0.3);
+    border-radius: 8px;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-size: 11px;
+    color: #5a6c50;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 6px;
+    width: fit-content;
+}
+
+.mika-rsvp-details-toggle:hover {
+    background: rgba(168, 192, 154, 0.2);
+    border-color: rgba(168, 192, 154, 0.5);
+    transform: translateY(-1px);
+}
+
+.mika-rsvp-toggle-icon {
+    font-size: 10px;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+}
+
+/* RSVP Details Row */
+.mika-rsvp-details-row {
+    background: rgba(168, 192, 154, 0.05);
+}
+
+.mika-rsvp-details-cell {
+    padding: 0 !important;
+    border-bottom: 1px solid rgba(168, 192, 154, 0.2);
+}
+
+.mika-rsvp-details-container {
+    padding: 16px 20px;
+    border-left: 4px solid rgba(168, 192, 154, 0.4);
+    margin: 8px 16px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    animation: mika-rsvp-expand 0.3s ease-out;
+}
+
+@keyframes mika-rsvp-expand {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.mika-rsvp-details-title {
+    color: #5a6c50;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 12px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.mika-rsvp-details-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mika-rsvp-detail-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 0;
+}
+
+.mika-rsvp-detail-icon {
+    font-size: 16px;
+    width: 24px;
+    text-align: center;
+}
+
+.mika-rsvp-detail-text {
+    font-size: 14px;
+    color: #374151;
+}
+
+.mika-rsvp-detail-note {
+    background: rgba(168, 192, 154, 0.1);
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 8px;
+}
+
+.mika-rsvp-note-label {
+    font-weight: 600;
+    color: #5a6c50;
+    font-size: 13px;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.mika-rsvp-note-text {
+    color: #374151;
+    font-size: 14px;
+    line-height: 1.4;
+    font-style: italic;
+}
+
+/* Mobile responsiveness for RSVP details */
+@media (max-width: 768px) {
+    .mika-rsvp-details-toggle {
+        font-size: 10px;
+        padding: 3px 6px;
+    }
+
+    .mika-rsvp-details-container {
+        padding: 12px 16px;
+        margin: 6px 12px;
+    }
+
+    .mika-rsvp-details-title {
+        font-size: 12px;
+    }
+
+    .mika-rsvp-detail-item {
+        gap: 6px;
+    }
+
+    .mika-rsvp-detail-icon {
+        font-size: 14px;
+        width: 20px;
+    }
+
+    .mika-rsvp-detail-text {
+        font-size: 12px;
+    }
+
+    .mika-rsvp-detail-note {
+        padding: 10px;
+    }
+
+    .mika-rsvp-note-label,
+    .mika-rsvp-note-text {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .mika-rsvp-details-container {
+        padding: 10px 12px;
+        margin: 4px 8px;
+    }
+
+    .mika-rsvp-details-content {
+        gap: 6px;
+    }
+}

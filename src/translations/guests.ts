@@ -325,4 +325,36 @@ export const guestTranslations: Translations = {
         et: 'Klõpsa ahendamiseks',
         ua: 'Клікніть для згортання'
     },
+
+
+
+    // RSVP Form details
+    'guestTable.rsvpDetails': {
+        et: 'RSVP üksikasjad',
+        ua: 'Деталі RSVP'
+    },
+    'guestTable.showRsvpDetails': {
+        et: 'Kuva RSVP üksikasju',
+        ua: 'Показати деталі RSVP'
+    },
+    'guestTable.hideRsvpDetails': {
+        et: 'Peida RSVP üksikasjad',
+        ua: 'Сховати деталі RSVP'
+    },
+    'guestTable.rsvpDetailsTitle': {
+        et: 'RSVP vastuse üksikasjad',
+        ua: 'Деталі відповіді RSVP'
+    },
+    'guestTable.dietaryNote': {
+        et: 'Toitumismärkus',
+        ua: 'Дієтична примітка'
+    },
+    'guestTable.invitationCopied': {
+        et: 'Kutse link kopeeritud!',
+        ua: 'Посилання скопійовано!'
+    },
+    'guestTable.invitationCopyError': {
+        et: 'Viga lingi kopeerimisel',
+        ua: 'Помилка копіювання посилання'
+    }
 };
