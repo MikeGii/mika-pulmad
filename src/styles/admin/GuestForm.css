@@ -279,3 +279,25 @@
         padding-left: 15px;
     }
 }
+
+.mika-form-input-disabled {
+    background-color: #f5f5f5;
+    color: #6b7280;
+    cursor: not-allowed;
+}
+
+.mika-form-help-text {
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 4px;
+    font-style: italic;
+}
+
+.mika-form-help-cascade {
+    background: #fef3c7;
+    color: #92400e;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border-left: 3px solid #f59e0b;
+    font-weight: 500;
+}

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../../../contexts/LanguageContext';
 import { useAuth } from '../../../contexts/AuthContext';
 import { GuestService } from '../../../services/guestService';
-import { Guest, GuestFormData, CreateGuestData } from '../../../types/Guest';
+import { Guest, GuestFormData, CreateGuestData } from '../../../types';
 import Header from '../../common/Header';
 import GuestForm from './GuestForm';
 import GuestTable from './GuestTable';
@@ -80,25 +80,61 @@ const GuestManagement: React.FC = () => {
         if (!editingGuest) return;
 
         try {
-            const guestData: CreateGuestData = {
-                firstName: formData.firstName,
-                lastName: formData.lastName,
-                phoneNumber: formData.phoneNumber || undefined,
-                email: formData.email || undefined,
-                location: formData.location || undefined,
-                tableNumber: Number(formData.tableNumber),
-                isChild: formData.isChild,
-                // Add new invitation fields
-                isInvitationGetter: formData.isInvitationGetter,
-                invitationLanguage: formData.invitationLanguage,
-                linkedInvitationGetterId: formData.linkedInvitationGetterId || undefined,
-            };
+            // Check if this is an invitation getter and table number changed
+            const isTableNumberChanged = editingGuest.isInvitationGetter &&
+                editingGuest.tableNumber !== Number(formData.tableNumber);
 
-            await GuestService.updateGuest(editingGuest.id, guestData);
+            if (isTableNumberChanged) {
+                // Use the cascading update method for invitation getters
+                // This handles BOTH the invitation getter AND all linked guests
+                await GuestService.updateInvitationGetterTable(
+                    editingGuest.id,
+                    Number(formData.tableNumber)
+                );
+
+                // Update other guest data (excluding table number since it was handled in cascade)
+                const otherGuestData = {
+                    firstName: formData.firstName,
+                    lastName: formData.lastName,
+                    phoneNumber: formData.phoneNumber || undefined,
+                    email: formData.email || undefined,
+                    location: formData.location || undefined,
+                    isChild: formData.isChild,
+                    isInvitationGetter: formData.isInvitationGetter,
+                    invitationLanguage: formData.invitationLanguage,
+                    linkedInvitationGetterId: formData.linkedInvitationGetterId || undefined,
+                    // DO NOT include tableNumber here - it was already handled by updateInvitationGetterTable
+                };
+
+                // Update only the non-table fields
+                await GuestService.updateGuest(editingGuest.id, otherGuestData);
+            } else {
+                // Normal update for non-invitation getters or when table didn't change
+                const guestData: CreateGuestData = {
+                    firstName: formData.firstName,
+                    lastName: formData.lastName,
+                    phoneNumber: formData.phoneNumber || undefined,
+                    email: formData.email || undefined,
+                    location: formData.location || undefined,
+                    tableNumber: Number(formData.tableNumber),
+                    isChild: formData.isChild,
+                    isInvitationGetter: formData.isInvitationGetter,
+                    invitationLanguage: formData.invitationLanguage,
+                    linkedInvitationGetterId: formData.linkedInvitationGetterId || undefined,
+                };
+
+                await GuestService.updateGuest(editingGuest.id, guestData);
+            }
+
             setEditingGuest(null);
             setShowForm(false);
             fetchGuests();
             fetchStatistics();
+
+            // Show success message for cascading updates
+            if (isTableNumberChanged) {
+                alert(t('guestManagement.tableUpdatedWithLinkedGuests'));
+            }
         } catch (error) {
             console.error('Error updating guest:', error);
             alert(t('guestManagement.errorUpdating'));

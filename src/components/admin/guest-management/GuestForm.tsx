@@ -62,18 +62,33 @@ const GuestForm: React.FC<GuestFormProps> = ({ guest, onSave, onCancel }) => {
                 invitationLanguage: guest.invitationLanguage || 'et',
                 linkedInvitationGetterId: guest.linkedInvitationGetterId || '',
             });
+        } else {
+            // Reset form when no guest (creating new guest)
+            setFormData({
+                firstName: '',
+                lastName: '',
+                phoneNumber: '',
+                email: '',
+                location: '',
+                tableNumber: '',
+                isChild: false,
+                isInvitationGetter: false,
+                invitationLanguage: 'et',
+                linkedInvitationGetterId: '',
+            });
+            setLinkedGetterSearchTerm('');
+        }
+    }, [guest]); // Only depend on guest
 
-            // Set search term for linked getter if editing
-            if (guest.linkedInvitationGetterId) {
-                loadInvitationGetters().then(() => {
-                    const linkedGetter = invitationGetters.find(g => g.id === guest.linkedInvitationGetterId);
-                    if (linkedGetter) {
-                        setLinkedGetterSearchTerm(`${linkedGetter.firstName} ${linkedGetter.lastName}`);
-                    }
-                });
+    // Set search term for linked getter - runs when invitation getters are loaded
+    useEffect(() => {
+        if (guest && guest.linkedInvitationGetterId && invitationGetters.length > 0) {
+            const linkedGetter = invitationGetters.find(g => g.id === guest.linkedInvitationGetterId);
+            if (linkedGetter) {
+                setLinkedGetterSearchTerm(`${linkedGetter.firstName} ${linkedGetter.lastName}`);
             }
         }
-    }, [guest, loadInvitationGetters, invitationGetters]);
+    }, [guest, invitationGetters]);
 
     const handleInputChange = (field: keyof GuestFormData, value: string | number | boolean) => {
         setFormData(prev => ({
@@ -96,9 +111,8 @@ const GuestForm: React.FC<GuestFormProps> = ({ guest, onSave, onCancel }) => {
         setLinkedGetterSearchTerm(`${getter.firstName} ${getter.lastName}`);
         handleInputChange('linkedInvitationGetterId', getter.id);
 
-        if (formData.tableNumber === '' || formData.tableNumber === 0) {
-            handleInputChange('tableNumber', getter.tableNumber);
-        }
+        // Always set the table number to match the invitation getter
+        handleInputChange('tableNumber', getter.tableNumber);
 
         setShowGetterDropdown(false);
     };
@@ -234,23 +248,36 @@ const GuestForm: React.FC<GuestFormProps> = ({ guest, onSave, onCancel }) => {
                             <input
                                 type="number"
                                 min="1"
-                                className="mika-form-input"
+                                className={`mika-form-input ${!formData.isInvitationGetter && formData.linkedInvitationGetterId ? 'mika-form-input-disabled' : ''}`}
                                 placeholder={t('guestForm.tableNumberPlaceholder')}
                                 value={formData.tableNumber}
                                 onChange={(e) => {
-                                    const value = e.target.value;
-                                    // Контролюємо, щоб значення не було порожнім або некоректним
-                                    if (value === '') {
-                                        handleInputChange('tableNumber', '');
-                                    } else {
-                                        const numValue = parseInt(value, 10);
-                                        if (!isNaN(numValue) && numValue > 0) {
-                                            handleInputChange('tableNumber', numValue);
+                                    // Only allow editing if user is invitation getter OR not linked to anyone
+                                    if (formData.isInvitationGetter || !formData.linkedInvitationGetterId) {
+                                        const value = e.target.value;
+                                        if (value === '') {
+                                            handleInputChange('tableNumber', '');
+                                        } else {
+                                            const numValue = parseInt(value, 10);
+                                            if (!isNaN(numValue) && numValue > 0) {
+                                                handleInputChange('tableNumber', numValue);
+                                            }
                                         }
                                     }
                                 }}
+                                disabled={!formData.isInvitationGetter && !!formData.linkedInvitationGetterId}
                                 required
                             />
+                            {formData.isInvitationGetter && (
+                                <div className="mika-form-help-text mika-form-help-cascade">
+                                    ⚠️ {t('guestForm.tableNumberCascadeWarning')}
+                                </div>
+                            )}
+                            {!formData.isInvitationGetter && formData.linkedInvitationGetterId && (
+                                <div className="mika-form-help-text">
+                                    {t('guestForm.tableNumberAutoAssigned')}
+                                </div>
+                            )}
                         </div>
 
                         {/* Invitation Settings */}

@@ -1,7 +1,7 @@
 // src/components/admin/guest-management/GuestTable.tsx
 import React, { useMemo } from 'react';
 import { useLanguage } from '../../../contexts/LanguageContext';
-import { Guest } from '../../../types/Guest';
+import { Guest } from '../../../types';
 import '../../../styles/admin/GuestTable.css';
 
 interface GuestTableProps {
@@ -208,6 +208,12 @@ const GuestTable: React.FC<GuestTableProps> = ({ guests, onEdit, onDelete }) => 
                                                 <div className="mika-linked-guest-info">
                                                     <span className="mika-linked-to-text">
                                                         {t('guestTable.linkedTo')}
+                                                        <span className="mika-linked-getter-name">
+                                                            {(() => {
+                                                                const linkedGetter = guests.find(g => g.id === guest.linkedInvitationGetterId);
+                                                                return linkedGetter ? ` ${linkedGetter.firstName} ${linkedGetter.lastName}` : t('guestTable.unknownGetter');
+                                                            })()}
+                                                        </span>
                                                     </span>
                                                 </div>
                                             )}

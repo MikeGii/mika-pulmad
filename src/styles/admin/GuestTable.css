@@ -480,3 +480,16 @@
         font-size: 12px;
     }
 }
+
+.mika-linked-to-text {
+    font-size: 12px;
+    color: #6b7280;
+    font-style: italic;
+}
+
+.mika-linked-getter-name {
+    font-weight: 600;
+    color: #5a6c50;
+    font-style: normal;
+}
+

@@ -269,4 +269,20 @@ export const guestTranslations: Translations = {
         et: 'Tühista',
         ua: 'Скасувати'
     },
+    'guestTable.unknownGetter': {
+        et: '(tundmatu kutse saaja)',
+        ua: '(невідомий отримувач запрошення)'
+    },
+    'guestForm.tableNumberAutoAssigned': {
+        et: 'Laua number määratakse automaatselt kutse saaja järgi',
+        ua: 'Номер столу призначається автоматично за отримувачем запрошення'
+    },
+    'guestManagement.tableUpdatedWithLinkedGuests': {
+        et: 'Laua number uuendatud. Kõik seotud külalised viidi samale lauale.',
+        ua: 'Номер столу оновлено. Усіх пов\'язаних гостей переведено за той самий стіл.'
+    },
+    'guestForm.tableNumberCascadeWarning': {
+        et: 'Laua numbri muutmisel viiakse kõik seotud külalised samale lauale',
+        ua: 'При зміні номера столу всі пов\'язані гості переводяться за той самий стіл'
+    },
 };

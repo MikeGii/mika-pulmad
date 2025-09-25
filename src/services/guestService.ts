@@ -12,6 +12,7 @@ import {
 } from 'firebase/firestore';
 import { db } from '../firebase';
 import { Guest, CreateGuestData } from '../types';
+import { writeBatch } from 'firebase/firestore';
 
 export class GuestService {
     // Create a new guest
@@ -295,6 +296,58 @@ export class GuestService {
                 totalChildren: 0,
                 guestsByTable: {}
             };
+        }
+    }
+
+    // Update invitation getter's table and cascade to all linked guests
+    static async updateInvitationGetterTable(getterId: string, newTableNumber: number): Promise<number> {
+        try {
+            const allGuests = await this.getAllGuests();
+
+            // Find the invitation getter
+            const getter = allGuests.find(g => g.id === getterId);
+            if (!getter || !getter.isInvitationGetter) {
+                throw new Error('Invitation getter not found');
+            }
+
+            // Skip update if table number hasn't actually changed
+            if (getter.tableNumber === newTableNumber) {
+                console.log('Table number unchanged, skipping update');
+                return 0;
+            }
+
+            // Find all guests linked to this invitation getter
+            const linkedGuests = allGuests.filter(g => g.linkedInvitationGetterId === getterId);
+
+            // Create batch updates
+            const batch = writeBatch(db);
+
+            // Update the invitation getter's table number FIRST
+            const getterRef = doc(db, 'guests', getterId);
+            batch.update(getterRef, {
+                tableNumber: newTableNumber,
+                updatedAt: new Date()
+            });
+
+            // Update all linked guests' table numbers
+            linkedGuests.forEach(linkedGuest => {
+                const guestRef = doc(db, 'guests', linkedGuest.id);
+                batch.update(guestRef, {
+                    tableNumber: newTableNumber,
+                    updatedAt: new Date()
+                });
+            });
+
+            // Execute all updates atomically
+            await batch.commit();
+
+            const totalUpdated = linkedGuests.length + 1; // +1 for the invitation getter
+            console.log(`Successfully updated table number to ${newTableNumber} for invitation getter and ${linkedGuests.length} linked guests (total: ${totalUpdated})`);
+
+            return linkedGuests.length; // Return number of linked guests moved
+        } catch (error) {
+            console.error('Error updating invitation getter table:', error);
+            throw error;
         }
     }
 }
