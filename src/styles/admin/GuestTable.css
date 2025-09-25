@@ -493,3 +493,111 @@
     font-style: normal;
 }
 
+/* Search Section Styles */
+.mika-guest-search-section {
+    padding: 20px;
+    background: linear-gradient(145deg, #f9f7f4, #ffffff);
+    border-bottom: 2px solid rgba(168, 192, 154, 0.2);
+}
+
+.mika-guest-search-container {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.mika-guest-search-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.mika-guest-search-input {
+    width: 100%;
+    padding: 12px 16px;
+    padding-right: 40px;
+    border: 2px solid rgba(168, 192, 154, 0.3);
+    border-radius: 25px;
+    font-size: 16px;
+    background: white;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.mika-guest-search-input:focus {
+    border-color: #7fa070;
+    box-shadow: 0 0 0 3px rgba(127, 160, 112, 0.1);
+}
+
+.mika-guest-search-input::placeholder {
+    color: #9ca3af;
+    font-style: italic;
+}
+
+.mika-guest-search-clear {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #6b7280;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.mika-guest-search-clear:hover {
+    background: rgba(168, 192, 154, 0.2);
+    color: #374151;
+}
+
+.mika-guest-search-summary {
+    text-align: center;
+    margin-top: 12px;
+    font-size: 14px;
+}
+
+.mika-guest-search-results-count {
+    color: #7fa070;
+    font-weight: 600;
+}
+
+.mika-guest-search-no-results {
+    color: #ef4444;
+    font-weight: 500;
+    font-style: italic;
+}
+
+/* Mobile responsiveness for search */
+@media (max-width: 768px) {
+    .mika-guest-search-section {
+        padding: 15px;
+    }
+
+    .mika-guest-search-input {
+        font-size: 14px;
+        padding: 10px 14px;
+        padding-right: 38px;
+    }
+
+    .mika-guest-search-clear {
+        right: 10px;
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .mika-guest-search-section {
+        padding: 12px;
+    }
+
+    .mika-guest-search-input {
+        font-size: 13px;
+        padding: 8px 12px;
+        padding-right: 36px;
+    }
+}

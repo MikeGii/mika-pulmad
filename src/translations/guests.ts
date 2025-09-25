@@ -285,4 +285,26 @@ export const guestTranslations: Translations = {
         et: 'Laua numbri muutmisel viiakse kõik seotud külalised samale lauale',
         ua: 'При зміні номера столу всі пов\'язані гості переводяться за той самий стіл'
     },
+
+    // Search bar
+    'guestTable.searchPlaceholder': {
+        et: 'Otsi külalisi nime järgi...',
+        ua: 'Шукати гостей за іменем...'
+    },
+    'guestTable.searchClear': {
+        et: 'Tühjenda otsing',
+        ua: 'Очистити пошук'
+    },
+    'guestTable.noSearchResults': {
+        et: 'Otsingu tulemusi ei leitud',
+        ua: 'Результатів пошуку не знайдено'
+    },
+    'guestTable.searchResults': {
+        et: 'otsingu tulemus',
+        ua: 'результат пошуку'
+    },
+    'guestTable.searchResultsPlural': {
+        et: 'otsingu tulemust',
+        ua: 'результатів пошуку'
+    },
 };
