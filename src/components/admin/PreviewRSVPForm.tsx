@@ -46,7 +46,7 @@ const PreviewRSVPForm: React.FC<PreviewRSVPFormProps> = ({ invitationGetter, lin
             dietaryNote: field === 'hasDietaryRestrictions' && prev[field] ? '' : prev.dietaryNote,
         }));
     };
-
+    // eslint-disable-next-line
     const handleTransportTypeChange = (type: 'estonia' | 'ukraine') => {
         setFormData(prev => ({
             ...prev,

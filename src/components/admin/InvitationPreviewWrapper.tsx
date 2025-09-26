@@ -40,12 +40,23 @@ const InvitationPreviewWrapper: React.FC<InvitationPreviewWrapperProps> = ({
             {/* Wedding Invitation Card with Frame */}
             <div className="mika-preview-invitation-section">
                 <div className="mika-ornamental-frame-container">
+                    {/* Layer 1: Frame image (bottom) */}
                     <img
                         src="/images/kutse_01.png"
                         alt=""
                         className="mika-ornamental-frame"
                     />
 
+                    {/* Layer 2: Meie.jpg oval background (middle) */}
+                    <div className="mika-ornamental-oval-bg">
+                        <img
+                            src="/images/meie.jpg"
+                            alt=""
+                            className="mika-oval-background-image"
+                        />
+                    </div>
+
+                    {/* Layer 3: Text content (top) */}
                     <div className="mika-ornamental-content">
                         <h1 className="mika-ornamental-title">
                             {mockData.invitationGetter.invitationLanguage === 'et' ? 'Pulmakutse' : 'Весільне запрошення'}

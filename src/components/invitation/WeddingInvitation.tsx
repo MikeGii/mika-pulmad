@@ -100,12 +100,23 @@ const WeddingInvitationContent: React.FC = () => {
                 {/* Wedding Invitation Card with Ornamental Frame */}
                 <div className="mika-invitation-section">
                     <div className="mika-ornamental-frame-container">
+                        {/* Bottom layer: Frame image */}
                         <img
                             src="/images/kutse_01.png"
                             alt=""
                             className="mika-ornamental-frame"
                         />
 
+                        {/* Middle layer: Meie.jpg oval background */}
+                        <div className="mika-ornamental-oval-bg">
+                            <img
+                                src="/images/meie.jpg"
+                                alt=""
+                                className="mika-oval-background-image"
+                            />
+                        </div>
+
+                        {/* Top layer: Text content */}
                         <div className="mika-ornamental-content">
                             <h1 className="mika-ornamental-title">
                                 {invitationGetter.invitationLanguage === 'et' ?
