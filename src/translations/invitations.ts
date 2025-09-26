@@ -197,4 +197,30 @@ export const invitationTranslations: Translations = {
         et: 'Kahju, et ei saa osaleda.',
         ua: 'Шкода, що не зможете взяти участь.'
     },
+
+    // Transport specific translations
+    'rsvp.transport.inEstonia': {
+        et: 'Eestis',
+        ua: 'В Естонії'
+    },
+    'rsvp.transport.fromUkraine': {
+        et: 'Ukrainast',
+        ua: 'З України'
+    },
+    'rsvp.transport.estoniaPlaceholder': {
+        et: 'Näiteks: Lennujaamast, bussijaamast või muu asukoht...',
+        ua: 'Наприклад: З аеропорту, автовокзалу або інше місце...'
+    },
+    'rsvp.transport.ukrainePlaceholder': {
+        et: 'Näiteks: Piirist või muu konkreetne asukoht...',
+        ua: 'Наприклад: З кордону або інше конкретне місце...'
+    },
+    'rsvp.transport.locationHint': {
+        et: 'Valikuline: täpsustage lähtepunkt',
+        ua: 'Необов\'язково: вкажіть місце відправлення'
+    },
+    'rsvp.pleaseSelectTransportType': {
+        et: 'Palun valige transpordi tüüp',
+        ua: 'Будь ласка, виберіть тип транспорту'
+    },
 };

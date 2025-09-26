@@ -37,6 +37,7 @@ const GuestTable: React.FC<GuestTableProps> = ({ guests, onEdit, onDelete }) => 
         const { rsvpResponses } = guest;
         return Boolean(rsvpResponses?.requiresAccommodation) ||
             Boolean(rsvpResponses?.needsTransport) ||
+            Boolean(rsvpResponses?.transportDetails) ||
             Boolean(rsvpResponses?.hasDietaryRestrictions) ||
             Boolean(rsvpResponses?.dietaryNote && rsvpResponses.dietaryNote.trim().length > 0);
     };
@@ -174,6 +175,19 @@ const GuestTable: React.FC<GuestTableProps> = ({ guests, onEdit, onDelete }) => 
     const handleClearSearch = () => {
         setSearchTerm('');
         setExpandedTables(new Set());
+    };
+
+    const formatTransportDetails = (transportDetails: string): string => {
+        // Parse the transport details string
+        // Format: "Estonia: Location" or "Ukraine: Location"
+        if (transportDetails.startsWith('Estonia:')) {
+            const location = transportDetails.replace('Estonia:', '').trim();
+            return `${t('guestTable.rsvpDetails.transportEstonia')}: ${location || '-'}`;
+        } else if (transportDetails.startsWith('Ukraine:')) {
+            const location = transportDetails.replace('Ukraine:', '').trim();
+            return `${t('guestTable.rsvpDetails.transportUkraine')}: ${location || '-'}`;
+        }
+        return transportDetails;
     };
 
     if (guests.length === 0) {
@@ -409,49 +423,54 @@ const GuestTable: React.FC<GuestTableProps> = ({ guests, onEdit, onDelete }) => 
 
                                                     {/* Expanded RSVP Details Row */}
                                                     {expandedRsvpRows.has(guest.id) && hasRsvpDetails(guest) && (
-                                                        <tr className="mika-rsvp-details-row">
-                                                            <td colSpan={5} className="mika-rsvp-details-cell">
+                                                        <tr key={`rsvp-${guest.id}`} className="mika-rsvp-details-row">
+                                                            <td colSpan={8} className="mika-rsvp-details-cell">
                                                                 <div className="mika-rsvp-details-container">
                                                                     <h4 className="mika-rsvp-details-title">
                                                                         {t('guestTable.rsvpDetailsTitle')}
                                                                     </h4>
-
                                                                     <div className="mika-rsvp-details-content">
-                                                                        {guest.rsvpResponses?.requiresAccommodation && (
+                                                                        {guest.rsvpResponses.requiresAccommodation && (
                                                                             <div className="mika-rsvp-detail-item">
                                                                                 <span className="mika-rsvp-detail-icon">🏨</span>
                                                                                 <span className="mika-rsvp-detail-text">
-                                                                                    {t('guestTable.needsAccommodation')}
-                                                                                </span>
+                                {t('guestTable.rsvpDetails.needsAccommodation')}
+                            </span>
                                                                             </div>
                                                                         )}
 
-                                                                        {guest.rsvpResponses?.needsTransport && (
+                                                                        {guest.rsvpResponses.needsTransport && (
                                                                             <div className="mika-rsvp-detail-item">
                                                                                 <span className="mika-rsvp-detail-icon">🚗</span>
                                                                                 <span className="mika-rsvp-detail-text">
-                                                                                    {t('guestTable.needsTransport')}
-                                                                                </span>
+                                {t('guestTable.rsvpDetails.needsTransport')}
+                                                                                    {guest.rsvpResponses.transportDetails && (
+                                                                                        <span className="mika-rsvp-transport-detail">
+                                        {' - '}
+                                                                                            {formatTransportDetails(guest.rsvpResponses.transportDetails)}
+                                    </span>
+                                                                                    )}
+                            </span>
                                                                             </div>
                                                                         )}
 
-                                                                        {guest.rsvpResponses?.hasDietaryRestrictions && (
+                                                                        {guest.rsvpResponses.hasDietaryRestrictions && (
                                                                             <div className="mika-rsvp-detail-item">
                                                                                 <span className="mika-rsvp-detail-icon">🍽️</span>
                                                                                 <span className="mika-rsvp-detail-text">
-                                                                                    {t('guestTable.hasDietaryRestrictions')}
-                                                                                </span>
+                                {t('guestTable.rsvpDetails.hasDietaryRestrictions')}
+                            </span>
                                                                             </div>
                                                                         )}
 
-                                                                        {guest.rsvpResponses?.dietaryNote && guest.rsvpResponses.dietaryNote.trim() && (
+                                                                        {guest.rsvpResponses.dietaryNote && (
                                                                             <div className="mika-rsvp-detail-note">
-                                                                                <span className="mika-rsvp-note-label">
-                                                                                    {t('guestTable.dietaryNote')}:
-                                                                                </span>
+                            <span className="mika-rsvp-note-label">
+                                {t('guestTable.rsvpDetails.dietaryNote')}:
+                            </span>
                                                                                 <span className="mika-rsvp-note-text">
-                                                                                    {guest.rsvpResponses.dietaryNote}
-                                                                                </span>
+                                {guest.rsvpResponses.dietaryNote}
+                            </span>
                                                                             </div>
                                                                         )}
                                                                     </div>

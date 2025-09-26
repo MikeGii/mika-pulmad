@@ -1,7 +1,7 @@
 // src/components/admin/PreviewRSVPForm.tsx
 import React, { useState } from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
-import { Guest } from '../../types/Guest';
+import { Guest } from '../../types';
 import '../../styles/invitation/RSVPForm.css';
 
 interface PreviewRSVPFormProps {
@@ -16,6 +16,8 @@ const PreviewRSVPForm: React.FC<PreviewRSVPFormProps> = ({ invitationGetter, lin
         attending: null as boolean | null,
         requiresAccommodation: false,
         needsTransport: false,
+        transportType: '' as 'estonia' | 'ukraine' | '',
+        transportLocation: '',
         hasDietaryRestrictions: false,
         dietaryNote: '',
     });
@@ -26,9 +28,10 @@ const PreviewRSVPForm: React.FC<PreviewRSVPFormProps> = ({ invitationGetter, lin
         setFormData(prev => ({
             ...prev,
             attending,
-            // Reset other fields if not attending
             requiresAccommodation: attending ? prev.requiresAccommodation : false,
             needsTransport: attending ? prev.needsTransport : false,
+            transportType: attending ? prev.transportType : '',
+            transportLocation: attending ? prev.transportLocation : '',
             hasDietaryRestrictions: attending ? prev.hasDietaryRestrictions : false,
             dietaryNote: attending ? prev.dietaryNote : '',
         }));
@@ -38,8 +41,17 @@ const PreviewRSVPForm: React.FC<PreviewRSVPFormProps> = ({ invitationGetter, lin
         setFormData(prev => ({
             ...prev,
             [field]: !prev[field],
-            // Clear dietary note if unchecking dietary restrictions
+            transportType: field === 'needsTransport' && prev[field] ? '' : prev.transportType,
+            transportLocation: field === 'needsTransport' && prev[field] ? '' : prev.transportLocation,
             dietaryNote: field === 'hasDietaryRestrictions' && prev[field] ? '' : prev.dietaryNote,
+        }));
+    };
+
+    const handleTransportTypeChange = (type: 'estonia' | 'ukraine') => {
+        setFormData(prev => ({
+            ...prev,
+            transportType: type,
+            transportLocation: '',
         }));
     };
 
@@ -51,9 +63,14 @@ const PreviewRSVPForm: React.FC<PreviewRSVPFormProps> = ({ invitationGetter, lin
             return;
         }
 
+        if (formData.needsTransport && !formData.transportType) {
+            alert(t('rsvp.pleaseSelectTransportType'));
+            return;
+        }
+
         setIsSubmitting(true);
 
-        // Simulate submission delay
+        // Simulate submission delay for preview
         setTimeout(() => {
             setShowThankYou(true);
             setTimeout(() => {

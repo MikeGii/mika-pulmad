@@ -333,3 +333,103 @@
         padding: 15px;
     }
 }
+
+/* Transport Options Section */
+.mika-rsvp-transport-options {
+    margin-top: 20px;
+    padding: 20px;
+    background: rgba(168, 192, 154, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(168, 192, 154, 0.2);
+}
+
+.mika-rsvp-transport-type {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.mika-rsvp-transport-option {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.mika-rsvp-transport-option:hover {
+    border-color: rgba(168, 192, 154, 0.5);
+    background: rgba(168, 192, 154, 0.03);
+}
+
+.mika-rsvp-transport-option.selected {
+    border-color: #7fa070;
+    background: rgba(168, 192, 154, 0.08);
+}
+
+.mika-rsvp-transport-option input[type="radio"] {
+    display: none;
+}
+
+.mika-rsvp-transport-option-text {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #374151;
+}
+
+.mika-rsvp-flag {
+    font-size: 20px;
+}
+
+/* Transport Location Input */
+.mika-rsvp-transport-location {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mika-rsvp-location-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.mika-rsvp-location-input:focus {
+    outline: none;
+    border-color: #7fa070;
+    box-shadow: 0 0 0 3px rgba(127, 160, 112, 0.1);
+}
+
+.mika-rsvp-location-input::placeholder {
+    color: #9ca3af;
+    font-style: italic;
+}
+
+.mika-rsvp-location-hint {
+    font-size: 12px;
+    color: #6b7280;
+    font-style: italic;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .mika-rsvp-transport-type {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .mika-rsvp-transport-option {
+        padding: 12px;
+    }
+}

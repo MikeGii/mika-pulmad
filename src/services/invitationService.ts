@@ -63,16 +63,22 @@ export class InvitationService {
         attending: boolean;
         requiresAccommodation: boolean;
         needsTransport: boolean;
+        transportDetails?: string; // Add this field
         hasDietaryRestrictions: boolean;
         dietaryNote?: string;
     }): Promise<void> {
         try {
-            // Build rsvpResponses object, only including dietaryNote if it has a value
+            // Build rsvpResponses object
             const rsvpResponses: any = {
                 requiresAccommodation: rsvpData.requiresAccommodation,
                 needsTransport: rsvpData.needsTransport,
                 hasDietaryRestrictions: rsvpData.hasDietaryRestrictions,
             };
+
+            // Add transport details if present
+            if (rsvpData.transportDetails && rsvpData.transportDetails.trim()) {
+                rsvpResponses.transportDetails = rsvpData.transportDetails.trim();
+            }
 
             // Only add dietaryNote if it exists and is not empty
             if (rsvpData.dietaryNote && rsvpData.dietaryNote.trim()) {

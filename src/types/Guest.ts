@@ -26,11 +26,11 @@ export interface Guest {
     rsvpStatus: 'pending' | 'attending' | 'not_attending';
     rsvpSubmittedAt?: Date;
     rsvpResponses: {
-        // Just the 3 essential questions for testing
         requiresAccommodation: boolean;
         needsTransport: boolean;
+        transportDetails?: string; // New field to store transport type and location
         hasDietaryRestrictions: boolean;
-        dietaryNote?: string; // Optional note for dietary requirements
+        dietaryNote?: string;
     };
 
     createdAt: Date;

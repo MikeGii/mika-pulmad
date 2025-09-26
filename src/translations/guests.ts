@@ -356,5 +356,35 @@ export const guestTranslations: Translations = {
     'guestTable.invitationCopyError': {
         et: 'Viga lingi kopeerimisel',
         ua: 'Помилка копіювання посилання'
-    }
+    },
+
+    // RSVP Details in Table
+    'guestTable.rsvpDetails.needsAccommodation': {
+        et: 'Vajab majutust',
+        ua: 'Потребує розміщення'
+    },
+    'guestTable.rsvpDetails.needsTransport': {
+        et: 'Vajab transporti',
+        ua: 'Потребує транспорт'
+    },
+    'guestTable.rsvpDetails.hasDietaryRestrictions': {
+        et: 'Toidupiirangud',
+        ua: 'Дієтичні обмеження'
+    },
+    'guestTable.rsvpDetails.dietaryNote': {
+        et: 'Toitumismärkus',
+        ua: 'Дієтична примітка'
+    },
+    'guestTable.rsvpDetails.transportFrom': {
+        et: 'Transport',
+        ua: 'Транспорт'
+    },
+    'guestTable.rsvpDetails.transportEstonia': {
+        et: 'Eestis',
+        ua: 'В Естонії'
+    },
+    'guestTable.rsvpDetails.transportUkraine': {
+        et: 'Ukrainast',
+        ua: 'З України'
+    },
 };

@@ -898,3 +898,22 @@
         gap: 6px;
     }
 }
+
+.mika-rsvp-transport-detail {
+    color: #6b7280;
+    font-style: italic;
+    margin-left: 4px;
+}
+
+.mika-rsvp-detail-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 4px 0;
+}
+
+.mika-rsvp-detail-text {
+    font-size: 14px;
+    color: #374151;
+    flex: 1;
+}
