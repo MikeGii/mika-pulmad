@@ -1,258 +1,194 @@
-/* src/styles/invitation/WeddingInvitation.css - Wedding invitation page styles */
+/* src/styles/invitation/WeddingInvitation.css - Updated with ornamental frame styles */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400;500&display=swap');
 
 /* Container and Layout */
 .mika-invitation-container {
     min-height: 100vh;
-    position: relative;
-    background: linear-gradient(135deg, #f8faf7 0%, #e8f5e8 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background: linear-gradient(135deg, #f9f7f4 0%, #ffffff 50%, #f5f3f0 100%);
     padding: 20px;
-    font-family: 'Georgia', 'Times New Roman', serif;
+    font-family: 'Arial', sans-serif;
 }
 
-.mika-invitation-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image:
-            radial-gradient(circle at 20% 80%, rgba(168, 192, 154, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 80% 20%, rgba(168, 192, 154, 0.08) 0%, transparent 50%);
-    pointer-events: none;
-}
-
-.mika-invitation-content {
-    background: white;
-    max-width: 600px;
+.mika-invitation-full-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: block;
     width: 100%;
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-    position: relative;
-    z-index: 1;
-    text-align: center;
 }
 
-/* Header */
-.mika-invitation-header {
+/* Wedding Invitation Section with Frame */
+.mika-invitation-section {
+    display: block;
+    width: 100%;
     margin-bottom: 40px;
-    padding: 40px;
-    background: linear-gradient(145deg, rgba(168, 192, 154, 0.15), rgba(127, 160, 112, 0.08));
-    border: 1px solid rgba(168, 192, 154, 0.2);
-    border-radius: 20px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-}
-
-.mika-invitation-title {
-    font-size: 36px;
-    font-weight: 700;
-    font-family: 'Dancing Script', cursive;
-    background: linear-gradient(45deg, #d4af37, #ffd700, #b8860b);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin: 0 0 15px 0;
-    letter-spacing: 1px;
-    text-shadow: 0 2px 4px rgba(212, 175, 55, 0.3);
-    text-align: center;
-}
-
-.mika-invitation-date-subtitle {
-    font-family: 'Dancing Script', cursive;
-    font-size: 2rem;
-    font-weight: 700;
-    background: linear-gradient(45deg, #d4af37, #ffd700, #b8860b);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin: 15px 0 0 0;
-    text-align: center;
-    letter-spacing: 1px;
-    text-shadow: 0 2px 4px rgba(212, 175, 55, 0.3);
-}
-
-/* Wedding Details */
-.mika-invitation-details {
-    display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    gap: 30px;
-    margin-bottom: 40px;
-    align-items: start;
-}
-
-.mika-invitation-date {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: rgba(168, 192, 154, 0.08);
-    padding: 20px;
+    background: white;
     border-radius: 15px;
+    padding: 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e8e6e0;
+    overflow: visible;
 }
 
-.mika-invitation-date-number {
-    font-size: 48px;
-    font-weight: bold;
+/* Ornamental Frame Container */
+.mika-ornamental-frame-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.mika-ornamental-frame {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.1));
+}
+
+.mika-ornamental-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 55%;
+    color: #4a5c3f;
+}
+
+.mika-ornamental-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #8b9d7a;
+    margin-bottom: 25px;
+}
+
+.mika-ornamental-date {
+    font-family: 'Dancing Script', cursive;
+    font-size: 42px;
+    font-weight: 700;
+    background: linear-gradient(45deg, #d4af37, #ffd700, #b8860b);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 20px 0;
+    filter: drop-shadow(0 2px 4px rgba(212, 175, 55, 0.2));
+}
+
+.mika-ornamental-location {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.8;
     color: #5a6c50;
-    line-height: 1;
+    margin: 20px 0;
+    letter-spacing: 0.5px;
+}
+
+.mika-ornamental-location-venue {
+    font-size: 16px;
+    font-weight: 500;
+    color: #4a5c3f;
     margin-bottom: 5px;
 }
 
-.mika-invitation-date-text {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.mika-ornamental-guest-names {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #3a4c2f;
+    margin: 25px 0;
+    line-height: 1.6;
 }
 
-.mika-invitation-month {
-    font-size: 18px;
-    color: #7fa070;
-    font-weight: 500;
-    text-transform: uppercase;
+.mika-ornamental-guest-name {
+    margin: 5px 0;
+}
+
+.mika-ornamental-signature {
+    font-family: 'Dancing Script', cursive;
+    font-size: 26px;
+    font-weight: 600;
+    color: #8b9d7a;
+    margin-top: 25px;
     letter-spacing: 1px;
 }
 
-.mika-invitation-year {
-    font-size: 16px;
-    color: #6b7280;
-    margin-top: 2px;
+/* RSVP Section Below Invitation */
+.mika-rsvp-section {
+    display: block;
+    width: 100%;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #fafaf8 0%, #ffffff 100%);
+    border-top: 2px solid #e8e6e0;
 }
 
-.mika-invitation-venue {
+.mika-rsvp-card {
+    max-width: 600px;
+    margin: 0 auto;
     text-align: center;
-}
-
-.mika-invitation-venue h3 {
-    font-size: 20px;
-    color: #5a6c50;
-    margin: 0 0 10px 0;
-    font-weight: 600;
-}
-
-.mika-invitation-venue p {
-    margin: 5px 0;
-    color: #374151;
-    font-size: 16px;
-}
-
-.mika-invitation-address {
-    font-size: 14px !important;
-    color: #6b7280 !important;
-    font-style: italic;
-}
-
-.mika-invitation-time {
-    text-align: center;
-    background: rgba(168, 192, 154, 0.08);
-    padding: 20px;
-    border-radius: 15px;
-}
-
-.mika-invitation-time h3 {
-    font-size: 18px;
-    color: #5a6c50;
-    margin: 0 0 10px 0;
-    font-weight: 600;
-}
-
-.mika-invitation-time p {
-    margin: 0;
-    color: #374151;
-    font-size: 16px;
-    font-weight: 500;
-}
-
-/* Guest Section */
-.mika-invitation-guests {
-    margin-bottom: 40px;
     padding: 30px;
-    background: rgba(168, 192, 154, 0.05);
-    border-radius: 15px;
-    border: 1px solid rgba(168, 192, 154, 0.2);
-}
-
-.mika-invitation-guests-title {
-    font-size: 24px;
-    color: #5a6c50;
-    margin: 0 0 20px 0;
-    font-weight: 400;
-}
-
-.mika-invitation-guest-names {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.mika-invitation-guest-name {
-    font-size: 20px;
-    color: #374151;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.mika-invitation-child-indicator {
-    font-size: 14px;
-    color: #7fa070;
-    font-style: italic;
-    font-weight: normal;
-}
-
-.mika-invitation-table-info {
-    font-size: 16px;
-    color: #6b7280;
-    font-weight: 500;
-    padding: 10px 20px;
     background: white;
-    border-radius: 8px;
-    display: inline-block;
-}
-
-/* Message */
-.mika-invitation-message {
-    margin-bottom: 40px;
-}
-
-.mika-invitation-message p {
-    font-size: 18px;
-    color: #374151;
-    line-height: 1.6;
-    margin: 0;
-    font-style: italic;
-}
-
-/* RSVP Section */
-.mika-invitation-rsvp {
-    background: rgba(168, 192, 154, 0.08);
-    padding: 30px;
     border-radius: 15px;
-    margin-bottom: 30px;
-    border: 2px solid rgba(168, 192, 154, 0.2);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #f0ede8;
 }
 
-.mika-invitation-rsvp h3 {
-    font-size: 24px;
+.mika-rsvp-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
     color: #5a6c50;
-    margin: 0 0 15px 0;
+    margin-bottom: 15px;
     font-weight: 600;
 }
 
-.mika-invitation-rsvp p {
+.mika-rsvp-card p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 25px;
+}
+
+.mika-rsvp-button {
+    background: linear-gradient(45deg, #7fa070, #8b9d7a);
+    color: white;
+    border: none;
+    padding: 15px 40px;
     font-size: 16px;
-    color: #374151;
-    margin: 10px 0;
+    font-weight: 500;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.mika-rsvp-button:hover {
+    background: linear-gradient(45deg, #6b8c5c, #7a8b6a);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(127, 160, 112, 0.3);
+}
+
+.mika-response-confirmed {
+    background: rgba(127, 160, 112, 0.1);
+    padding: 25px;
+    border-radius: 12px;
+    border: 2px solid rgba(127, 160, 112, 0.3);
+}
+
+.mika-response-confirmed h4 {
+    font-size: 20px;
+    color: #5a6c50;
+    margin-bottom: 10px;
 }
 
 .mika-invitation-contact {
     margin-top: 20px;
     padding: 15px;
-    background: white;
+    background: rgba(168, 192, 154, 0.08);
     border-radius: 10px;
 }
 
@@ -260,21 +196,6 @@
     margin: 0;
     font-weight: 500;
     color: #5a6c50;
-}
-
-/* Footer */
-.mika-invitation-footer {
-    text-align: center;
-    padding-top: 30px;
-    border-top: 1px solid rgba(168, 192, 154, 0.3);
-}
-
-.mika-invitation-footer p {
-    font-size: 20px;
-    color: #7fa070;
-    margin: 0;
-    font-style: italic;
-    font-weight: 500;
 }
 
 /* Loading and Error States */
@@ -302,8 +223,9 @@
     100% { transform: rotate(360deg); }
 }
 
-.mika-invitation-loading p {
-    color: #5a6c50;
+.mika-invitation-loading p,
+.mika-invitation-error p {
+    color: #6b7280;
     font-size: 18px;
 }
 
@@ -324,108 +246,43 @@
     margin-bottom: 20px;
 }
 
-.mika-invitation-error p {
-    color: #6b7280;
-    font-size: 18px;
-    max-width: 500px;
-}
-
-/* Responsive Design */
+/* Mobile Responsiveness */
 @media (max-width: 768px) {
-    .mika-invitation-content {
-        padding: 30px 20px;
-        margin: 10px;
+    .mika-ornamental-content {
+        width: 70%;
     }
 
-    .mika-invitation-title {
-        font-size: 36px;
-        letter-spacing: 1px;
+    .mika-ornamental-date {
+        font-size: 32px;
     }
 
-    .mika-invitation-subtitle {
-        font-size: 16px;
-    }
-
-    .mika-invitation-details {
-        grid-template-columns: 1fr;
-        gap: 20px;
-        text-align: center;
-    }
-
-    .mika-invitation-date {
-        padding: 15px;
-    }
-
-    .mika-invitation-date-number {
-        font-size: 36px;
-    }
-
-    .mika-invitation-guests,
-    .mika-invitation-rsvp {
-        padding: 20px;
-    }
-
-    .mika-invitation-guests-title {
-        font-size: 20px;
-    }
-
-    .mika-invitation-guest-name {
+    .mika-ornamental-guest-names {
         font-size: 18px;
     }
 
-    .mika-invitation-message p {
-        font-size: 16px;
+    .mika-rsvp-section {
+        padding: 20px;
     }
 }
 
 @media (max-width: 480px) {
-    .mika-invitation-content {
-        padding: 20px 15px;
+    .mika-ornamental-content {
+        width: 80%;
     }
 
-    .mika-invitation-title {
+    .mika-ornamental-date {
         font-size: 28px;
     }
 
-    .mika-invitation-date-number {
-        font-size: 32px;
-    }
-
-    .mika-invitation-guest-name {
+    .mika-ornamental-title {
         font-size: 16px;
-        flex-direction: column;
-        gap: 5px;
-    }
-}
-
-/* Print Styles */
-@media print {
-    .mika-invitation-container {
-        background: white;
-        padding: 0;
     }
 
-    .mika-invitation-content {
-        box-shadow: none;
-        border: 1px solid #ddd;
+    .mika-ornamental-guest-names {
+        font-size: 16px;
     }
 
-    .mika-invitation-background {
-        display: none;
-    }
-}
-
-.mika-invitation-fade-in {
-    animation: mika-fadeIn 1s ease-in;
-}
-
-@keyframes mika-fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+    .mika-rsvp-card {
+        padding: 20px;
     }
 }

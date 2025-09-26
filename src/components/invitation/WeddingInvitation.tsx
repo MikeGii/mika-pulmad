@@ -96,82 +96,54 @@ const WeddingInvitationContent: React.FC = () => {
 
     return (
         <div className="mika-invitation-container">
-            {/* Background decoration */}
-            <div className="mika-invitation-background"></div>
+            <div className="mika-invitation-full-container">
+                {/* Wedding Invitation Card with Ornamental Frame */}
+                <div className="mika-invitation-section">
+                    <div className="mika-ornamental-frame-container">
+                        <img
+                            src="/images/kutse_01.png"
+                            alt=""
+                            className="mika-ornamental-frame"
+                        />
 
-            <div className="mika-invitation-content">
-                {/* Header */}
-                <header className="mika-invitation-header">
-                    <h1 className="mika-invitation-title">
-                        Mike & Kateryna
-                    </h1>
-                    <p className="mika-invitation-subtitle">
-                        {t('invitation.subtitle')}
-                    </p>
-                </header>
+                        <div className="mika-ornamental-content">
+                            <h1 className="mika-ornamental-title">
+                                {invitationGetter.invitationLanguage === 'et' ?
+                                    'Pulmakutse' : 'Весільне запрошення'}
+                            </h1>
 
-                {/* Wedding Details */}
-                <section className="mika-invitation-details">
-                    <div className="mika-invitation-date">
-                        <span className="mika-invitation-date-number">22</span>
-                        <div className="mika-invitation-date-text">
-                            <span className="mika-invitation-month">{t('invitation.may')}</span>
-                            <span className="mika-invitation-year">2026</span>
+                            <p className="mika-ornamental-date">
+                                22.05.2026
+                            </p>
+
+                            <div className="mika-ornamental-location">
+                                <p className="mika-ornamental-location-venue">Põhjala Resort</p>
+                                <p>Kata küla, Kose vald, Harjumaa</p>
+                                <p>Eesti</p>
+                            </div>
+
+                            <div className="mika-ornamental-guest-names">
+                                {allInvitedGuests.map((guest) => (
+                                    <div key={guest.id} className="mika-ornamental-guest-name">
+                                        {guest.firstName} {guest.lastName}
+                                    </div>
+                                ))}
+                            </div>
+
+                            <p className="mika-ornamental-signature">
+                                Mike & Kateryna
+                            </p>
                         </div>
                     </div>
+                </div>
 
-                    <div className="mika-invitation-venue">
-                        <h3>{t('invitation.venue')}</h3>
-                        <p>Põhjala Resort</p>
-                        <p className="mika-invitation-address">
-                            {t('invitation.address')}
-                        </p>
-                    </div>
+                {/* RSVP Section - Completely Separate Below */}
+                <div className="mika-rsvp-section">
+                    <div className="mika-rsvp-card">
+                        <h3>{t('invitation.rsvp.title')}</h3>
+                        <p>{t('invitation.rsvp.deadline')}</p>
 
-                    <div className="mika-invitation-time">
-                        <h3>{t('invitation.time')}</h3>
-                        <p>{t('invitation.ceremonyTime')}</p>
-                    </div>
-                </section>
-
-                {/* Guest Names */}
-                <section className="mika-invitation-guests">
-                    <h3 className="mika-invitation-guests-title">
-                        {allInvitedGuests.length === 1
-                            ? t('invitation.dearGuest')
-                            : t('invitation.dearGuests')
-                        }
-                    </h3>
-                    <div className="mika-invitation-guest-names">
-                        {allInvitedGuests.map((guest, index) => (
-                            <div key={guest.id} className="mika-invitation-guest-name">
-                                {guest.firstName} {guest.lastName}
-                                {guest.isChild && (
-                                    <span className="mika-invitation-child-indicator">
-                                        {t('invitation.child')}
-                                    </span>
-                                )}
-                            </div>
-                        ))}
-                    </div>
-
-                    <div className="mika-invitation-table-info">
-                        {t('invitation.tableNumber')}: {invitationGetter.tableNumber}
-                    </div>
-                </section>
-
-                {/* Message */}
-                <section className="mika-invitation-message">
-                    <p>{t('invitation.message')}</p>
-                </section>
-
-                {/* RSVP Section */}
-                <section className="mika-invitation-rsvp">
-                    <h3>{t('invitation.rsvp.title')}</h3>
-                    <p>{t('invitation.rsvp.deadline')}</p>
-
-                    {hasResponded ? (
-                        <div className="mika-invitation-response-status">
+                        {hasResponded ? (
                             <div className="mika-response-confirmed">
                                 <h4>✓ {t('rsvp.responseReceived')}</h4>
                                 <p>
@@ -180,51 +152,33 @@ const WeddingInvitationContent: React.FC = () => {
                                         : t('rsvp.sorryToMissYou')
                                     }
                                 </p>
-                                {invitationGetter.rsvpStatus === 'attending' && (
-                                    <div className="mika-response-details">
-                                        {invitationGetter.rsvpResponses.requiresAccommodation && (
-                                            <p>• {t('guestTable.needsAccommodation')}</p>
-                                        )}
-                                        {invitationGetter.rsvpResponses.needsTransport && (
-                                            <p>• {t('guestTable.needsTransport')}</p>
-                                        )}
-                                        {invitationGetter.rsvpResponses.hasDietaryRestrictions && (
-                                            <p>• {t('guestTable.hasDietaryRestrictions')}</p>
-                                        )}
-                                    </div>
-                                )}
                             </div>
-                        </div>
-                    ) : (
-                        <>
-                            {!showRSVP ? (
-                                <button
-                                    className="mika-rsvp-button"
-                                    onClick={() => setShowRSVP(true)}
-                                >
-                                    {t('rsvp.respondNow')}
-                                </button>
-                            ) : (
-                                <RSVPForm
-                                    invitationGetter={invitationGetter}
-                                    linkedGuests={linkedGuests}
-                                    onSubmitted={handleRSVPSubmitted}
-                                />
-                            )}
-                        </>
-                    )}
+                        ) : (
+                            <>
+                                {!showRSVP ? (
+                                    <button
+                                        className="mika-rsvp-button"
+                                        onClick={() => setShowRSVP(true)}
+                                    >
+                                        {t('rsvp.respondNow')}
+                                    </button>
+                                ) : (
+                                    <RSVPForm
+                                        invitationGetter={invitationGetter}
+                                        linkedGuests={linkedGuests}
+                                        onSubmitted={handleRSVPSubmitted}
+                                    />
+                                )}
+                            </>
+                        )}
 
-                    {invitationGetter.phoneNumber && (
-                        <div className="mika-invitation-contact">
-                            <p>{t('invitation.contact')}: {invitationGetter.phoneNumber}</p>
-                        </div>
-                    )}
-                </section>
-
-                {/* Footer */}
-                <footer className="mika-invitation-footer">
-                    <p>{t('invitation.footer')}</p>
-                </footer>
+                        {invitationGetter.phoneNumber && (
+                            <div className="mika-invitation-contact">
+                                <p>{t('invitation.contact')}: {invitationGetter.phoneNumber}</p>
+                            </div>
+                        )}
+                    </div>
+                </div>
             </div>
         </div>
     );

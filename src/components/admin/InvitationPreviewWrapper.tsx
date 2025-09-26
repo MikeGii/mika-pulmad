@@ -1,7 +1,7 @@
 // src/components/admin/InvitationPreviewWrapper.tsx
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
-import { Guest } from '../../types/Guest';
+import { Guest } from '../../types';
 import PreviewRSVPForm from './PreviewRSVPForm';
 import '../../styles/admin/InvitationPreview.css';
 
