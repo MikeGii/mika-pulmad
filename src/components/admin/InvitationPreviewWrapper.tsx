@@ -45,10 +45,10 @@ const InvitationPreviewWrapper: React.FC<InvitationPreviewWrapperProps> = ({
                 {/* Header */}
                 <header className="mika-invitation-header">
                     <h1 className="mika-invitation-title">
-                        Mike & Kateryna
+                        Mike & Kateryna Pulmad
                     </h1>
-                    <p className="mika-invitation-subtitle">
-                        {t('invitation.subtitle')}
+                    <p className="mika-invitation-date-subtitle">
+                        22.05.2026
                     </p>
                 </header>
 

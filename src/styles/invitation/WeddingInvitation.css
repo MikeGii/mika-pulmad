@@ -39,25 +39,39 @@
 /* Header */
 .mika-invitation-header {
     margin-bottom: 40px;
-    border-bottom: 1px solid rgba(168, 192, 154, 0.3);
-    padding-bottom: 30px;
+    padding: 40px;
+    background: linear-gradient(145deg, rgba(168, 192, 154, 0.15), rgba(127, 160, 112, 0.08));
+    border: 1px solid rgba(168, 192, 154, 0.2);
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
 .mika-invitation-title {
-    font-size: 48px;
-    font-weight: 300;
-    color: #5a6c50;
+    font-size: 36px;
+    font-weight: 700;
+    font-family: 'Dancing Script', cursive;
+    background: linear-gradient(45deg, #d4af37, #ffd700, #b8860b);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     margin: 0 0 15px 0;
-    letter-spacing: 2px;
-    font-family: 'Georgia', serif;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 4px rgba(212, 175, 55, 0.3);
+    text-align: center;
 }
 
-.mika-invitation-subtitle {
-    font-size: 18px;
-    color: #7fa070;
-    margin: 0;
-    font-style: italic;
-    font-weight: 400;
+.mika-invitation-date-subtitle {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(45deg, #d4af37, #ffd700, #b8860b);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 15px 0 0 0;
+    text-align: center;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 4px rgba(212, 175, 55, 0.3);
 }
 
 /* Wedding Details */

@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../../../contexts/LanguageContext';
 import { Task, TaskContent, PriceOffer } from '../../../types';
+// eslint-disable-next-line
 import PriceOfferModal from './PriceOfferModal';
 import '../../../styles/admin/FinancialTable.css';
 
