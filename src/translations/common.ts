@@ -47,4 +47,9 @@ export const commonTranslations: Translations = {
         et: 'Administratiiv paneel',
         ua: 'Адміністративна панель'
     },
+
+    'menu.invitationPreview': {
+        et: 'Kutse eelvaade',
+        ua: 'Попередній перегляд запрошення'
+    },
 };

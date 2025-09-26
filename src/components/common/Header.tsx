@@ -88,6 +88,13 @@ const Header: React.FC = () => {
                             </button>
                         )}
 
+                        {currentUserProfile?.permissions.guestManagement && (
+                            <button onClick={() => navigateTo('/admin/invitation-preview')} className="menu-item">
+                                <span className="menu-icon">👁️</span>
+                                {t('menu.invitationPreview')}
+                            </button>
+                        )}
+
                         {currentUserProfile?.permissions.accountManagement && (
                             <button onClick={() => navigateTo('/admin/accounts')} className="menu-item">
                                 <span className="menu-icon">👤</span>

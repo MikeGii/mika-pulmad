@@ -10,6 +10,7 @@ import TaskManagement from './components/admin/task-management/TaskManagement';
 import FinancialManagement from "./components/admin/financial-management/FinancialManagement";
 import GuestManagement from "./components/admin/guest-management/GuestManagement";
 import WeddingInvitation from './components/invitation/WeddingInvitation';
+import InvitationPreview from './components/admin/InvitationPreview';
 import './App.css';
 
 // Protected Route Component
@@ -116,6 +117,18 @@ function AppContent() {
                             <ProtectedRoute>
                                 <PermissionRoute requiredPermission="accountManagement">
                                     <AccountManagement />
+                                </PermissionRoute>
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    {/* Invitation Preview route */}
+                    <Route
+                        path="/admin/invitation-preview"
+                        element={
+                            <ProtectedRoute>
+                                <PermissionRoute requiredPermission="guestManagement">
+                                    <InvitationPreview />
                                 </PermissionRoute>
                             </ProtectedRoute>
                         }

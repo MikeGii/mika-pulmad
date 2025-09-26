@@ -7,6 +7,7 @@ import { userTranslations } from './users';
 import { financialTranslations } from './financial';
 import { guestTranslations } from './guests';
 import { invitationTranslations } from './invitations';
+import { invitationPreviewTranslations } from './invitationPreview';
 
 // Merge all translation objects into one
 export const translations: Translations = {
@@ -17,4 +18,5 @@ export const translations: Translations = {
     ...financialTranslations,
     ...guestTranslations,
     ...invitationTranslations,
+    ...invitationPreviewTranslations,
 };
