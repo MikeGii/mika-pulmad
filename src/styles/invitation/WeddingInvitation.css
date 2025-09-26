@@ -414,3 +414,18 @@
         display: none;
     }
 }
+
+.mika-invitation-fade-in {
+    animation: mika-fadeIn 1s ease-in;
+}
+
+@keyframes mika-fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

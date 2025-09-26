@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { Guest } from '../../types/Guest';
 import PreviewRSVPForm from './PreviewRSVPForm';
-import '../../styles/invitation/WeddingInvitation.css';
+import '../../styles/admin/InvitationPreview.css';
 
 interface InvitationPreviewWrapperProps {
     mockData: {
@@ -21,7 +21,6 @@ const InvitationPreviewWrapper: React.FC<InvitationPreviewWrapperProps> = ({
     const [showRSVP, setShowRSVP] = useState(false);
     const [hasResponded, setHasResponded] = useState(false);
 
-    // Set language based on mock data and reset states when resetKey changes
     useEffect(() => {
         setLanguage(mockData.invitationGetter.invitationLanguage);
         setShowRSVP(false);
@@ -37,92 +36,61 @@ const InvitationPreviewWrapper: React.FC<InvitationPreviewWrapperProps> = ({
     const allInvitedGuests = [mockData.invitationGetter, ...mockData.linkedGuests];
 
     return (
-        <div className="mika-invitation-container">
-            {/* Background decoration */}
-            <div className="mika-invitation-background"></div>
+        <div className="mika-preview-full-container">
+            {/* Wedding Invitation Card with Frame */}
+            <div className="mika-preview-invitation-section">
+                <div className="mika-ornamental-frame-container">
+                    <img
+                        src="/images/kutse_01.png"
+                        alt=""
+                        className="mika-ornamental-frame"
+                    />
 
-            <div className="mika-invitation-content">
-                {/* Header */}
-                <header className="mika-invitation-header">
-                    <h1 className="mika-invitation-title">
-                        Mike & Kateryna Pulmad
-                    </h1>
-                    <p className="mika-invitation-date-subtitle">
-                        22.05.2026
-                    </p>
-                </header>
+                    <div className="mika-ornamental-content">
+                        <h1 className="mika-ornamental-title">
+                            {mockData.invitationGetter.invitationLanguage === 'et' ? 'Pulmakutse' : 'Весільне запрошення'}
+                        </h1>
 
-                {/* Wedding Details */}
-                <section className="mika-invitation-details">
-                    <div className="mika-invitation-date">
-                        <span className="mika-invitation-date-number">22</span>
-                        <div className="mika-invitation-date-text">
-                            <span className="mika-invitation-month">{t('invitation.may')}</span>
-                            <span className="mika-invitation-year">2026</span>
+                        <p className="mika-ornamental-date">
+                            22.05.2026
+                        </p>
+
+                        <div className="mika-ornamental-location">
+                            <p className="mika-ornamental-location-venue">Põhjala Resort</p>
+                            <p>Kata küla, Kose vald, Harjumaa</p>
+                            <p>Eesti</p>
                         </div>
-                    </div>
 
-                    <div className="mika-invitation-venue">
-                        <h3>{t('invitation.venue')}</h3>
-                        <p>Põhjala Resort</p>
-                        <p className="mika-invitation-address">
-                            {t('invitation.address')}
+                        <div className="mika-ornamental-guest-names">
+                            {allInvitedGuests.map((guest) => (
+                                <div key={guest.id} className="mika-ornamental-guest-name">
+                                    {guest.firstName} {guest.lastName}
+                                </div>
+                            ))}
+                        </div>
+
+                        <p className="mika-ornamental-signature">
+                            Mike & Kateryna
                         </p>
                     </div>
+                </div>
+            </div>
 
-                    <div className="mika-invitation-time">
-                        <h3>{t('invitation.time')}</h3>
-                        <p>{t('invitation.ceremonyTime')}</p>
-                    </div>
-                </section>
-
-                {/* Guest Names */}
-                <section className="mika-invitation-guests">
-                    <h3 className="mika-invitation-guests-title">
-                        {allInvitedGuests.length === 1
-                            ? t('invitation.dearGuest')
-                            : t('invitation.dearGuests')
-                        }
-                    </h3>
-                    <div className="mika-invitation-guest-names">
-                        {allInvitedGuests.map((guest, index) => (
-                            <div key={guest.id} className="mika-invitation-guest-name">
-                                {guest.firstName} {guest.lastName}
-                                {guest.isChild && (
-                                    <span className="mika-invitation-child-indicator">
-                                        {t('invitation.child')}
-                                    </span>
-                                )}
-                            </div>
-                        ))}
-                    </div>
-
-                    <div className="mika-invitation-table-info">
-                        {t('invitation.tableNumber')}: {mockData.invitationGetter.tableNumber}
-                    </div>
-                </section>
-
-                {/* Message */}
-                <section className="mika-invitation-message">
-                    <p>{t('invitation.message')}</p>
-                </section>
-
-                {/* RSVP Section */}
-                <section className="mika-invitation-rsvp">
+            {/* RSVP Section - Completely Separate Below */}
+            <div className="mika-preview-rsvp-section">
+                <div className="mika-preview-rsvp-card">
                     <h3>{t('invitation.rsvp.title')}</h3>
                     <p>{t('invitation.rsvp.deadline')}</p>
 
                     {hasResponded ? (
-                        <div className="mika-invitation-response-status">
-                            <div className="mika-response-confirmed">
-                                <h4>✓ {t('rsvp.responseReceived')}</h4>
-                                <p>
-                                    {mockData.invitationGetter.rsvpStatus === 'attending'
-                                        ? t('rsvp.seeYouThere')
-                                        : t('rsvp.sorryToMissYou')
-                                    }
-                                </p>
-                            </div>
+                        <div className="mika-response-confirmed">
+                            <h4>✓ {t('rsvp.responseReceived')}</h4>
+                            <p>
+                                {mockData.invitationGetter.rsvpStatus === 'attending'
+                                    ? t('rsvp.seeYouThere')
+                                    : t('rsvp.sorryToMissYou')
+                                }
+                            </p>
                         </div>
                     ) : (
                         <>
@@ -142,18 +110,7 @@ const InvitationPreviewWrapper: React.FC<InvitationPreviewWrapperProps> = ({
                             )}
                         </>
                     )}
-
-                    {mockData.invitationGetter.phoneNumber && (
-                        <div className="mika-invitation-contact">
-                            <p>{t('invitation.contact')}: {mockData.invitationGetter.phoneNumber}</p>
-                        </div>
-                    )}
-                </section>
-
-                {/* Footer */}
-                <footer className="mika-invitation-footer">
-                    <p>{t('invitation.footer')}</p>
-                </footer>
+                </div>
             </div>
         </div>
     );

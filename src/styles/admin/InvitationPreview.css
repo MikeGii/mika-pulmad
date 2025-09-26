@@ -1,5 +1,5 @@
 /* src/styles/admin/InvitationPreview.css */
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400;500&display=swap');
 
 .mika-invitation-preview-container {
     min-height: 100vh;
@@ -117,7 +117,7 @@
     cursor: pointer;
     transition: all 0.3s ease;
     width: 100%;
-    margin-top: 24px; /* Align with other controls */
+    margin-top: 24px;
 }
 
 .mika-preview-reset-button:hover {
@@ -148,7 +148,166 @@
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     border: 1px solid #e8e6e0;
     margin-top: 30px;
-    overflow: hidden;
+    overflow: visible;
+}
+
+/* Ornamental Invitation Styles */
+.mika-ornamental-frame-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.mika-ornamental-frame {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.1));
+}
+
+.mika-ornamental-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 55%;
+    color: #4a5c3f;
+}
+
+.mika-ornamental-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #8b9d7a;
+    margin-bottom: 25px;
+}
+
+.mika-ornamental-date {
+    font-family: 'Dancing Script', cursive;
+    font-size: 42px;
+    font-weight: 700;
+    background: linear-gradient(45deg, #d4af37, #ffd700, #b8860b);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 20px 0;
+    filter: drop-shadow(0 2px 4px rgba(212, 175, 55, 0.2));
+}
+
+.mika-ornamental-location {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.8;
+    color: #5a6c50;
+    margin: 20px 0;
+    letter-spacing: 0.5px;
+}
+
+.mika-ornamental-location-venue {
+    font-size: 16px;
+    font-weight: 500;
+    color: #4a5c3f;
+    margin-bottom: 5px;
+}
+
+.mika-ornamental-guest-names {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #3a4c2f;
+    margin: 25px 0;
+    line-height: 1.6;
+}
+
+.mika-ornamental-guest-name {
+    margin: 5px 0;
+}
+
+.mika-ornamental-signature {
+    font-family: 'Dancing Script', cursive;
+    font-size: 26px;
+    font-weight: 600;
+    color: #8b9d7a;
+    margin-top: 25px;
+    letter-spacing: 1px;
+}
+
+/* RSVP Section Below Invitation */
+.mika-ornamental-rsvp-wrapper {
+    margin-top: 60px;
+    padding: 40px;
+    background: linear-gradient(135deg, #fafaf8 0%, #ffffff 100%);
+    border-top: 2px solid #e8e6e0;
+}
+
+.mika-invitation-rsvp {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 30px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #f0ede8;
+}
+
+.mika-invitation-rsvp h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: #5a6c50;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.mika-invitation-rsvp p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 25px;
+}
+
+.mika-rsvp-button {
+    background: linear-gradient(45deg, #7fa070, #8b9d7a);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.mika-rsvp-button:hover {
+    background: linear-gradient(45deg, #6b8c5c, #7a8b6a);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(127, 160, 112, 0.3);
+}
+
+.mika-invitation-response-status {
+    padding: 20px;
+}
+
+.mika-response-confirmed {
+    background: rgba(127, 160, 112, 0.1);
+    padding: 25px;
+    border-radius: 12px;
+    border: 2px solid rgba(127, 160, 112, 0.3);
+}
+
+.mika-response-confirmed h4 {
+    font-size: 20px;
+    color: #5a6c50;
+    margin-bottom: 10px;
 }
 
 /* Mobile responsiveness */
@@ -184,10 +343,88 @@
     .mika-preview-reset-button {
         margin-top: 0;
     }
+
+    .mika-ornamental-content {
+        width: 70%;
+    }
+
+    .mika-ornamental-date {
+        font-size: 32px;
+    }
+
+    .mika-ornamental-guest-names {
+        font-size: 18px;
+    }
+
+    .mika-ornamental-rsvp-wrapper {
+        padding: 20px;
+    }
 }
 
 @media (max-width: 480px) {
     .mika-invitation-preview-page-title {
         font-size: 2rem;
     }
+
+    .mika-ornamental-content {
+        width: 80%;
+    }
+
+    .mika-ornamental-date {
+        font-size: 28px;
+    }
+
+    .mika-ornamental-title {
+        font-size: 16px;
+    }
+
+    .mika-ornamental-guest-names {
+        font-size: 16px;
+    }
+}
+
+/* Override conflicting styles and ensure vertical layout */
+.mika-preview-full-container {
+    display: block !important;
+    width: 100%;
+}
+
+.mika-preview-invitation-section {
+    display: block;
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+.mika-preview-rsvp-section {
+    display: block;
+    width: 100%;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #fafaf8 0%, #ffffff 100%);
+    border-top: 2px solid #e8e6e0;
+}
+
+.mika-preview-rsvp-card {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 30px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #f0ede8;
+}
+
+.mika-preview-rsvp-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: #5a6c50;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.mika-preview-rsvp-card p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 25px;
 }
