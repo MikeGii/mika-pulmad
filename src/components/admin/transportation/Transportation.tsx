@@ -59,26 +59,53 @@ const Transportation: React.FC = () => {
     };
 
     // Group guests by invitation getter
-    const groupedGuests = guests.reduce((acc, guest) => {
+    const groupedGuests: Record<string, { invitationGetter: Guest | null; linkedGuests: Guest[] }> = {};
+
+    // First, add all invitation getters who need transport
+    guests.forEach(guest => {
         if (guest.isInvitationGetter) {
-            // Initialize with invitation getter
-            acc[guest.id] = {
+            groupedGuests[guest.id] = {
                 invitationGetter: guest,
                 linkedGuests: []
             };
         }
-        return acc;
-    }, {} as Record<string, { invitationGetter: Guest; linkedGuests: Guest[] }>);
+    });
 
-    // Add linked guests to their invitation getters
+    // Then, handle linked guests who need transport
     guests.forEach(guest => {
         if (!guest.isInvitationGetter && guest.linkedInvitationGetterId) {
+            // Check if the invitation getter exists in our grouped list
             if (groupedGuests[guest.linkedInvitationGetterId]) {
+                // Invitation getter also needs transport, add to their list
                 groupedGuests[guest.linkedInvitationGetterId].linkedGuests.push(guest);
+            } else {
+                // Invitation getter doesn't need transport, but linked guest does
+                // We need to fetch the invitation getter info or create a placeholder group
+                if (!groupedGuests[guest.linkedInvitationGetterId]) {
+                    groupedGuests[guest.linkedInvitationGetterId] = {
+                        invitationGetter: null, // We'll need to fetch this
+                        linkedGuests: [guest]
+                    };
+                } else {
+                    groupedGuests[guest.linkedInvitationGetterId].linkedGuests.push(guest);
+                }
             }
         }
     });
 
+    // Handle orphaned linked guests (whose invitation getter might not need transport)
+    const orphanedGuests = guests.filter(guest =>
+        !guest.isInvitationGetter &&
+        guest.linkedInvitationGetterId &&
+        !groupedGuests[guest.linkedInvitationGetterId]
+    );
+
+    if (orphanedGuests.length > 0) {
+        groupedGuests['orphaned'] = {
+            invitationGetter: null,
+            linkedGuests: orphanedGuests
+        };
+    }
     if (loading) {
         return (
             <div className="mika-transportation-container">
@@ -132,29 +159,29 @@ const Transportation: React.FC = () => {
                             </tr>
                             </thead>
                             <tbody>
-                            {Object.values(groupedGuests).map(group => (
-                                <React.Fragment key={group.invitationGetter.id}>
-                                    {/* Invitation Getter */}
-                                    <tr className="mika-transport-getter-row">
-                                        <td className="mika-transport-name">
-                                            <strong>
-                                                {group.invitationGetter.firstName} {group.invitationGetter.lastName}
-                                            </strong>
-                                            <span className="mika-transport-badge">
-                                                {t('transportation.invitationGetter')}
-                                            </span>
-                                        </td>
-                                        <td>{group.invitationGetter.phoneNumber || '-'}</td>
-                                        <td>{formatTransportDetails(group.invitationGetter.rsvpResponses?.transportDetails)}</td>
-                                        <td>
-                                            <span className="mika-transport-type">
-                                                {group.invitationGetter.isInvitationGetter ?
-                                                    t('transportation.mainGuest') :
-                                                    t('transportation.linkedGuest')}
-                                            </span>
-                                        </td>
-                                        <td>{group.invitationGetter.tableNumber}</td>
-                                    </tr>
+                            {Object.values(groupedGuests).map((group, index) => (
+                                <React.Fragment key={group.invitationGetter?.id || `group-${index}`}>
+                                    {/* Invitation Getter - only show if they exist and need transport */}
+                                    {group.invitationGetter && (
+                                        <tr className="mika-transport-getter-row">
+                                            <td className="mika-transport-name">
+                                                <strong>
+                                                    {group.invitationGetter.firstName} {group.invitationGetter.lastName}
+                                                </strong>
+                                                <span className="mika-transport-badge">
+                                                    {t('transportation.invitationGetter')}
+                                                </span>
+                                            </td>
+                                            <td>{group.invitationGetter.phoneNumber || '-'}</td>
+                                            <td>{formatTransportDetails(group.invitationGetter.rsvpResponses?.transportDetails)}</td>
+                                            <td>
+                                                <span className="mika-transport-type">
+                                                    {t('transportation.mainGuest')}
+                                                </span>
+                                            </td>
+                                            <td>{group.invitationGetter.tableNumber}</td>
+                                        </tr>
+                                    )}
 
                                     {/* Linked Guests */}
                                     {group.linkedGuests.map(linkedGuest => (

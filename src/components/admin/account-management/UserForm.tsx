@@ -178,6 +178,16 @@ const UserForm: React.FC<UserFormProps> = ({ user, onSave, onCancel }) => {
                                     />
                                     <span>{t('permission.guestManagement')}</span>
                                 </label>
+
+                                <label className="mika-permission-item">
+                                    <input
+                                        type="checkbox"
+                                        checked={formData.permissions.transportationManagement}
+                                        onChange={(e) => handleInputChange('permissions.transportationManagement', e.target.checked)}
+                                    />
+                                    <span>{t('permission.transportationManagement')}</span>
+                                </label>
+
                                 <label className="mika-permission-item">
                                     <input
                                         type="checkbox"

@@ -40,6 +40,7 @@ const AccountManagement: React.FC = () => {
                         taskManagement: data.permissions?.taskManagement || true,
                         financialManagement: data.permissions?.financialManagement || false,
                         guestManagement: data.permissions?.guestManagement || false,
+                        transportationManagement: data.permissions?.transportationManagement || false,
                         ...data.permissions
                     },
                     dashboardAccess: {
@@ -47,6 +48,7 @@ const AccountManagement: React.FC = () => {
                         taskManagement: data.dashboardAccess?.taskManagement || true,
                         financialManagement: data.dashboardAccess?.financialManagement || false,
                         guestManagement: data.dashboardAccess?.guestManagement || false,
+                        transportationManagement: data.dashboardAccess?.transportationManagement || false,
                         ...data.dashboardAccess
                     },
                     isActive: data.isActive ?? true,
@@ -197,6 +199,16 @@ const AccountManagement: React.FC = () => {
                                         disabled={user.id === currentUserProfile?.id}
                                     />
                                     <span>{t('permission.guestManagement')}</span>
+                                </label>
+
+                                <label className="permission-item">
+                                    <input
+                                        type="checkbox"
+                                        checked={user.permissions?.transportationManagement || false}
+                                        onChange={(e) => updateUserPermission(user.id, 'transportationManagement', e.target.checked)}
+                                        disabled={user.id === currentUserProfile?.id}
+                                    />
+                                    <span>{t('permission.transportationManagement')}</span>
                                 </label>
 
                                 <label className="permission-item">
