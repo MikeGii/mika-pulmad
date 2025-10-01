@@ -27,6 +27,7 @@ const UserForm: React.FC<UserFormProps> = ({ user, onSave, onCancel }) => {
             taskManagement: true,
             financialManagement: false,
             guestManagement: false,
+            transportationManagement: false,
         }
     });
 

@@ -4,6 +4,7 @@ export interface UserPermissions {
     taskManagement: boolean;
     financialManagement: boolean;
     guestManagement: boolean;
+    transportationManagement: boolean;
 }
 
 export interface UserDashboardAccess {
@@ -11,6 +12,7 @@ export interface UserDashboardAccess {
     taskManagement: boolean;
     financialManagement: boolean;
     guestManagement: boolean;
+    transportationManagement: boolean;
 }
 
 export interface UserProfile {

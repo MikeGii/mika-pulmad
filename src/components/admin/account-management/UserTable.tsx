@@ -119,6 +119,15 @@ const UserTable: React.FC<UserTableProps> = ({
                                     <label className="mika-permission-checkbox">
                                         <input
                                             type="checkbox"
+                                            checked={user.permissions.transportationManagement}
+                                            onChange={(e) => handlePermissionChange(user, 'transportationManagement', e.target.checked)}
+                                            disabled={user.id === currentUserUid}
+                                        />
+                                        <span>{t('permission.transportationManagement')}</span>
+                                    </label>
+                                    <label className="mika-permission-checkbox">
+                                        <input
+                                            type="checkbox"
                                             checked={user.permissions.accountManagement}
                                             onChange={(e) => handlePermissionChange(user, 'accountManagement', e.target.checked)}
                                             disabled={user.id === currentUserUid}

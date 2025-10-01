@@ -153,4 +153,8 @@ export const userTranslations: Translations = {
         et: 'Mitteaktiivne',
         ua: 'Неактивний'
     },
+    'permission.transportationManagement': {
+        et: 'Transpordi haldamine',
+        ua: 'Управління транспортом'
+    }
 };

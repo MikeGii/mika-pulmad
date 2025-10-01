@@ -95,6 +95,13 @@ const Header: React.FC = () => {
                             </button>
                         )}
 
+                        {currentUserProfile?.permissions.transportationManagement && (
+                            <button onClick={() => navigateTo('/admin/transportation')} className="menu-item">
+                                <span className="menu-icon">🚗</span>
+                                {t('menu.transportation')}
+                            </button>
+                        )}
+
                         {currentUserProfile?.permissions.accountManagement && (
                             <button onClick={() => navigateTo('/admin/accounts')} className="menu-item">
                                 <span className="menu-icon">👤</span>
