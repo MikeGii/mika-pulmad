@@ -20,10 +20,24 @@ const Transportation: React.FC = () => {
     const fetchGuests = async () => {
         try {
             const allGuests = await GuestService.getAllGuests();
-            // Filter only guests who need transportation
-            const guestsNeedingTransport = allGuests.filter(
-                guest => guest.rsvpResponses?.needsTransport === true
+
+            // Get all invitation getters who need transport
+            const gettersNeedingTransport = allGuests.filter(
+                guest => guest.isInvitationGetter && guest.rsvpResponses?.needsTransport === true
             );
+
+            // Get IDs of getters who need transport
+            const getterIds = new Set(gettersNeedingTransport.map(g => g.id));
+
+            // Include linked guests whose invitation getter needs transport
+            const guestsNeedingTransport = allGuests.filter(
+                guest =>
+                    // Include if guest themselves need transport
+                    guest.rsvpResponses?.needsTransport === true ||
+                    // OR if they're linked to an invitation getter who needs transport
+                    (guest.linkedInvitationGetterId && getterIds.has(guest.linkedInvitationGetterId))
+            );
+
             setGuests(guestsNeedingTransport);
         } catch (error) {
             console.error('Error fetching guests:', error);
