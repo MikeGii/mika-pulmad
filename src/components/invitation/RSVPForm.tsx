@@ -155,7 +155,6 @@ const RSVPForm: React.FC<RSVPFormProps> = ({ invitationGetter, linkedGuests, onS
                                 {attendingGuests.map(guest => (
                                     <span key={guest.id} className="mika-rsvp-guest-name mika-rsvp-guest-attending">
                                         ✓ {guest.firstName} {guest.lastName}
-                                        {guest.isChild && <span className="mika-rsvp-child-indicator">{t('invitation.child')}</span>}
                                     </span>
                                 ))}
                             </div>
@@ -169,7 +168,6 @@ const RSVPForm: React.FC<RSVPFormProps> = ({ invitationGetter, linkedGuests, onS
                                 {notAttendingGuests.map(guest => (
                                     <span key={guest.id} className="mika-rsvp-guest-name mika-rsvp-guest-not-attending">
                                         ✗ {guest.firstName} {guest.lastName}
-                                        {guest.isChild && <span className="mika-rsvp-child-indicator">{t('invitation.child')}</span>}
                                     </span>
                                 ))}
                             </div>

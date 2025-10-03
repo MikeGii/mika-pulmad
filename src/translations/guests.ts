@@ -387,4 +387,12 @@ export const guestTranslations: Translations = {
         et: 'Ukrainast',
         ua: 'З України'
     },
+    'guestTable.rsvpDetails.attending': {
+        et: 'Tulevad',
+        ua: 'Прийдуть'
+    },
+    'guestTable.rsvpDetails.notAttending': {
+        et: 'Ei tule',
+        ua: 'Не прийдуть'
+    },
 };

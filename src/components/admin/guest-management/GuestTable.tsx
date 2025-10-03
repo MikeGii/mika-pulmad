@@ -430,6 +430,51 @@ const GuestTable: React.FC<GuestTableProps> = ({ guests, onEdit, onDelete }) => 
                                                                         {t('guestTable.rsvpDetailsTitle')}
                                                                     </h4>
                                                                     <div className="mika-rsvp-details-content">
+                                                                        {/* Show who is attending */}
+                                                                        {guest.rsvpResponses.attendingGuestIds && guest.rsvpResponses.attendingGuestIds.length > 0 && (
+                                                                            <div className="mika-rsvp-detail-item">
+                                                                                <span className="mika-rsvp-detail-icon">✓</span>
+                                                                                <span className="mika-rsvp-detail-text">
+                                <strong>{t('guestTable.rsvpDetails.attending')}:</strong>
+                                                                                    {(() => {
+                                                                                        const allInGroup = [guest, ...guests.filter(g => g.linkedInvitationGetterId === guest.id)];
+                                                                                        const attendingGuests = allInGroup.filter(g =>
+                                                                                            guest.rsvpResponses.attendingGuestIds?.includes(g.id)
+                                                                                        );
+                                                                                        const notAttendingGuests = allInGroup.filter(g =>
+                                                                                            !guest.rsvpResponses.attendingGuestIds?.includes(g.id)
+                                                                                        );
+
+                                                                                        return (
+                                                                                            <div className="mika-rsvp-guest-lists">
+                                                                                                {attendingGuests.length > 0 && (
+                                                                                                    <div className="mika-rsvp-attending-list">
+                                                                                                        {attendingGuests.map((g, i) => (
+                                                                                                            <span key={g.id} className="mika-rsvp-guest-attending">
+                                                            {g.firstName} {g.lastName}
+                                                                                                                {i < attendingGuests.length - 1 && ', '}
+                                                        </span>
+                                                                                                        ))}
+                                                                                                    </div>
+                                                                                                )}
+                                                                                                {notAttendingGuests.length > 0 && (
+                                                                                                    <div className="mika-rsvp-not-attending-list">
+                                                                                                        <strong>{t('guestTable.rsvpDetails.notAttending')}:</strong>{' '}
+                                                                                                        {notAttendingGuests.map((g, i) => (
+                                                                                                            <span key={g.id} className="mika-rsvp-guest-not-attending">
+                                                            {g.firstName} {g.lastName}
+                                                                                                                {i < notAttendingGuests.length - 1 && ', '}
+                                                        </span>
+                                                                                                        ))}
+                                                                                                    </div>
+                                                                                                )}
+                                                                                            </div>
+                                                                                        );
+                                                                                    })()}
+                            </span>
+                                                                            </div>
+                                                                        )}
+
                                                                         {guest.rsvpResponses.requiresAccommodation && (
                                                                             <div className="mika-rsvp-detail-item">
                                                                                 <span className="mika-rsvp-detail-icon">🏨</span>

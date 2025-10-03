@@ -71,7 +71,8 @@ export const invitationTranslations: Translations = {
     },
     'invitation.message': {
         et: 'Täpsem info ja peokava tulevad peagi.\n' +
-            'Palun hoidke kuupäev vaba — teie kohalolek on meile väga tähtis!',
+            'Palun hoidke kuupäev vaba — teie kohalolek on meile väga tähtis!\n' +
+            ' (NB! Palun hoidke selle kutse link endal alles)',
         ua: 'Деталі та план святкування ми повідомимо трохи пізніше.\n' +
             'Збережіть дату — нам буде дуже важливо бачити вас поруч!'
     },
@@ -142,7 +143,7 @@ export const invitationTranslations: Translations = {
         ua: 'Так, потрібен транспорт'
     },
     'rsvp.answers.hasDietary': {
-        et: 'Jah, mul on toidupiirangud',
+        et: 'Jah, on toidupiirangud - kellel ja milline?',
         ua: 'Так, у мене є дієтичні обмеження'
     },
     'rsvp.submit': {
