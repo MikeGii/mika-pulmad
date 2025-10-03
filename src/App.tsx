@@ -13,6 +13,7 @@ import WeddingInvitation from './components/invitation/WeddingInvitation';
 import InvitationPreview from './components/admin/InvitationPreview';
 import './App.css';
 import Transportation from "./components/admin/transportation/Transportation";
+import Accommodation from "./components/admin/accommodation/Accommodation";
 
 // Protected Route Component
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -142,6 +143,18 @@ function AppContent() {
                             <ProtectedRoute>
                                 <PermissionRoute requiredPermission="transportationManagement">
                                     <Transportation />
+                                </PermissionRoute>
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    {/* Accommodation page */}
+                    <Route
+                        path="/admin/accommodation"
+                        element={
+                            <ProtectedRoute>
+                                <PermissionRoute requiredPermission="accommodationManagement">
+                                    <Accommodation />
                                 </PermissionRoute>
                             </ProtectedRoute>
                         }

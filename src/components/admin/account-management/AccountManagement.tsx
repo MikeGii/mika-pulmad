@@ -214,6 +214,16 @@ const AccountManagement: React.FC = () => {
                                 <label className="permission-item">
                                     <input
                                         type="checkbox"
+                                        checked={user.permissions?.accommodationManagement || false}
+                                        onChange={(e) => updateUserPermission(user.id, 'accommodationManagement', e.target.checked)}
+                                        disabled={user.id === currentUserProfile?.id}
+                                    />
+                                    <span>{t('permission.accommodationManagement')}</span>
+                                </label>
+
+                                <label className="permission-item">
+                                    <input
+                                        type="checkbox"
                                         checked={user.permissions?.accountManagement || false}
                                         onChange={(e) => updateUserPermission(user.id, 'accountManagement', e.target.checked)}
                                         disabled={user.id === currentUserProfile?.id}

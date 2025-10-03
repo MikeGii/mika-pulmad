@@ -59,7 +59,7 @@ export const invitationTranslations: Translations = {
     },
     'invitation.dearGuest': {
         et: 'Kallis',
-        ua: 'Дорогий'
+        ua: 'Дорогий(a)'
     },
     'invitation.dearGuests': {
         et: 'Kallid',

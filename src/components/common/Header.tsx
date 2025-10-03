@@ -102,6 +102,13 @@ const Header: React.FC = () => {
                             </button>
                         )}
 
+                        {currentUserProfile?.permissions.accommodationManagement && (
+                            <button onClick={() => navigateTo('/admin/accommodation')} className="menu-item">
+                                <span className="menu-icon">🏨</span>
+                                {t('menu.accommodation')}
+                            </button>
+                        )}
+
                         {currentUserProfile?.permissions.accountManagement && (
                             <button onClick={() => navigateTo('/admin/accounts')} className="menu-item">
                                 <span className="menu-icon">👤</span>

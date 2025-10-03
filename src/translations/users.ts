@@ -156,5 +156,9 @@ export const userTranslations: Translations = {
     'permission.transportationManagement': {
         et: 'Transpordi haldamine',
         ua: 'Управління транспортом'
-    }
+    },
+    'permission.accommodationManagement': {
+        et: 'Majutuse haldamine',
+        ua: 'Управління житлом'
+    },
 };

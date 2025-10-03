@@ -121,5 +121,67 @@ export const commonTranslations: Translations = {
     'transportation.noPermission': {
         et: 'Teil pole õigust vaadata transporti vajavaid külalisi',
         ua: 'У вас немає прав для перегляду гостей, які потребують транспорту'
-    }
+    },
+
+    // Accommodation page
+    'menu.accommodation': {
+        et: 'Majutus',
+        ua: 'Житло'
+    },
+    'accommodation.title': {
+        et: 'Majutus',
+        ua: 'Житло'
+    },
+    'accommodation.subtitle': {
+        et: 'Külalised, kes vajavad majutust:',
+        ua: 'Гості, яким потрібне житло:'
+    },
+    'accommodation.loading': {
+        et: 'Laadin...',
+        ua: 'Завантаження...'
+    },
+    'accommodation.noGuests': {
+        et: 'Majutuse vajadusi pole',
+        ua: 'Немає потреб у житлі'
+    },
+    'accommodation.noGuestsDescription': {
+        et: 'Ükski külaline pole märkinud, et vajab majutust',
+        ua: 'Жоден гість не вказав, що потребує житла'
+    },
+    'accommodation.name': {
+        et: 'Nimi',
+        ua: 'Ім\'я'
+    },
+    'accommodation.phone': {
+        et: 'Telefon',
+        ua: 'Телефон'
+    },
+    'accommodation.type': {
+        et: 'Tüüp',
+        ua: 'Тип'
+    },
+    'accommodation.tableNumber': {
+        et: 'Laua number',
+        ua: 'Номер столу'
+    },
+    'accommodation.invitationGetter': {
+        et: 'Kutse saaja',
+        ua: 'Отримувач запрошення'
+    },
+    'accommodation.mainGuest': {
+        et: 'Peamine külaline',
+        ua: 'Основний гість'
+    },
+    'accommodation.linkedGuest': {
+        et: 'Seotud külaline',
+        ua: 'Пов\'язаний гість'
+    },
+    'accommodation.accessDenied': {
+        et: 'Juurdepääs keelatud',
+        ua: 'Доступ заборонено'
+    },
+    'accommodation.noPermission': {
+        et: 'Teil pole õigusi majutuse haldamiseks',
+        ua: 'У вас немає прав для управління житлом'
+    },
 };
