@@ -40,49 +40,54 @@ const InvitationPreviewWrapper: React.FC<InvitationPreviewWrapperProps> = ({
             {/* Wedding Invitation Card with Frame */}
             <div className="mika-preview-invitation-section">
                 <div className="mika-ornamental-frame-container">
-                    {/* Layer 1: Frame image (bottom) */}
+                    {/* Frame image */}
                     <img
-                        src="/images/kutse_01.png"
+                        src="/images/kutse_021.png"
                         alt=""
                         className="mika-ornamental-frame"
                     />
 
-                    {/* Layer 2: Meie.jpg oval background (middle) */}
-                    <div className="mika-ornamental-oval-bg">
-                        <img
-                            src="/images/meie.jpg"
-                            alt=""
-                            className="mika-oval-background-image"
-                        />
-                    </div>
-
-                    {/* Layer 3: Text content (top) */}
+                    {/* Text content BELOW the image */}
                     <div className="mika-ornamental-content">
-                        <h1 className="mika-ornamental-title">
-                            {mockData.invitationGetter.invitationLanguage === 'et' ? 'Pulmakutse' : 'Весільне запрошення'}
-                        </h1>
-
-                        <p className="mika-ornamental-date">
-                            22.05.2026
-                        </p>
-
-                        <div className="mika-ornamental-location">
-                            <p className="mika-ornamental-location-venue">Põhjala Resort</p>
-                            <p>Kata küla, Kose vald, Harjumaa</p>
-                            <p>Eesti</p>
-                        </div>
-
+                        {/* Guest Names - Elegant presentation */}
                         <div className="mika-ornamental-guest-names">
-                            {allInvitedGuests.map((guest) => (
+                    <span className="mika-ornamental-dear">
+                        {allInvitedGuests.length > 1
+                            ? t('invitation.dearGuests')
+                            : t('invitation.dearGuest')}
+                    </span>
+                            {allInvitedGuests.map((guest, index) => (
                                 <div key={guest.id} className="mika-ornamental-guest-name">
                                     {guest.firstName} {guest.lastName}
+                                    {guest.isChild && <span className="mika-child-indicator">{t('invitation.child')}</span>}
                                 </div>
                             ))}
                         </div>
 
-                        <p className="mika-ornamental-signature">
+                        {/* Main invitation text */}
+                        <div className="mika-ornamental-invitation-text">
+                            <p className="mika-ornamental-subtitle">
+                                {t('invitation.subtitle')}
+                            </p>
+
+                            {/* Venue Information */}
+                            <div className="mika-ornamental-venue">
+                                <h4 className="mika-ornamental-venue-title">Põhjala Resort</h4>
+                                <p className="mika-ornamental-address">
+                                    {t('invitation.address')}
+                                </p>
+                            </div>
+
+                            {/* Personal Message */}
+                            <p className="mika-ornamental-message">
+                                {t('invitation.message')}
+                            </p>
+                        </div>
+
+                        {/* Signature */}
+                        <div className="mika-ornamental-signature">
                             Mike & Kateryna
-                        </p>
+                        </div>
                     </div>
                 </div>
             </div>

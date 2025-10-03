@@ -40,7 +40,8 @@ export const invitationTranslations: Translations = {
 
     // Invitation Page Content
     'invitation.subtitle': {
-        et: 'kutsuvad teid oma pulmapeole',
+        et: 'Meil on rõõm jagada teiega erilist uudist — me abiellume!\n' +
+            'Olete südamest oodatud meiega seda päeva tähistama Põhjala Resortis.',
         ua: 'запрошують вас на своє весілля'
     },
     'invitation.may': {
@@ -55,32 +56,21 @@ export const invitationTranslations: Translations = {
         et: 'Kata küla, Kose vald, Harjumaa, 75103',
         ua: 'Kata küla, Kose vald, Harjumaa, 75103'
     },
-    'invitation.time': {
-        et: 'Aeg',
-        ua: 'Час'
-    },
-    'invitation.ceremonyTime': {
-        et: 'Tseremoonia algab kell 16:00',
-        ua: 'Церемонія розпочинається о 16:00'
-    },
     'invitation.dearGuest': {
-        et: 'Kallis külaline',
+        et: 'Kallis sõber',
         ua: 'Дорогий гість'
     },
     'invitation.dearGuests': {
-        et: 'Kallid külalised',
+        et: 'Kallid sõbrad',
         ua: 'Дорогі гості'
-    },
-    'invitation.child': {
-        et: '(laps)',
-        ua: '(дитина)'
     },
     'invitation.tableNumber': {
         et: 'Laua number',
         ua: 'Номер столу'
     },
     'invitation.message': {
-        et: 'Palume teil olla meie kõrval selles erilistel päeval, kui alustame oma uut peatükki koos.',
+        et: 'Täpsem info ja peokava tulevad peagi.\n' +
+            'Palun hoidke kuupäev vaba — teie kohalolek on meile väga tähtis!',
         ua: 'Просимо вас бути поруч з нами в цей особливий день, коли ми починаємо нашу нову главу разом.'
     },
     'invitation.rsvp.title': {
