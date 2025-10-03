@@ -1,271 +1,239 @@
 /* src/styles/admin/GuestStatus.css */
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap');
-
 .mika-guest-status {
-    background: linear-gradient(135deg, #ffffff 0%, #f9f7f4 50%, #f5f3f0 100%);
-    padding: 60px 40px;
-    position: relative;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    padding: 40px 0;
+    margin: 20px 0;
 }
 
 .mika-guest-content {
     max-width: 1200px;
     margin: 0 auto;
+    padding: 0 20px;
 }
 
 .mika-guest-header {
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 }
 
 .mika-guest-title {
-    font-family: 'Dancing Script', cursive;
-    font-size: 3.5rem;
-    font-weight: 700;
     color: #7fa070;
-    margin-bottom: 15px;
-    letter-spacing: 1px;
-    text-shadow: 0 2px 4px rgba(127, 160, 112, 0.2);
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
 }
 
 .mika-guest-subtitle {
-    color: #666;
-    font-size: 1.1rem;
-    font-weight: 400;
-    max-width: 600px;
-    margin: 0 auto 30px;
-    line-height: 1.6;
+    color: #6b7280;
+    font-size: 1rem;
 }
 
+/* Cards Layout */
+.mika-guest-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.mika-guest-card {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    border: 1px solid #f0f0f0;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.mika-guest-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.mika-card-icon {
+    font-size: 2.5rem;
+    line-height: 1;
+}
+
+.mika-card-content {
+    flex: 1;
+}
+
+/* Different card colors */
+.mika-card-invited {
+    border-left: 4px solid #3b82f6;
+}
+
+.mika-card-responded {
+    border-left: 4px solid #22c55e;
+}
+
+.mika-card-attending {
+    border-left: 4px solid #a8c09a;
+}
+
+/* Guest Overview Stats */
 .mika-guest-overview {
     display: flex;
-    justify-content: center;
-    gap: 40px;
-    margin-top: 25px;
-    padding: 25px;
-    background: linear-gradient(145deg, rgba(127, 160, 112, 0.1), rgba(168, 192, 154, 0.05));
-    border-radius: 20px;
-    border: 2px solid rgba(127, 160, 112, 0.2);
+    justify-content: space-between;
+    gap: 20px;
 }
 
 .mika-guest-stat {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
+    text-align: center;
+    flex: 1;
 }
 
 .mika-guest-stat-number {
-    font-size: 2.2rem;
+    display: block;
+    font-size: 1.8rem;
     font-weight: 700;
-    color: #7fa070;
+    color: #1f2937;
+    line-height: 1.2;
 }
 
 .mika-guest-stat-label {
-    font-size: 12px;
-    font-weight: 600;
-    color: #666;
+    display: block;
+    color: #6b7280;
+    font-size: 0.75rem;
+    margin-top: 4px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    text-align: center;
 }
 
-.mika-guest-container {
-    background: linear-gradient(145deg, #ffffff, #f9f7f4);
-    border: 1px solid #e8e6e0;
-    border-radius: 20px;
-    min-height: 200px;
-    box-shadow:
-            0 10px 30px rgba(0, 0, 0, 0.08),
-            0 0 0 1px rgba(255, 255, 255, 0.5);
-    position: relative;
-    overflow: hidden;
+/* Response Status Bar */
+.mika-response-status {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    border: 1px solid #f0f0f0;
 }
 
-.mika-guest-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(45deg, #7fa070, #a8c09a, #95a889);
-    opacity: 0.7;
-}
-
-.mika-guest-empty {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 60px 40px;
-    text-align: center;
-    min-height: 160px;
-}
-
-.mika-guest-empty-icon {
-    font-size: 3.5rem;
+.mika-response-status h3 {
+    color: #374151;
+    font-size: 1.1rem;
+    font-weight: 600;
     margin-bottom: 20px;
-    opacity: 0.6;
 }
 
-.mika-guest-empty h3 {
-    color: #7fa070;
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin-bottom: 10px;
-    letter-spacing: 0.5px;
-}
-
-.mika-guest-empty p {
-    color: #999;
-    font-size: 15px;
-    line-height: 1.6;
-    max-width: 400px;
-    margin: 0;
-}
-
-.mika-guest-summary {
-    padding: 40px;
+.mika-status-bar {
+    width: 100%;
+    height: 40px;
+    background: #f3f4f6;
+    border-radius: 20px;
+    overflow: hidden;
     display: flex;
-    flex-direction: column;
+    margin-bottom: 20px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+.mika-status-segment {
+    height: 100%;
+    display: flex;
     align-items: center;
     justify-content: center;
-    gap: 25px;
-    min-height: 160px;
+    color: white;
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: width 0.3s ease;
 }
 
-.mika-guest-summary-item {
+.mika-status-attending {
+    background: linear-gradient(90deg, #22c55e, #16a34a);
+}
+
+.mika-status-not-attending {
+    background: linear-gradient(90deg, #ef4444, #dc2626);
+}
+
+.mika-status-pending {
+    background: linear-gradient(90deg, #fbbf24, #f59e0b);
+}
+
+/* Legend */
+.mika-status-legend {
     display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 1.2rem;
-}
-
-.mika-guest-summary-label {
-    color: #666;
-    font-weight: 500;
-}
-
-.mika-guest-summary-value {
-    color: #7fa070;
-    font-weight: 700;
-    font-size: 1.4rem;
-}
-
-.mika-guest-breakdown {
-    display: flex;
-    align-items: center;
+    justify-content: center;
     gap: 30px;
-    padding: 20px 30px;
-    background: rgba(127, 160, 112, 0.05);
-    border-radius: 15px;
-    border: 1px solid rgba(127, 160, 112, 0.1);
+    flex-wrap: wrap;
 }
 
-.mika-guest-breakdown-item {
+.mika-legend-item {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 5px;
+    gap: 8px;
+    color: #6b7280;
+    font-size: 0.875rem;
 }
 
-.mika-guest-breakdown-count {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #7fa070;
+.mika-legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
 }
 
-.mika-guest-breakdown-label {
-    font-size: 12px;
-    font-weight: 600;
-    color: #666;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+.mika-dot-attending {
+    background: #22c55e;
 }
 
-.mika-guest-breakdown-divider {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #7fa070;
+.mika-dot-not-attending {
+    background: #ef4444;
 }
 
-.mika-guest-tables-info {
-    text-align: center;
+.mika-dot-pending {
+    background: #fbbf24;
 }
 
-.mika-guest-tables-text {
-    color: #666;
-    font-size: 14px;
-    font-style: italic;
-}
-
+/* Loading state */
 .mika-guest-loading {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 60px;
-    color: #7fa070;
-    font-size: 16px;
+    text-align: center;
+    padding: 60px 20px;
+    color: #6b7280;
 }
 
-/* Mobile responsiveness */
+/* Mobile Responsiveness */
 @media (max-width: 768px) {
-    .mika-guest-status {
-        padding: 40px 20px;
+    .mika-guest-cards {
+        grid-template-columns: 1fr;
     }
 
-    .mika-guest-title {
-        font-size: 2.5rem;
-    }
-
-    .mika-guest-overview {
-        flex-wrap: wrap;
-        gap: 25px;
+    .mika-guest-card {
         padding: 20px;
     }
 
-    .mika-guest-stat {
-        flex: 1;
-        min-width: 100px;
+    .mika-guest-overview {
+        gap: 15px;
     }
 
-    .mika-guest-breakdown {
-        gap: 20px;
-        padding: 15px 20px;
+    .mika-guest-stat-number {
+        font-size: 1.5rem;
     }
 
-    .mika-guest-summary {
-        padding: 30px 20px;
-        gap: 20px;
+    .mika-status-bar {
+        height: 30px;
+    }
+
+    .mika-status-legend {
+        gap: 15px;
+    }
+
+    .mika-legend-item {
+        font-size: 0.75rem;
     }
 }
 
 @media (max-width: 480px) {
-    .mika-guest-title {
-        font-size: 2rem;
+    .mika-guest-card {
+        flex-direction: column;
+        text-align: center;
     }
 
     .mika-guest-overview {
         flex-direction: column;
-        gap: 20px;
-    }
-
-    .mika-guest-stat-number {
-        font-size: 1.8rem;
-    }
-
-    .mika-guest-breakdown {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .mika-guest-breakdown-divider {
-        transform: rotate(90deg);
-    }
-
-    .mika-guest-summary-item {
-        flex-direction: column;
-        gap: 5px;
-        text-align: center;
+        gap: 10px;
     }
 }

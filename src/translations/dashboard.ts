@@ -97,4 +97,45 @@ export const dashboardTranslations: Translations = {
         et: 'Kui külalised lisatakse, kuvatakse nende statistika siin',
         ua: 'Коли гості будуть додані, їх статистика відображатиметься тут'
     },
+
+    'guests.totalInvited': {
+        et: 'Kutsutud kokku',
+        ua: 'Всього запрошено'
+    },
+    'guests.responded': {
+        et: 'Vastanud',
+        ua: 'Відповіли'
+    },
+    'guests.responseRate': {
+        et: 'Vastamise %',
+        ua: 'Відсоток відповідей'
+    },
+    'guests.pending': {
+        et: 'Ootab',
+        ua: 'Очікує'
+    },
+    'guests.attending': {
+        et: 'Tulevad',
+        ua: 'Прийдуть'
+    },
+    'guests.attendingAdults': {
+        et: 'Täiskasvanud',
+        ua: 'Дорослі'
+    },
+    'guests.attendingChildren': {
+        et: 'Lapsed',
+        ua: 'Діти'
+    },
+    'guests.notAttending': {
+        et: 'Ei tule',
+        ua: 'Не прийдуть'
+    },
+    'guests.responseStatus': {
+        et: 'Vastuste ülevaade',
+        ua: 'Огляд відповідей'
+    },
+    'guests.loading': {
+        et: 'Laadin külaliste andmeid...',
+        ua: 'Завантажую дані гостей...'
+    }
 };
