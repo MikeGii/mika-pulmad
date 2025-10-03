@@ -21,22 +21,36 @@ const Transportation: React.FC = () => {
         try {
             const allGuests = await GuestService.getAllGuests();
 
-            // Get all invitation getters who need transport
-            const gettersNeedingTransport = allGuests.filter(
-                guest => guest.isInvitationGetter && guest.rsvpResponses?.needsTransport === true
+            // Get all invitation getters who:
+            // 1. Have responded to RSVP
+            // 2. Need transport
+            // 3. Have at least one person attending
+            const gettersNeedingTransport = allGuests.filter(guest =>
+                guest.isInvitationGetter &&
+                guest.rsvpStatus !== 'pending' &&
+                guest.rsvpResponses?.needsTransport === true &&
+                guest.rsvpResponses?.attendingGuestIds?.length > 0
             );
 
-            // Get IDs of getters who need transport
-            const getterIds = new Set(gettersNeedingTransport.map(g => g.id));
+            // Build a list of guests who actually need transport
+            const guestsNeedingTransport: Guest[] = [];
 
-            // Include linked guests whose invitation getter needs transport
-            const guestsNeedingTransport = allGuests.filter(
-                guest =>
-                    // Include if guest themselves need transport
-                    guest.rsvpResponses?.needsTransport === true ||
-                    // OR if they're linked to an invitation getter who needs transport
-                    (guest.linkedInvitationGetterId && getterIds.has(guest.linkedInvitationGetterId))
-            );
+            gettersNeedingTransport.forEach(getter => {
+                const attendingIds = getter.rsvpResponses?.attendingGuestIds || [];
+
+                // Check if the invitation getter themselves is attending
+                if (attendingIds.includes(getter.id)) {
+                    guestsNeedingTransport.push(getter);
+                }
+
+                // Find all linked guests who are attending
+                const linkedGuests = allGuests.filter(guest =>
+                    guest.linkedInvitationGetterId === getter.id &&
+                    attendingIds.includes(guest.id)
+                );
+
+                guestsNeedingTransport.push(...linkedGuests);
+            });
 
             setGuests(guestsNeedingTransport);
         } catch (error) {
@@ -62,11 +76,11 @@ const Transportation: React.FC = () => {
     const formatTransportDetails = (details?: string): string => {
         if (!details) return '-';
 
-        if (details.startsWith('Estonia:')) {
-            const location = details.replace('Estonia:', '').trim();
+        if (details.startsWith('estonia:')) {
+            const location = details.replace('estonia:', '').trim();
             return `🇪🇪 ${location || t('transportation.noLocation')}`;
-        } else if (details.startsWith('Ukraine:')) {
-            const location = details.replace('Ukraine:', '').trim();
+        } else if (details.startsWith('ukraine:')) {
+            const location = details.replace('ukraine:', '').trim();
             return `🇺🇦 ${location || t('transportation.noLocation')}`;
         }
         return details;
@@ -75,51 +89,25 @@ const Transportation: React.FC = () => {
     // Group guests by invitation getter
     const groupedGuests: Record<string, { invitationGetter: Guest | null; linkedGuests: Guest[] }> = {};
 
-    // First, add all invitation getters who need transport
     guests.forEach(guest => {
         if (guest.isInvitationGetter) {
-            groupedGuests[guest.id] = {
-                invitationGetter: guest,
-                linkedGuests: []
-            };
-        }
-    });
-
-    // Then, handle linked guests who need transport
-    guests.forEach(guest => {
-        if (!guest.isInvitationGetter && guest.linkedInvitationGetterId) {
-            // Check if the invitation getter exists in our grouped list
-            if (groupedGuests[guest.linkedInvitationGetterId]) {
-                // Invitation getter also needs transport, add to their list
-                groupedGuests[guest.linkedInvitationGetterId].linkedGuests.push(guest);
-            } else {
-                // Invitation getter doesn't need transport, but linked guest does
-                // We need to fetch the invitation getter info or create a placeholder group
-                if (!groupedGuests[guest.linkedInvitationGetterId]) {
-                    groupedGuests[guest.linkedInvitationGetterId] = {
-                        invitationGetter: null, // We'll need to fetch this
-                        linkedGuests: [guest]
-                    };
-                } else {
-                    groupedGuests[guest.linkedInvitationGetterId].linkedGuests.push(guest);
-                }
+            if (!groupedGuests[guest.id]) {
+                groupedGuests[guest.id] = {
+                    invitationGetter: guest,
+                    linkedGuests: []
+                };
             }
+        } else if (guest.linkedInvitationGetterId) {
+            if (!groupedGuests[guest.linkedInvitationGetterId]) {
+                groupedGuests[guest.linkedInvitationGetterId] = {
+                    invitationGetter: null,
+                    linkedGuests: []
+                };
+            }
+            groupedGuests[guest.linkedInvitationGetterId].linkedGuests.push(guest);
         }
     });
 
-    // Handle orphaned linked guests (whose invitation getter might not need transport)
-    const orphanedGuests = guests.filter(guest =>
-        !guest.isInvitationGetter &&
-        guest.linkedInvitationGetterId &&
-        !groupedGuests[guest.linkedInvitationGetterId]
-    );
-
-    if (orphanedGuests.length > 0) {
-        groupedGuests['orphaned'] = {
-            invitationGetter: null,
-            linkedGuests: orphanedGuests
-        };
-    }
     if (loading) {
         return (
             <div className="mika-transportation-container">
@@ -132,7 +120,6 @@ const Transportation: React.FC = () => {
         );
     }
 
-    // Create subtitle with count
     const getSubtitleText = (): string => {
         const language = localStorage.getItem('language') || 'et';
         if (language === 'et') {
@@ -175,7 +162,7 @@ const Transportation: React.FC = () => {
                             <tbody>
                             {Object.values(groupedGuests).map((group, index) => (
                                 <React.Fragment key={group.invitationGetter?.id || `group-${index}`}>
-                                    {/* Invitation Getter - only show if they exist and need transport */}
+                                    {/* Invitation Getter - only if they're attending */}
                                     {group.invitationGetter && (
                                         <tr className="mika-transport-getter-row">
                                             <td className="mika-transport-name">
@@ -197,7 +184,7 @@ const Transportation: React.FC = () => {
                                         </tr>
                                     )}
 
-                                    {/* Linked Guests */}
+                                    {/* Linked Guests - only those who are attending */}
                                     {group.linkedGuests.map(linkedGuest => (
                                         <tr key={linkedGuest.id} className="mika-transport-linked-row">
                                             <td className="mika-transport-name mika-transport-linked">

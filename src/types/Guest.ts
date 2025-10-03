@@ -1,4 +1,4 @@
-// src/types/Guest.ts - Updated simplified version
+// src/types/Guest.ts
 export interface Guest {
     id: string;
     firstName: string;
@@ -26,9 +26,10 @@ export interface Guest {
     rsvpStatus: 'pending' | 'attending' | 'not_attending';
     rsvpSubmittedAt?: Date;
     rsvpResponses: {
+        attendingGuestIds: string[];
         requiresAccommodation: boolean;
         needsTransport: boolean;
-        transportDetails?: string; // New field to store transport type and location
+        transportDetails?: string;
         hasDietaryRestrictions: boolean;
         dietaryNote?: string;
     };

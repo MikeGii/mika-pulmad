@@ -155,6 +155,7 @@ export const createMockData = (
                 invitationOpenCount: 0,
                 rsvpStatus: 'pending' as const,
                 rsvpResponses: {
+                    attendingGuestIds: [],
                     requiresAccommodation: false,
                     needsTransport: false,
                     hasDietaryRestrictions: false
@@ -181,6 +182,7 @@ export const createMockData = (
                 invitationOpenCount: 0,
                 rsvpStatus: 'pending' as const,
                 rsvpResponses: {
+                    attendingGuestIds: [],
                     requiresAccommodation: false,
                     needsTransport: false,
                     hasDietaryRestrictions: false
@@ -202,6 +204,7 @@ export const createMockData = (
                 invitationOpenCount: 0,
                 rsvpStatus: 'pending' as const,
                 rsvpResponses: {
+                    attendingGuestIds: [],
                     requiresAccommodation: false,
                     needsTransport: false,
                     hasDietaryRestrictions: false
@@ -227,6 +230,7 @@ export const createMockData = (
                 invitationOpenCount: 0,
                 rsvpStatus: 'pending' as const,
                 rsvpResponses: {
+                    attendingGuestIds: [],
                     requiresAccommodation: false,
                     needsTransport: false,
                     hasDietaryRestrictions: false
@@ -249,6 +253,7 @@ export const createMockData = (
                     invitationOpenCount: 0,
                     rsvpStatus: 'pending' as const,
                     rsvpResponses: {
+                        attendingGuestIds: [],
                         requiresAccommodation: false,
                         needsTransport: false,
                         hasDietaryRestrictions: false
@@ -270,6 +275,7 @@ export const createMockData = (
                     invitationOpenCount: 0,
                     rsvpStatus: 'pending' as const,
                     rsvpResponses: {
+                        attendingGuestIds: [],
                         requiresAccommodation: false,
                         needsTransport: false,
                         hasDietaryRestrictions: false
@@ -296,6 +302,7 @@ export const createMockData = (
                 invitationOpenCount: 0,
                 rsvpStatus: 'pending' as const,
                 rsvpResponses: {
+                    attendingGuestIds: [],
                     requiresAccommodation: false,
                     needsTransport: false,
                     hasDietaryRestrictions: false
@@ -317,6 +324,7 @@ export const createMockData = (
                     invitationOpenCount: 0,
                     rsvpStatus: 'pending' as const,
                     rsvpResponses: {
+                        attendingGuestIds: [],
                         requiresAccommodation: false,
                         needsTransport: false,
                         hasDietaryRestrictions: false
@@ -337,6 +345,7 @@ export const createMockData = (
                     invitationOpenCount: 0,
                     rsvpStatus: 'pending' as const,
                     rsvpResponses: {
+                        attendingGuestIds: [],
                         requiresAccommodation: false,
                         needsTransport: false,
                         hasDietaryRestrictions: false
@@ -357,6 +366,7 @@ export const createMockData = (
                     invitationOpenCount: 0,
                     rsvpStatus: 'pending' as const,
                     rsvpResponses: {
+                        attendingGuestIds: [],
                         requiresAccommodation: false,
                         needsTransport: false,
                         hasDietaryRestrictions: false

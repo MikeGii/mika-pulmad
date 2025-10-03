@@ -42,7 +42,8 @@ export const invitationTranslations: Translations = {
     'invitation.subtitle': {
         et: 'Meil on rõõm jagada teiega erilist uudist — me abiellume!\n' +
             'Olete südamest oodatud meiega seda päeva tähistama Põhjala Resortis.',
-        ua: 'запрошують вас на своє весілля'
+        ua: 'Ми раді поділитися з вами особливою новиною — ми одружуємось!\n' +
+            'Запрошуємо вас розділити цей день із нами у Põhjala Resort.'
     },
     'invitation.may': {
         et: 'Mai',
@@ -71,7 +72,8 @@ export const invitationTranslations: Translations = {
     'invitation.message': {
         et: 'Täpsem info ja peokava tulevad peagi.\n' +
             'Palun hoidke kuupäev vaba — teie kohalolek on meile väga tähtis!',
-        ua: 'Просимо вас бути поруч з нами в цей особливий день, коли ми починаємо нашу нову главу разом.'
+        ua: 'Деталі та план святкування ми повідомимо трохи пізніше.\n' +
+            'Збережіть дату — нам буде дуже важливо бачити вас поруч!'
     },
     'invitation.rsvp.title': {
         et: 'Palume kinnitada osalemist',
@@ -212,5 +214,66 @@ export const invitationTranslations: Translations = {
     'rsvp.pleaseSelectTransportType': {
         et: 'Palun valige transpordi tüüp',
         ua: 'Будь ласка, виберіть тип транспорту'
+    },
+
+    'rsvp.selectWhoIsAttending': {
+        et: 'Palun valige, kes tulevad',
+        ua: 'Будь ласка, оберіть, хто прийде'
+    },
+    'rsvp.questions.whoIsAttending': {
+        et: 'Kes tulevad?',
+        ua: 'Хто прийде?'
+    },
+    'rsvp.pleaseSelectAtLeastOneGuest': {
+        et: 'Palun valige vähemalt üks külastaja',
+        ua: 'Будь ласка, оберіть хоча б одного гостя'
+    },
+    'rsvp.nobodyAttending': {
+        et: 'Kahjuks ei saa keegi tulla. Täname teate eest!',
+        ua: 'На жаль, ніхто не зможе прийти. Дякуємо за повідомлення!'
+    },
+    'rsvp.yourResponse': {
+        et: 'Teie vastus',
+        ua: 'Ваша відповідь'
+    },
+    'rsvp.submittedOn': {
+        et: 'Esitatud',
+        ua: 'Подано'
+    },
+    'rsvp.attending': {
+        et: 'Tulevad',
+        ua: 'Прийдуть'
+    },
+    'rsvp.notAttending': {
+        et: 'Ei tule',
+        ua: 'Не прийдуть'
+    },
+    'rsvp.editResponse': {
+        et: 'Muuda vastust',
+        ua: 'Змінити відповідь'
+    },
+    'rsvp.editYourResponse': {
+        et: 'Muuda oma vastust',
+        ua: 'Змінити свою відповідь'
+    },
+    'rsvp.updateResponse': {
+        et: 'Uuenda vastust',
+        ua: 'Оновити відповідь'
+    },
+    'rsvp.errorSubmitting': {
+        et: 'Viga vastuse esitamisel. Palun proovi uuesti.',
+        ua: 'Помилка під час відправки відповіді. Спробуйте ще раз.'
+    },
+    'rsvp.transport.fromEstonia': {
+        et: 'Eestist',
+        ua: 'З Естонії'
+    },
+    'rsvp.transport.locationPlaceholder': {
+        et: 'Täpsustage asukoht (nt Tallinn Lennujaam)',
+        ua: 'Вкажіть місце (напр. Аеропорт Таллінн)'
+    },
+    'invitation.child': {
+        et: '(laps)',
+        ua: '(дитина)'
     },
 };

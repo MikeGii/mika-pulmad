@@ -1,5 +1,5 @@
 // src/components/invitation/RSVPForm.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { InvitationService } from '../../services/invitationService';
 import { Guest } from '../../types/Guest';
@@ -13,29 +13,46 @@ interface RSVPFormProps {
 
 const RSVPForm: React.FC<RSVPFormProps> = ({ invitationGetter, linkedGuests, onSubmitted }) => {
     const { t } = useLanguage();
+    const allInvitedGuests = [invitationGetter, ...linkedGuests];
+
+    // Check if there's an existing RSVP
+    const hasExistingRsvp = invitationGetter.rsvpStatus !== 'pending';
+    const existingAttendingIds = invitationGetter.rsvpResponses?.attendingGuestIds || [];
+
     const [formData, setFormData] = useState({
-        attending: null as boolean | null,
-        requiresAccommodation: false,
-        needsTransport: false,
+        attendingGuestIds: hasExistingRsvp ? existingAttendingIds : allInvitedGuests.map(g => g.id),
+        requiresAccommodation: invitationGetter.rsvpResponses?.requiresAccommodation || false,
+        needsTransport: invitationGetter.rsvpResponses?.needsTransport || false,
         transportType: '' as 'estonia' | 'ukraine' | '',
-        transportLocation: '',
-        hasDietaryRestrictions: false,
-        dietaryNote: '',
+        transportLocation: invitationGetter.rsvpResponses?.transportDetails || '',
+        hasDietaryRestrictions: invitationGetter.rsvpResponses?.hasDietaryRestrictions || false,
+        dietaryNote: invitationGetter.rsvpResponses?.dietaryNote || '',
     });
+
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [showThankYou, setShowThankYou] = useState(false);
+    const [isEditing, setIsEditing] = useState(!hasExistingRsvp);
 
-    const handleAttendingChange = (attending: boolean) => {
+    // Parse transport details if they exist
+    useEffect(() => {
+        if (invitationGetter.rsvpResponses?.transportDetails) {
+            const parts = invitationGetter.rsvpResponses.transportDetails.split(':');
+            if (parts.length === 2) {
+                setFormData(prev => ({
+                    ...prev,
+                    transportType: parts[0] as 'estonia' | 'ukraine',
+                    transportLocation: parts[1]
+                }));
+            }
+        }
+    }, [invitationGetter.rsvpResponses?.transportDetails]);
+
+    const handleGuestToggle = (guestId: string) => {
         setFormData(prev => ({
             ...prev,
-            attending,
-            // Reset other fields if not attending
-            requiresAccommodation: attending ? prev.requiresAccommodation : false,
-            needsTransport: attending ? prev.needsTransport : false,
-            transportType: attending ? prev.transportType : '',
-            transportLocation: attending ? prev.transportLocation : '',
-            hasDietaryRestrictions: attending ? prev.hasDietaryRestrictions : false,
-            dietaryNote: attending ? prev.dietaryNote : '',
+            attendingGuestIds: prev.attendingGuestIds.includes(guestId)
+                ? prev.attendingGuestIds.filter(id => id !== guestId)
+                : [...prev.attendingGuestIds, guestId]
         }));
     };
 
@@ -43,10 +60,8 @@ const RSVPForm: React.FC<RSVPFormProps> = ({ invitationGetter, linkedGuests, onS
         setFormData(prev => ({
             ...prev,
             [field]: !prev[field],
-            // Clear transport details if unchecking transport
             transportType: field === 'needsTransport' && prev[field] ? '' : prev.transportType,
             transportLocation: field === 'needsTransport' && prev[field] ? '' : prev.transportLocation,
-            // Clear dietary note if unchecking dietary restrictions
             dietaryNote: field === 'hasDietaryRestrictions' && prev[field] ? '' : prev.dietaryNote,
         }));
     };
@@ -55,19 +70,18 @@ const RSVPForm: React.FC<RSVPFormProps> = ({ invitationGetter, linkedGuests, onS
         setFormData(prev => ({
             ...prev,
             transportType: type,
-            transportLocation: '', // Clear location when changing type
+            transportLocation: '',
         }));
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (formData.attending === null) {
-            alert(t('rsvp.pleaseSelectAttending'));
+        if (formData.attendingGuestIds.length === 0) {
+            alert(t('rsvp.pleaseSelectAtLeastOneGuest'));
             return;
         }
 
-        // Validate transport selection if needed
         if (formData.needsTransport && !formData.transportType) {
             alert(t('rsvp.pleaseSelectTransportType'));
             return;
@@ -76,36 +90,38 @@ const RSVPForm: React.FC<RSVPFormProps> = ({ invitationGetter, linkedGuests, onS
         setIsSubmitting(true);
 
         try {
-            // Prepare transport details string
-            let transportDetails = '';
-            if (formData.needsTransport && formData.transportType) {
-                transportDetails = formData.transportType === 'estonia' ?
-                    `Estonia: ${formData.transportLocation || 'Not specified'}` :
-                    `Ukraine: ${formData.transportLocation || 'Not specified'}`;
-            }
+            // Build transport details string
+            const transportDetails = formData.needsTransport && formData.transportType
+                ? `${formData.transportType}:${formData.transportLocation}`
+                : undefined;
 
             await InvitationService.submitRSVP(invitationGetter.id, {
-                attending: formData.attending,
+                attendingGuestIds: formData.attendingGuestIds,
+                attending: formData.attendingGuestIds.length > 0,
                 requiresAccommodation: formData.requiresAccommodation,
                 needsTransport: formData.needsTransport,
                 transportDetails: transportDetails,
                 hasDietaryRestrictions: formData.hasDietaryRestrictions,
-                ...(formData.dietaryNote.trim() && { dietaryNote: formData.dietaryNote.trim() })
+                dietaryNote: formData.dietaryNote || undefined,
             });
 
             setShowThankYou(true);
+            setIsEditing(false);
             setTimeout(() => {
                 onSubmitted();
             }, 3000);
         } catch (error) {
             console.error('Error submitting RSVP:', error);
-            alert(t('rsvp.submissionError'));
+            alert(t('rsvp.errorSubmitting'));
         } finally {
             setIsSubmitting(false);
         }
     };
 
-    const allInvitedGuests = [invitationGetter, ...linkedGuests];
+    const handleEdit = () => {
+        setIsEditing(true);
+        setShowThankYou(false);
+    };
 
     if (showThankYou) {
         return (
@@ -119,63 +135,122 @@ const RSVPForm: React.FC<RSVPFormProps> = ({ invitationGetter, linkedGuests, onS
         );
     }
 
+    // Show summary view if already responded and not editing
+    if (hasExistingRsvp && !isEditing) {
+        const attendingGuests = allInvitedGuests.filter(g => existingAttendingIds.includes(g.id));
+        const notAttendingGuests = allInvitedGuests.filter(g => !existingAttendingIds.includes(g.id));
+
+        return (
+            <div className="mika-rsvp-form-container">
+                <div className="mika-rsvp-form-header">
+                    <h3>{t('rsvp.yourResponse')}</h3>
+                    <p className="mika-rsvp-form-subtitle">{t('rsvp.submittedOn')}: {invitationGetter.rsvpSubmittedAt?.toLocaleDateString()}</p>
+                </div>
+
+                <div className="mika-rsvp-summary">
+                    {attendingGuests.length > 0 && (
+                        <div className="mika-rsvp-summary-section">
+                            <h4 className="mika-rsvp-summary-title">{t('rsvp.attending')}:</h4>
+                            <div className="mika-rsvp-guest-list">
+                                {attendingGuests.map(guest => (
+                                    <span key={guest.id} className="mika-rsvp-guest-name mika-rsvp-guest-attending">
+                                        ✓ {guest.firstName} {guest.lastName}
+                                        {guest.isChild && <span className="mika-rsvp-child-indicator">{t('invitation.child')}</span>}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {notAttendingGuests.length > 0 && (
+                        <div className="mika-rsvp-summary-section">
+                            <h4 className="mika-rsvp-summary-title">{t('rsvp.notAttending')}:</h4>
+                            <div className="mika-rsvp-guest-list">
+                                {notAttendingGuests.map(guest => (
+                                    <span key={guest.id} className="mika-rsvp-guest-name mika-rsvp-guest-not-attending">
+                                        ✗ {guest.firstName} {guest.lastName}
+                                        {guest.isChild && <span className="mika-rsvp-child-indicator">{t('invitation.child')}</span>}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {attendingGuests.length > 0 && (
+                        <div className="mika-rsvp-summary-details">
+                            {formData.requiresAccommodation && (
+                                <div className="mika-rsvp-summary-item">
+                                    <span className="mika-rsvp-summary-icon">🏨</span>
+                                    {t('rsvp.answers.needAccommodation')}
+                                </div>
+                            )}
+                            {formData.needsTransport && (
+                                <div className="mika-rsvp-summary-item">
+                                    <span className="mika-rsvp-summary-icon">🚗</span>
+                                    {t('rsvp.answers.needTransport')}
+                                </div>
+                            )}
+                            {formData.hasDietaryRestrictions && (
+                                <div className="mika-rsvp-summary-item">
+                                    <span className="mika-rsvp-summary-icon">🍽️</span>
+                                    {t('rsvp.answers.hasDietary')}
+                                    {formData.dietaryNote && <p className="mika-rsvp-summary-note">{formData.dietaryNote}</p>}
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </div>
+
+                <div className="mika-rsvp-edit-section">
+                    <button onClick={handleEdit} className="mika-rsvp-edit-button">
+                        {t('rsvp.editResponse')}
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
+    // Show form for editing/initial submission
+    const isAnyoneAttending = formData.attendingGuestIds.length > 0;
+
     return (
         <div className="mika-rsvp-form-container">
             <div className="mika-rsvp-form-header">
-                <h3>{t('rsvp.title')}</h3>
+                <h3>{hasExistingRsvp ? t('rsvp.editYourResponse') : t('rsvp.title')}</h3>
                 <p className="mika-rsvp-form-subtitle">
                     {allInvitedGuests.length === 1
                         ? t('rsvp.forYou')
-                        : t('rsvp.forYourGroup')}
+                        : t('rsvp.selectWhoIsAttending')}
                 </p>
-                <div className="mika-rsvp-guest-list">
-                    {allInvitedGuests.map((guest) => (
-                        <span key={guest.id} className="mika-rsvp-guest-name">
-                            {guest.firstName} {guest.lastName}
-                            {guest.isChild && (
-                                <span className="mika-rsvp-child-indicator">
-                                    {t('invitation.child')}
-                                </span>
-                            )}
-                        </span>
-                    ))}
-                </div>
             </div>
 
             <form onSubmit={handleSubmit}>
-                {/* Attending Question */}
+                {/* Guest Selection Section */}
                 <div className="mika-rsvp-section">
-                    <h4 className="mika-rsvp-question">{t('rsvp.questions.attending')}</h4>
-                    <div className="mika-rsvp-options">
-                        <label className={`mika-rsvp-option ${formData.attending === true ? 'selected' : ''}`}>
-                            <input
-                                type="radio"
-                                name="attending"
-                                checked={formData.attending === true}
-                                onChange={() => handleAttendingChange(true)}
-                            />
-                            <span className="mika-rsvp-option-text">
-                                <span className="mika-rsvp-option-icon">✅</span>
-                                {t('rsvp.answers.yes')}
-                            </span>
-                        </label>
-                        <label className={`mika-rsvp-option ${formData.attending === false ? 'selected' : ''}`}>
-                            <input
-                                type="radio"
-                                name="attending"
-                                checked={formData.attending === false}
-                                onChange={() => handleAttendingChange(false)}
-                            />
-                            <span className="mika-rsvp-option-text">
-                                <span className="mika-rsvp-option-icon">❌</span>
-                                {t('rsvp.answers.no')}
-                            </span>
-                        </label>
+                    <h4 className="mika-rsvp-question">{t('rsvp.questions.whoIsAttending')}</h4>
+                    <div className="mika-rsvp-guest-selection">
+                        {allInvitedGuests.map((guest) => (
+                            <label
+                                key={guest.id}
+                                className={`mika-rsvp-guest-checkbox ${formData.attendingGuestIds.includes(guest.id) ? 'selected' : ''}`}
+                            >
+                                <input
+                                    type="checkbox"
+                                    checked={formData.attendingGuestIds.includes(guest.id)}
+                                    onChange={() => handleGuestToggle(guest.id)}
+                                />
+                                <span className="mika-rsvp-guest-checkbox-text">
+                                    <span className="mika-rsvp-guest-checkbox-name">
+                                        {guest.firstName} {guest.lastName}
+                                    </span>
+                                </span>
+                            </label>
+                        ))}
                     </div>
                 </div>
 
-                {/* Additional Questions if Attending */}
-                {formData.attending === true && (
+                {/* Additional Questions if Anyone Attending */}
+                {isAnyoneAttending && (
                     <div className="mika-rsvp-additional-questions">
                         {/* Accommodation Question */}
                         <div className="mika-rsvp-section">
@@ -208,62 +283,50 @@ const RSVPForm: React.FC<RSVPFormProps> = ({ invitationGetter, linkedGuests, onS
                                 </span>
                             </label>
 
-                            {/* Transport Type Options */}
                             {formData.needsTransport && (
-                                <div className="mika-rsvp-transport-options">
+                                <div className="mika-rsvp-transport-details">
                                     <div className="mika-rsvp-transport-type">
-                                        <label className={`mika-rsvp-transport-option ${formData.transportType === 'estonia' ? 'selected' : ''}`}>
+                                        <label className={`mika-rsvp-option ${formData.transportType === 'estonia' ? 'selected' : ''}`}>
                                             <input
                                                 type="radio"
                                                 name="transportType"
                                                 checked={formData.transportType === 'estonia'}
                                                 onChange={() => handleTransportTypeChange('estonia')}
                                             />
-                                            <span className="mika-rsvp-transport-option-text">
-                                                <span className="mika-rsvp-flag">🇪🇪</span>
-                                                {t('rsvp.transport.inEstonia')}
+                                            <span className="mika-rsvp-option-text">
+                                                {t('rsvp.transport.fromEstonia')}
                                             </span>
                                         </label>
-                                        <label className={`mika-rsvp-transport-option ${formData.transportType === 'ukraine' ? 'selected' : ''}`}>
+                                        <label className={`mika-rsvp-option ${formData.transportType === 'ukraine' ? 'selected' : ''}`}>
                                             <input
                                                 type="radio"
                                                 name="transportType"
                                                 checked={formData.transportType === 'ukraine'}
                                                 onChange={() => handleTransportTypeChange('ukraine')}
                                             />
-                                            <span className="mika-rsvp-transport-option-text">
-                                                <span className="mika-rsvp-flag">🇺🇦</span>
+                                            <span className="mika-rsvp-option-text">
                                                 {t('rsvp.transport.fromUkraine')}
                                             </span>
                                         </label>
                                     </div>
 
-                                    {/* Transport Location Field */}
                                     {formData.transportType && (
-                                        <div className="mika-rsvp-transport-location">
-                                            <input
-                                                type="text"
-                                                className="mika-rsvp-location-input"
-                                                placeholder={formData.transportType === 'estonia' ?
-                                                    t('rsvp.transport.estoniaPlaceholder') :
-                                                    t('rsvp.transport.ukrainePlaceholder')}
-                                                value={formData.transportLocation}
-                                                onChange={(e) => setFormData(prev => ({
-                                                    ...prev,
-                                                    transportLocation: e.target.value
-                                                }))}
-                                                maxLength={100}
-                                            />
-                                            <span className="mika-rsvp-location-hint">
-                                                {t('rsvp.transport.locationHint')}
-                                            </span>
-                                        </div>
+                                        <input
+                                            type="text"
+                                            className="mika-rsvp-input"
+                                            placeholder={t('rsvp.transport.locationPlaceholder')}
+                                            value={formData.transportLocation}
+                                            onChange={(e) => setFormData(prev => ({
+                                                ...prev,
+                                                transportLocation: e.target.value
+                                            }))}
+                                        />
                                     )}
                                 </div>
                             )}
                         </div>
 
-                        {/* Dietary Restrictions Question */}
+                        {/* Dietary Restrictions */}
                         <div className="mika-rsvp-section">
                             <h4 className="mika-rsvp-question">{t('rsvp.questions.dietary')}</h4>
                             <label className="mika-rsvp-checkbox">
@@ -300,31 +363,29 @@ const RSVPForm: React.FC<RSVPFormProps> = ({ invitationGetter, linkedGuests, onS
                 )}
 
                 {/* Declining Message */}
-                {formData.attending === false && (
+                {!isAnyoneAttending && (
                     <div className="mika-rsvp-declining-message">
-                        <p>{t('rsvp.decliningMessage')}</p>
+                        <p>{t('rsvp.nobodyAttending')}</p>
                     </div>
                 )}
 
                 {/* Submit Button */}
-                {formData.attending !== null && (
-                    <div className="mika-rsvp-submit-section">
-                        <button
-                            type="submit"
-                            className="mika-rsvp-submit-button"
-                            disabled={isSubmitting}
-                        >
-                            {isSubmitting ? (
-                                <>
-                                    <span className="mika-rsvp-spinner"></span>
-                                    {t('rsvp.submitting')}
-                                </>
-                            ) : (
-                                t('rsvp.submit')
-                            )}
-                        </button>
-                    </div>
-                )}
+                <div className="mika-rsvp-submit-section">
+                    <button
+                        type="submit"
+                        className="mika-rsvp-submit-button"
+                        disabled={isSubmitting}
+                    >
+                        {isSubmitting ? (
+                            <>
+                                <span className="mika-rsvp-spinner"></span>
+                                {t('rsvp.submitting')}
+                            </>
+                        ) : (
+                            hasExistingRsvp ? t('rsvp.updateResponse') : t('rsvp.submit')
+                        )}
+                    </button>
+                </div>
             </form>
         </div>
     );

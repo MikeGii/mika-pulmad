@@ -433,3 +433,181 @@
         padding: 12px;
     }
 }
+
+/* Guest Selection Checkboxes */
+.mika-rsvp-guest-selection {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.mika-rsvp-guest-checkbox {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #f9fafb;
+}
+
+.mika-rsvp-guest-checkbox:hover {
+    border-color: rgba(168, 192, 154, 0.5);
+    background: rgba(168, 192, 154, 0.05);
+}
+
+.mika-rsvp-guest-checkbox.selected {
+    border-color: #7fa070;
+    background: rgba(168, 192, 154, 0.1);
+}
+
+.mika-rsvp-guest-checkbox input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: #7fa070;
+    margin-right: 12px;
+    cursor: pointer;
+}
+
+.mika-rsvp-guest-checkbox-text {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+}
+
+.mika-rsvp-guest-checkbox-name {
+    font-size: 16px;
+    font-weight: 500;
+    color: #374151;
+}
+
+/* Summary View Styles */
+.mika-rsvp-summary {
+    padding: 20px;
+    background: rgba(168, 192, 154, 0.05);
+    border-radius: 12px;
+}
+
+.mika-rsvp-summary-section {
+    margin-bottom: 20px;
+}
+
+.mika-rsvp-summary-section:last-child {
+    margin-bottom: 0;
+}
+
+.mika-rsvp-summary-title {
+    font-size: 18px;
+    color: #5a6c50;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.mika-rsvp-guest-attending {
+    color: #15803d;
+}
+
+.mika-rsvp-guest-not-attending {
+    color: #dc2626;
+    text-decoration: line-through;
+    opacity: 0.7;
+}
+
+.mika-rsvp-summary-details {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(168, 192, 154, 0.2);
+}
+
+.mika-rsvp-summary-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    color: #374151;
+}
+
+.mika-rsvp-summary-icon {
+    font-size: 18px;
+}
+
+.mika-rsvp-summary-note {
+    margin-top: 5px;
+    padding: 10px;
+    background: white;
+    border-radius: 8px;
+    font-style: italic;
+    color: #6b7280;
+    margin-left: 28px;
+}
+
+/* Edit Section */
+.mika-rsvp-edit-section {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(168, 192, 154, 0.2);
+}
+
+.mika-rsvp-edit-button {
+    background: transparent;
+    color: #7fa070;
+    border: 2px solid #7fa070;
+    padding: 12px 30px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.mika-rsvp-edit-button:hover {
+    background: #7fa070;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Transport Details */
+.mika-rsvp-transport-details {
+    margin-top: 15px;
+    padding-left: 30px;
+}
+
+.mika-rsvp-transport-type {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.mika-rsvp-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.mika-rsvp-input:focus {
+    outline: none;
+    border-color: #7fa070;
+    box-shadow: 0 0 0 3px rgba(127, 160, 112, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .mika-rsvp-guest-checkbox {
+        padding: 12px;
+    }
+
+    .mika-rsvp-guest-checkbox-name {
+        font-size: 14px;
+    }
+
+    .mika-rsvp-transport-type {
+        flex-direction: column;
+    }
+}

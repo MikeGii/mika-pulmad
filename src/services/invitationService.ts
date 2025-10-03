@@ -1,6 +1,6 @@
 // src/services/invitationService.ts
 import { GuestService } from './guestService';
-import { Guest } from '../types/Guest';
+import { Guest } from '../types';
 
 export class InvitationService {
     /**
@@ -60,22 +60,24 @@ export class InvitationService {
      * Submit RSVP responses for a guest
      */
     static async submitRSVP(guestId: string, rsvpData: {
+        attendingGuestIds: string[];
         attending: boolean;
         requiresAccommodation: boolean;
         needsTransport: boolean;
-        transportDetails?: string; // Add this field
+        transportDetails?: string;
         hasDietaryRestrictions: boolean;
         dietaryNote?: string;
     }): Promise<void> {
         try {
-            // Build rsvpResponses object
+            // Build rsvpResponses object - only include defined values
             const rsvpResponses: any = {
+                attendingGuestIds: rsvpData.attendingGuestIds,
                 requiresAccommodation: rsvpData.requiresAccommodation,
                 needsTransport: rsvpData.needsTransport,
                 hasDietaryRestrictions: rsvpData.hasDietaryRestrictions,
             };
 
-            // Add transport details if present
+            // Only add transportDetails if it exists and is not empty
             if (rsvpData.transportDetails && rsvpData.transportDetails.trim()) {
                 rsvpResponses.transportDetails = rsvpData.transportDetails.trim();
             }
@@ -94,7 +96,7 @@ export class InvitationService {
 
             await GuestService.updateGuest(guestId, updateData);
 
-            console.log(`RSVP submitted for guest ${guestId}`);
+            console.log(`RSVP submitted for guest ${guestId}`, rsvpData);
         } catch (error) {
             console.error('Error submitting RSVP:', error);
             throw error;
@@ -256,4 +258,6 @@ export class InvitationService {
             return false;
         }
     }
+
+
 }
