@@ -57,12 +57,12 @@ export const invitationTranslations: Translations = {
         ua: 'Kata küla, Kose vald, Harjumaa, 75103'
     },
     'invitation.dearGuest': {
-        et: 'Kallis sõber',
-        ua: 'Дорогий гість'
+        et: 'Kallis',
+        ua: 'Дорогий'
     },
     'invitation.dearGuests': {
-        et: 'Kallid sõbrad',
-        ua: 'Дорогі гості'
+        et: 'Kallid',
+        ua: 'Дорогі'
     },
     'invitation.tableNumber': {
         et: 'Laua number',

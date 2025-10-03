@@ -100,40 +100,22 @@ const WeddingInvitationContent: React.FC = () => {
                 {/* Wedding Invitation Card with Ornamental Frame */}
                 <div className="mika-invitation-section">
                     <div className="mika-ornamental-frame-container">
-                        {/* Bottom layer: Frame image */}
+                        {/* Frame image */}
                         <img
-                            src="/images/kutse_01.png"
+                            src="/images/kutse_021.png"
                             alt=""
                             className="mika-ornamental-frame"
                         />
 
-                        {/* Middle layer: Meie.jpg oval background */}
-                        <div className="mika-ornamental-oval-bg">
-                            <img
-                                src="/images/meie.jpg"
-                                alt=""
-                                className="mika-oval-background-image"
-                            />
-                        </div>
-
-                        {/* Top layer: Text content */}
+                        {/* Text content BELOW the image */}
                         <div className="mika-ornamental-content">
-                            <h1 className="mika-ornamental-title">
-                                {invitationGetter.invitationLanguage === 'et' ?
-                                    'Pulmakutse' : 'Весільне запрошення'}
-                            </h1>
-
-                            <p className="mika-ornamental-date">
-                                22.05.2026
-                            </p>
-
-                            <div className="mika-ornamental-location">
-                                <p className="mika-ornamental-location-venue">Põhjala Resort</p>
-                                <p>Kata küla, Kose vald, Harjumaa</p>
-                                <p>Eesti</p>
-                            </div>
-
+                            {/* Guest Names - Elegant presentation */}
                             <div className="mika-ornamental-guest-names">
+                            <span className="mika-ornamental-dear">
+                                {allInvitedGuests.length > 1
+                                    ? t('invitation.dearGuests')
+                                    : t('invitation.dearGuest')}
+                            </span>
                                 {allInvitedGuests.map((guest) => (
                                     <div key={guest.id} className="mika-ornamental-guest-name">
                                         {guest.firstName} {guest.lastName}
@@ -141,9 +123,30 @@ const WeddingInvitationContent: React.FC = () => {
                                 ))}
                             </div>
 
-                            <p className="mika-ornamental-signature">
+                            {/* Main invitation text */}
+                            <div className="mika-ornamental-invitation-text">
+                                <p className="mika-ornamental-subtitle">
+                                    {t('invitation.subtitle')}
+                                </p>
+
+                                {/* Venue Information */}
+                                <div className="mika-ornamental-venue">
+                                    <h4 className="mika-ornamental-venue-title">Põhjala Resort</h4>
+                                    <p className="mika-ornamental-address">
+                                        {t('invitation.address')}
+                                    </p>
+                                </div>
+
+                                {/* Personal Message */}
+                                <p className="mika-ornamental-message">
+                                    {t('invitation.message')}
+                                </p>
+                            </div>
+
+                            {/* Signature */}
+                            <div className="mika-ornamental-signature">
                                 Mike & Kateryna
-                            </p>
+                            </div>
                         </div>
                     </div>
                 </div>

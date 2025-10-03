@@ -56,10 +56,9 @@ const InvitationPreviewWrapper: React.FC<InvitationPreviewWrapperProps> = ({
                             ? t('invitation.dearGuests')
                             : t('invitation.dearGuest')}
                     </span>
-                            {allInvitedGuests.map((guest, index) => (
+                            {allInvitedGuests.map((guest) => (
                                 <div key={guest.id} className="mika-ornamental-guest-name">
                                     {guest.firstName} {guest.lastName}
-                                    {guest.isChild && <span className="mika-child-indicator">{t('invitation.child')}</span>}
                                 </div>
                             ))}
                         </div>
