@@ -7,8 +7,9 @@ export class InvitationService {
      * Generate unique invitation URL for a guest
      */
     static generateInvitationUrl(guest: Guest): string {
-        const encodedName = `${guest.firstName}&${guest.lastName}`;
-        return `/invitation/${encodedName}`;
+        // Combine first and last name without encoding
+        const combinedName = `${guest.firstName.trim()}${guest.lastName.trim()}`;
+        return `/invitation/${combinedName}`;
     }
 
     /**
@@ -26,17 +27,16 @@ export class InvitationService {
         try {
             if (!guestName) return;
 
-            // Parse guest name from URL
-            const [firstName, lastName] = guestName.split('&');
-            if (!firstName || !lastName) return;
+            // Decode the URL-encoded name
+            const decodedName = decodeURIComponent(guestName);
 
-            // Find the invitation getter
+            // Find the invitation getter by matching combined name
             const allGuests = await GuestService.getAllGuests();
-            const invitationGetter = allGuests.find(guest =>
-                guest.firstName.toLowerCase() === firstName.toLowerCase() &&
-                guest.lastName.toLowerCase() === lastName.toLowerCase() &&
-                guest.isInvitationGetter
-            );
+            const invitationGetter = allGuests.find(guest => {
+                const combinedName = `${guest.firstName.trim()}${guest.lastName.trim()}`;
+                return combinedName.toLowerCase() === decodedName.toLowerCase() &&
+                    guest.isInvitationGetter;
+            });
 
             if (!invitationGetter) return;
 
@@ -50,7 +50,7 @@ export class InvitationService {
 
             await GuestService.updateGuest(invitationGetter.id, updateData);
 
-            console.log(`Invitation opened by ${firstName} ${lastName}`);
+            console.log(`Invitation opened by ${invitationGetter.firstName} ${invitationGetter.lastName}`);
         } catch (error) {
             console.error('Error tracking invitation open:', error);
         }
@@ -225,16 +225,16 @@ export class InvitationService {
     }
 
     /**
-     * Find invitation getter by name (used by invitation page)
+     * Find invitation getter by combined name (used by invitation page)
      */
-    static async findInvitationGetterByName(firstName: string, lastName: string): Promise<Guest | null> {
+    static async findInvitationGetterByCombinedName(combinedName: string): Promise<Guest | null> {
         try {
             const allGuests = await GuestService.getAllGuests();
-            const invitationGetter = allGuests.find(guest =>
-                guest.firstName.toLowerCase() === firstName.toLowerCase() &&
-                guest.lastName.toLowerCase() === lastName.toLowerCase() &&
-                guest.isInvitationGetter
-            );
+            const invitationGetter = allGuests.find(guest => {
+                const guestCombinedName = `${guest.firstName.trim()}${guest.lastName.trim()}`;
+                return guestCombinedName.toLowerCase() === combinedName.toLowerCase() &&
+                    guest.isInvitationGetter;
+            });
 
             return invitationGetter || null;
         } catch (error) {
@@ -248,16 +248,15 @@ export class InvitationService {
      */
     static async validateInvitationUrl(guestName: string): Promise<boolean> {
         try {
-            const [firstName, lastName] = guestName.split('&');
-            if (!firstName || !lastName) return false;
+            if (!guestName) return false;
 
-            const invitationGetter = await this.findInvitationGetterByName(firstName, lastName);
+            // Decode the URL-encoded name
+            const decodedName = decodeURIComponent(guestName);
+            const invitationGetter = await this.findInvitationGetterByCombinedName(decodedName);
             return invitationGetter !== null;
         } catch (error) {
             console.error('Error validating invitation URL:', error);
             return false;
         }
     }
-
-
 }

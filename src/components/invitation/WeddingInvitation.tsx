@@ -20,13 +20,11 @@ const WeddingInvitationContent: React.FC = () => {
         try {
             if (!guestName) return;
 
-            const [firstName, lastName] = guestName.split('&');
-            if (!firstName || !lastName) {
-                setError('Invalid invitation URL');
-                return;
-            }
+            // Decode the URL parameter
+            const decodedName = decodeURIComponent(guestName);
 
-            const getter = await InvitationService.findInvitationGetterByName(firstName, lastName);
+            // Find guest by combined name
+            const getter = await InvitationService.findInvitationGetterByCombinedName(decodedName);
 
             if (!getter) {
                 setError('Invitation not found');
